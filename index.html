@@ -355,12 +355,15 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
 #start .home-launch .ghost-big{margin:0;padding:11px 16px;border-color:#3b5065}#start .home-launch .go-big{margin:0;padding:13px 24px;min-width:210px}#start .home-launch .go-big span{font-size:18px;margin-left:10px}
 @media(max-width:760px){.home-hero{padding:16px 18px}.home-hero-main{grid-template-columns:1fr}.home-hero-art{display:none}.home-stats{gap:14px;flex-wrap:wrap}.home-stats>small{width:100%;margin:0}.home-nav{padding:0 8px}.home-nav button{padding:13px 9px;font-size:9px}.home-nav #homeBoardBtn{margin-left:0}.home-section{padding:18px 16px 6px}#start .start-card>.xclose{top:12px;right:12px}.home-live{display:none}.home-launch{flex-wrap:wrap}.home-launch>div{width:100%}#start .home-launch .ghost-big,#start .home-launch .go-big{flex:1;min-width:0;padding:12px 8px;font-size:11px}}
 
+
+.alertItem.critical{border-left-color:#ef4444}.alertItem.caution{border-left-color:#e5a93c}.alertItem.warning{border-left-color:#55a7d8}
+.alertItem button{float:right}.toolGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.toolTile{border:1px solid var(--line);border-radius:7px;padding:10px;background:var(--panel2,#111820)}.toolTile h3{margin:0 0 8px;font-size:12px;color:var(--hi)}.toolTable{width:100%;border-collapse:collapse;font:11px var(--mono)}.toolTable td,.toolTable th{padding:6px;border-bottom:1px solid var(--line);text-align:left}.statePill{display:inline-block;padding:3px 6px;border-radius:4px;background:#263747;font:10px var(--mono)}.statePill.closed{background:#51252a;color:#ffb0b0}.statePill.occupied{background:#563d1d;color:#ffd28a}.statePill.available{background:#183e31;color:#9ce4bf}
 </style>
 </head>
 <body>
 <div id="app">
   <header id="top">
-    <div class="brand">LOCAL&nbsp;CONTROL <span id="brandIcao">KTTR</span> <small class="ver" title="build v35, Nov 25">v35</small></div>
+    <div class="brand">LOCAL&nbsp;CONTROL <span id="brandIcao">KTTR</span> <small class="ver" title="build v38, Nov 25">v38</small></div>
     <div class="clk"><canvas id="clockCv" style="width:36px;height:36px"></canvas><span id="ampm">AM</span></div>
     <button class="tbtn atisTop" id="atisBtn" title="Open ATIS generator"><small>ATIS</small> <b id="atis">-</b></button>
     <div class="tk"><small>Rwy</small><b id="rwyIn">27</b></div>
@@ -373,7 +376,7 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     <div class="grp"><button class="tbtn" id="pauseBtn">❚❚ Pause</button><button class="tbtn spd" data-speed="1">1×</button><button class="tbtn spd" data-speed="2">2×</button><button class="tbtn spd" data-speed="4">4×</button><button class="tbtn" id="speedCycle">1×</button></div>
     <div id="moreMenu">
       <div class="grp"><button class="tbtn" id="weatherBtn">Weather</button><button class="tbtn" id="trafficGenBtn">Add Traffic</button><button class="tbtn" id="tagsBtn">Tags</button><button class="tbtn" id="guideBtn">Guide</button><button class="tbtn" id="voiceBtn">Voice</button></div>
-      <div class="grp"><button class="tbtn" id="hotlineBtn">Hotline</button><button class="tbtn" id="opsBtn">Ops</button><button class="tbtn" id="alertsBtn">⚠ Alerts <b id="alertCount" class="alertCount">0</b></button><button class="tbtn" id="lightsBtn">Lights</button><button class="tbtn" id="reportBtn">Report</button><button class="tbtn" id="helpBtn">?</button><button class="tbtn" id="newBtn">New shift</button></div>
+      <div class="grp"><button class="tbtn" id="hotlineBtn">Hotline</button><button class="tbtn" id="opsBtn">Ops</button><button class="tbtn" id="trafficToolsBtn">Traffic / Airport</button><button class="tbtn" id="alertsBtn">⚠ Alerts <b id="alertCount" class="alertCount">0</b></button><button class="tbtn" id="lightsBtn">Lights</button><button class="tbtn" id="reportBtn">Report</button><button class="tbtn" id="helpBtn">?</button><button class="tbtn" id="newBtn">New shift</button></div>
     </div>
     <button class="tbtn" id="menuBtn">☰</button>
   </header>
@@ -510,6 +513,10 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
 <div class="modal" id="ops"><div class="card">
   <button class="x" data-close="ops">Close</button><h1 style="font-size:20px">AIRPORT OPERATIONS</h1>
   <div id="opsBody"></div>
+</div></div>
+<div class="modal" id="trafficTools"><div class="card">
+  <button class="x" data-close="trafficTools">Close</button><h1 style="font-size:20px">TRAFFIC &amp; AIRPORT MANAGEMENT</h1>
+  <p class="hintx">Live operational picture, sequencing, gate management, holding and training tools.</p><div id="trafficToolsBody"></div>
 </div></div>
 <div class="modal" id="alerts"><div class="card">
   <button class="x" data-close="alerts">Close</button><h1 style="font-size:20px">AIRPORT ALERTS &amp; ALARMS</h1>
@@ -1496,7 +1503,7 @@ const ATC = {};
       this.dens = Object.assign({}, DENSITY[this.o.density] || DENSITY.medium);
       this.dens.patMax = this.ap.patMax;
       this.flow = Object.assign({ arrivals: true, departures: true, arrHr: this.dens.arrHr, depHr: this.dens.depHr, randomClosures: false, closureRate: 1 }, this.o.flow || {});
-      this.alerts = []; this._alertTick = 0; this._alertSeen = new Map(); this.atisBroadcast = '';
+      this.alerts = []; this.alertHistory = []; this._alertTick = 0; this._alertSeen = new Map(); this.atisBroadcast = ''; this.runwayReservations = {}; this.holdingAssignments = []; this.gateTurnarounds = {}; this.emergencies = []; this.weatherOverlay = true;
       this.lighting = Object.assign({ mode: 'auto', preset: 'normal', runway: true, taxiway: true, approach: true, papi: true, guard: true, aircraft: true, city: true, runwayLevel: 0.75, taxiwayLevel: 0.65, approachLevel: 0.8, papiLevel: 0.85, guardLevel: 0.75, aircraftLevel: 0.9, cityLevel: 0.45 }, this.o.lighting || {});
       this.closedRunways = new Set(); this.closedTaxiways = new Set(); this.ap._closedTaxiways = this.closedTaxiways; this.closureEvents = [];
       this.next = { arr: this.rng.range(20, 200), dep: 20, pat: 8, vin: 1e12, wx: this.rng.range(240, 600), wind: 60, closure: 600 };
@@ -1980,12 +1987,13 @@ const ATC = {};
         for (const b of contenders) add(`incursion-${a.id}-${b.id}-${rid}`, 'critical', 'RUNWAY INCURSION RISK', `${a.cs} occupies runway ${a.rwy.id} while ${b.cs} is cleared/positioned to use the same runway.`, a.x, a.y, [a.id,b.id], {kind:'runway',id:a.rwy.id});
       }
       // Ground congestion: proximity plus overlapping taxiway route segments.
-      const routeTws = a => new Set((a.path && a.path.nodeS || []).flatMap(q => (this.N[q.node] && this.N[q.node].tws) || []));
+      const routeTws = a => new Set((this.remEdges(a) || []).map(e => { const edge = this.ap.edge(e.u, e.v); return edge && edge.tw; }).filter(Boolean));
       for (let i = 0; i < moving.length; i++) for (let j = i + 1; j < moving.length; j++) {
         const a = moving[i], b = moving[j];
         if (a.phase === 'takeoff' || b.phase === 'takeoff' || a.phase === 'rollout' || b.phase === 'rollout') continue;
         const d = A.dist(a, b), shared = [...routeTws(a)].filter(t => routeTws(b).has(t));
-        if (d < 260) add(`taxi-close-${a.id}-${b.id}`, 'warning', 'Taxiway traffic conflict', `${a.cs} and ${b.cs} are within ${Math.round(d)} ft on the movement area.`, (a.x+b.x)/2, (a.y+b.y)/2, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
+        if (shared.length && d < 520) add(`taxi-close-${a.id}-${b.id}`, 'warning', 'Taxiway traffic conflict', `${a.cs} and ${b.cs} are within ${Math.round(d)} ft on shared taxiway ${shared.slice(0,2).join('/')}.`, (a.x+b.x)/2, (a.y+b.y)/2, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
+        else if (d < 105) add(`taxi-close-physical-${a.id}-${b.id}`, 'critical', 'Ground proximity alert', `${a.cs} and ${b.cs} are only ${Math.round(d)} ft apart on the movement area.`, (a.x+b.x)/2, (a.y+b.y)/2, [a.id,b.id], {kind:'taxiway',id:null});
         else if (d < 520 && shared.length) add(`taxi-bottleneck-${a.id}-${b.id}`, 'warning', 'Taxiway bottleneck', `${a.cs} and ${b.cs} share taxiway ${shared.slice(0,2).join('/')} with limited spacing.`, (a.x+b.x)/2, (a.y+b.y)/2, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
       }
       // Aircraft approaching or occupying a closed taxiway segment.
@@ -2002,8 +2010,27 @@ const ATC = {};
         if (shared.length || A.dist(a,b) < 210)
           add(`taxi-blocked-${a.id}-${b.id}`, 'warning', 'Taxiway blocked', `${b.cs} is stopped ahead of ${a.cs}${shared.length ? ` on taxiway ${shared.slice(0,2).join('/')}` : ''}.`, b.x, b.y, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
       }
+      // Predict short-term airborne convergence using projected ground tracks.
+      const airborne=this.acs.filter(a=>!a.removed&&!a.onGround&&Number.isFinite(a.hdg)&&Number.isFinite(a.spd));
+      const project=(a,seconds)=>{const v=(a.spd||0)*1.68781;const r=(a.hdg||0)*Math.PI/180;return {x:a.x+Math.sin(r)*v*seconds,y:a.y+Math.cos(r)*v*seconds,alt:(a.alt||0)+(a.vs||0)*seconds/60};};
+      for(let i=0;i<airborne.length;i++)for(let j=i+1;j<airborne.length;j++){
+        const a=airborne[i],b=airborne[j];let closest=Infinity,at=0,vertical=Infinity;
+        for(let sec=15;sec<=90;sec+=15){const pa=project(a,sec),pb=project(b,sec),d=A.dist(pa,pb),v=Math.abs(pa.alt-pb.alt);if(d<closest){closest=d;at=sec;vertical=v;}}
+        if(closest<1.2*NM&&vertical<1000)add(`predicted-separation-${a.id}-${b.id}`,'caution','Predicted aircraft convergence',`${a.cs} and ${b.cs} projected to ${closest/NM<1?(closest/NM).toFixed(2)+' NM':(closest/NM).toFixed(1)+' NM'} lateral spacing in about ${at}s with ${Math.round(vertical)} ft vertical separation.`,(a.x+b.x)/2,(a.y+b.y)/2,[a.id,b.id],null);
+      }
       const old = new Map(this.alerts.map(a => [a.key, a]));
-      this.alerts = next.map(a => Object.assign(a, { since: old.has(a.key) ? old.get(a.key).since : this.t }));
+      const fresh = new Map(next.map(a => [a.key,a]));
+      for (const prior of this.alerts) if (!fresh.has(prior.key)) {
+        const h = this.alertHistory.find(x => x.key === prior.key && x.cleared == null);
+        if (h) h.cleared = this.t;
+      }
+      this.alerts = next.map(a => {
+        const prev = old.get(a.key);
+        if (!prev) this.alertHistory.unshift({key:a.key,title:a.title,detail:a.detail,severity:a.severity,started:this.t,cleared:null,acknowledgedBy:null,acknowledgedAt:null});
+        const hist = this.alertHistory.find(x=>x.key===a.key && x.cleared==null);
+        return Object.assign(a, { since: prev ? prev.since : this.t, acknowledged: !!(prev && prev.acknowledged), acknowledgedBy: prev && prev.acknowledgedBy || null });
+      });
+      if (this.alertHistory.length > 250) this.alertHistory.length = 250;
       return this.alerts;
     }
     setRunwayConfig(index) {
@@ -3184,9 +3211,12 @@ const ATC = {};
             if (toks[i] === 'AT' || toks[i] === '@') { i++; dt += '@' + toks[i++]; }
             const dest = this.parseDest(ac, dt);
             if (dest.err) { err = dest.err; break; }
+            if(dest.type==='rwy'){const re=this.endsById[dest.end],rk=re&&re.rwyId||dest.end,holder=this.runwayReservations[rk]||this.runwayReservations[dest.end];if(holder&&holder!==ac.cs){err=`unable, runway ${dest.end} is reserved for ${holder}`;break;}}
             const via = [];
             if (toks[i] === 'VIA') i++;
             while (i < toks.length && this.ap.tw[toks[i]] && !KEYWORDS.has(toks[i])) via.push(toks[i++]);
+            const closedVia=via.find(t=>this.closedTaxiways.has(t));
+            if(closedVia){err=`unable, taxiway ${closedVia} is closed`;break;}
             let r = st.node ? this.ap.route(st.node, via, dest) : { err: 'no route' };
             if (st.alt) {
               const r2 = this.ap.route(st.alt, via, dest);
@@ -4524,6 +4554,7 @@ const ATC = {};
       $('#hotlinePresets').querySelectorAll('[data-hotline]').forEach(b=>b.onclick=()=>sendHotline(b.dataset.hotline));
       $('#lightsBtn').onclick = () => { this.renderLighting(); this.modal('#lighting', true); };
       $('#alertsBtn').onclick = () => { this.renderAlerts(true); this.modal('#alerts', true); };
+      $('#trafficToolsBtn').onclick = () => { this.renderTrafficTools(); this.modal('#trafficTools', true); };
       $('#atisBtn').onclick = () => { this.renderAtis(); this.modal('#atisPanel', true); };
       $('#newBtn').onclick = () => {
         this.resumePaused = this.paused;
@@ -5030,7 +5061,8 @@ const ATC = {};
       const r = s.ap.route(st.node, tb.via, dest);
       if (r.err) { this.tbErr = r.err; return; }
       const pts = (st.pos ? [st.pos] : []).concat(r.nodes.map(n => s.N[n]));
-      this.r.preview = { pts, via: r.via.filter(v => !s.ap.tw[v].lead) };
+      const segs=[];for(let i=1;i<r.nodes.length;i++){const e=s.ap.edge(r.nodes[i-1],r.nodes[i]);if(e&&e.tw&&!segs.includes(e.tw))segs.push(e.tw);}
+      this.r.preview = { pts, nodes:r.nodes.slice(), segments:segs, crossings:r.nodes.filter(n=>s.N[n]&&s.N[n].rwy).length, via: r.via.filter(v => !s.ap.tw[v].lead) };
     }
     renderPanel(force) {
       const s = this.sim; const el = $('#panel'); if (!s) return;
@@ -5093,7 +5125,8 @@ const ATC = {};
           const pv = this.r.preview && this.tb.id === ac.id ? this.r.preview.via.join(' ') : '';
           body += sec('Taxi', `<div class="row">${rwyDests.map(chip).join('')}</div>
             <div class="row">${own ? chip(own) : ''}<select class="csel" id="parkSel"><option value="">Other parking…</option>${parks.filter(p => p !== own).map(p => `<option ${tb.dest === p ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
-            <div class="via">${viaChips}</div><div class="hintx">Route editor: click taxiways on the map to add them in sequence; click a blue route segment above to remove that waypoint. Undo removes the last waypoint.</div>
+            <div class="via">${viaChips}</div><div class="hintx">Edit the ordered taxiway route directly (for example: F A A5), or click taxiways on the map to build it. The route is checked against the airport taxiway network and closures.</div>
+            <div class="row"><input id="routeEdit" class="csel" style="flex:1;min-width:0" spellcheck="false" autocomplete="off" value="${esc(this.routeDraft && this.routeDraft.id === ac.id ? this.routeDraft.value : (pv || tb.via.join(' ')))}" placeholder="Taxiway route, e.g. F A A5"><button class="cb" id="applyRouteEdit">Apply route</button></div>
             <div class="row">${btn('Send taxi', '__taxi', 'go big')}${tb.via.length ? `<button class="cb ghost" data-cmd="__undo">Undo</button><button class="cb ghost" data-cmd="__clear">Clear</button>` : ''}</div>
             <div class="tbinfo ${this.tbErr ? 'err' : ''}" id="tbinfo">${this.tbErr ? '⚠ ' + esc(this.tbErr) : pv ? 'Route: ' + esc(pv) : ''}</div>`);
         }
@@ -5178,7 +5211,22 @@ const ATC = {};
       el.querySelectorAll('.chip[data-entry]').forEach(b => b.onclick = () => { const a = s.byId(this.sel); if (a) { a.rwy = s.endsById[b.dataset.entry]; if (a.pat) a.pat.sg = a.rwy.sideSg; } this.renderPanel(true); });
       const ps = $('#parkSel'); if (ps) ps.onchange = () => { if (ps.value) { this.tb.dest = ps.value; this.previewRoute(); this.renderPanel(true); } };
       el.querySelectorAll('.csel[data-pre]').forEach(sl => sl.onchange = () => { if (sl.value) this.send(sl.dataset.pre + ' ' + sl.value); sl.value = ''; });
-      if (this.panelHasTaxi) { this.previewRoute(); const ti = $('#tbinfo'); if (ti) { ti.className = 'tbinfo' + (this.tbErr ? ' err' : ''); ti.textContent = this.tbErr ? '⚠ ' + this.tbErr : this.r.preview ? 'Route: ' + this.r.preview.via.join(' ') : ''; } }
+      if (this.panelHasTaxi) {
+        const applyRouteEdit = () => {
+          const field = $('#routeEdit'); if (!field || !this.tb || this.tb.id !== ac.id) return;
+          const raw = field.value.trim().toUpperCase();
+          const tokens = raw ? raw.split(/[\\s,;>→]+/).filter(Boolean) : [];
+          const unknown = tokens.find(t => !s.ap.tw[t] || s.ap.tw[t].lead);
+          if (unknown) { this.tbErr = `Unknown taxiway ${unknown}`; this.renderPanel(true); return; }
+          this.tb.via = tokens;
+          this.previewRoute();
+          if (!this.tbErr) this.routeDraft = null;
+          this.renderPanel(true);
+        };
+        const routeApply = $('#applyRouteEdit'); if (routeApply) routeApply.onclick = applyRouteEdit;
+        const routeInput = $('#routeEdit'); if (routeInput) { routeInput.oninput = () => { this.routeDraft = { id: ac.id, value: routeInput.value }; }; routeInput.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); applyRouteEdit(); } }; }
+        this.previewRoute(); const ti = $('#tbinfo'); if (ti) { ti.className = 'tbinfo' + (this.tbErr ? ' err' : ''); ti.textContent = this.tbErr ? '⚠ ' + this.tbErr : this.r.preview ? 'Route: ' + this.r.preview.via.join(' ') + ' · Segments: ' + this.r.preview.segments.join(' → ') + ' · Runway crossings: ' + this.r.preview.crossings : ''; }
+      }
       else this.r.preview = null;
     }
     issueClearance(id) {
@@ -5201,6 +5249,10 @@ const ATC = {};
       const s = this.sim, ac = this.sel && s.byId(this.sel); if (!ac) return;
       if (c === '__taxi') {
         const v = this.tb.via.join(' ');
+        const closed=this.tb.via.find(t=>s.closedTaxiways.has(t));
+        if(closed){this.tbErr=`Taxiway ${closed} is closed. Choose an open route before issuing clearance.`;this.renderPanel(true);return;}
+        const preview=this.r.preview;
+        if(!preview||preview.err){this.tbErr='Route is not connected to the selected destination.';this.renderPanel(true);return;}
         this.send(`TAXI ${this.tb.dest}${v ? ' VIA ' + v : ''}`);
         this.tb.via = []; this.r.preview = null; this.renderPanel(true); return;
       }
@@ -5246,12 +5298,50 @@ const ATC = {};
       const s = this.sim; if (!s) return;
       const alerts = s.alerts || [];
       const count = $('#alertCount');
-      if (count) { count.textContent = alerts.length; count.classList.toggle('hot', alerts.some(a => a.severity === 'critical')); }
+      if (count) { count.textContent = alerts.length; count.classList.toggle('hot', alerts.some(a => a.severity === 'critical' && !a.acknowledged)); }
       const toast = $('#alarmToast');
-      if (toast) toast.innerHTML = alerts.slice(0,3).map(a => `<div class="alarmToastItem ${a.severity}"><b>${a.severity === 'critical' ? '🚨' : '⚠'} ${esc(a.title)}</b>${esc(a.detail)}</div>`).join('');
+      if (toast) toast.innerHTML = alerts.filter(a=>!a.acknowledged).slice(0,3).map(a => `<div class="alarmToastItem ${a.severity}"><b>${a.severity === 'critical' ? '🚨' : '⚠'} ${esc(a.title)}</b>${esc(a.detail)}</div>`).join('');
       const body = $('#alertsBody');
-      if (body && (force || $('#alerts').classList.contains('open'))) body.innerHTML = alerts.length ? alerts.map(a => `<div class="alertItem ${a.severity}"><b>${a.severity === 'critical' ? '🚨' : '⚠'} ${esc(a.title)}</b>${esc(a.detail)}<small>Active for ${Math.max(0,Math.round(s.t-a.since))} sec</small></div>`).join('') : '<div class="empty">No active operational alerts. Airport operations are clear.</div>';
+      if (body && (force || $('#alerts').classList.contains('open'))) {
+        const active = alerts.length ? alerts.map((a,i)=>`<div class="alertItem ${a.severity}"><button class="cb ${a.acknowledged?'ghost':''}" data-ack-alert="${esc(a.key)}" ${a.acknowledged?'disabled':''}>${a.acknowledged?'Acknowledged':'Acknowledge'}</button><b>${a.severity==='critical'?'🚨':a.severity==='caution'?'⚠':'ℹ'} ${esc(a.title)}</b><div>${esc(a.detail)}</div><small>${a.severity.toUpperCase()} · Started ${Math.round(a.since)}s · ${a.acknowledged?'Acknowledged by '+esc(a.acknowledgedBy||'Controller'):'Unacknowledged'} · unresolved alerts remain active</small></div>`).join('') : '<div class="empty">No active operational alerts. Airport operations are clear.</div>';
+        const history=(s.alertHistory||[]).slice(0,25).map(h=>`<tr><td>${esc(h.title)}</td><td>${esc(h.severity)}</td><td>${Math.round(h.started)}s</td><td>${h.cleared==null?'ACTIVE':Math.round(h.cleared)+'s'}</td><td>${esc(h.acknowledgedBy||'—')}</td></tr>`).join('');
+        body.innerHTML=`<h3>ACTIVE ALERTS · ${alerts.length}</h3>${active}<h3>RECENT ALERT HISTORY</h3><table class="toolTable"><tr><th>Alert</th><th>Level</th><th>Started</th><th>Cleared</th><th>Acknowledged by</th></tr>${history||'<tr><td colspan="5">No alert history yet.</td></tr>'}</table>`;
+        body.querySelectorAll('[data-ack-alert]').forEach(b=>b.onclick=()=>{const a=s.alerts.find(x=>x.key===b.dataset.ackAlert);if(!a)return;a.acknowledged=true;a.acknowledgedBy=(s.o.position||'controller').toUpperCase();a.acknowledgedAt=s.t;const h=s.alertHistory.find(x=>x.key===a.key&&x.cleared==null);if(h){h.acknowledgedBy=a.acknowledgedBy;h.acknowledgedAt=s.t;}this.renderAlerts(true);});
+      }
     }
+    renderTrafficTools() {
+      const s=this.sim;if(!s)return;
+      const twRows=Object.keys(s.ap.tw).filter(k=>!s.ap.tw[k].lead).map(k=>{const users=s.acs.filter(a=>!a.removed&&a.onGround&&a.path&&this._aircraftUsesTaxiway(a,k));return `<tr><td>${esc(k)}</td><td>${users.length?users.map(a=>esc(a.cs)).join(', '):'—'}</td><td><span class="statePill ${s.closedTaxiways.has(k)?'closed':users.length?'occupied':'available'}">${s.closedTaxiways.has(k)?'CLOSED':users.length?'OCCUPIED':'AVAILABLE'}</span></td></tr>`;}).join('');
+      const rwRows=s.ap.runways.map(r=>{const id=r.id,occ=s.acs.filter(a=>!a.removed&&a.onGround&&this._aircraftOnRunway(a,id));const reserved=s.runwayReservations[id];const closed=s.closedRunways.has(id);return `<tr><td>${esc(id)}</td><td>${occ.map(a=>esc(a.cs)).join(', ')||'—'}</td><td><span class="statePill ${closed?'closed':occ.length?'occupied':'available'}">${closed?'CLOSED':occ.length?'OCCUPIED':reserved?'RESERVED':'AVAILABLE'}</span></td><td>${reserved?esc(reserved):'—'}</td></tr>`;}).join('');
+      const gates=s.ap.gates.map(g=>{const ac=s.acs.find(a=>!a.removed&&(g.occ===a.id||g.res===a.id));return `<option value="${esc(g.id)}">${esc(g.id)}${ac?' · '+esc(ac.cs):' · Available'}</option>`;}).join('');
+      const arrivals=s.acs.filter(a=>!a.removed&&!a.onGround&&['final','inbound','pattern'].includes(a.phase)).sort((a,b)=>(a.alt||0)-(b.alt||0));
+      const departures=s.acs.filter(a=>!a.removed&&a.onGround&&['hs','stopped','lineup','luaw'].includes(a.phase));
+      const acOpts=s.acs.filter(a=>!a.removed).map(a=>`<option value="${a.id}">${esc(a.cs)} · ${esc(a.type)}</option>`).join('');
+      $('#trafficToolsBody').innerHTML=`<div class="toolGrid">
+      <div class="toolTile"><h3>RUNWAY STATUS</h3><table class="toolTable"><tr><th>Runway</th><th>Aircraft</th><th>State</th><th>Reserved for</th></tr>${rwRows}</table><div class="row"><select id="reserveRwy" class="csel">${s.ap.runways.map(r=>`<option>${esc(r.id)}</option>`).join('')}</select><select id="reserveAc" class="csel">${acOpts}</select><button class="cb" id="reserveRunwayBtn">Reserve</button><button class="cb ghost" id="clearReserveBtn">Clear</button></div></div>
+      <div class="toolTile"><h3>TAXIWAY OCCUPANCY</h3><table class="toolTable"><tr><th>Taxiway</th><th>Aircraft on segment</th><th>Status</th></tr>${twRows}</table></div>
+      <div class="toolTile"><h3>ARRIVAL SEQUENCE</h3><table class="toolTable"><tr><th>#</th><th>Aircraft</th><th>Phase</th><th>Altitude</th><th>ETA*</th></tr>${arrivals.map((a,i)=>`<tr><td>${i+1}</td><td>${esc(a.cs)}</td><td>${esc(a.phase)}</td><td>${Math.round(a.alt||0)} ft</td><td>${Math.max(0,Math.round((a.alt||0)/Math.max(500,a.vs||700)*60))}s</td></tr>`).join('')||'<tr><td colspan="5">No arrivals</td></tr>'}</table><small>*Simplified estimate from current altitude and vertical speed.</small></div>
+      <div class="toolTile"><h3>DEPARTURE QUEUE</h3><table class="toolTable"><tr><th>#</th><th>Aircraft</th><th>Runway</th><th>State</th></tr>${departures.map((a,i)=>`<tr><td>${i+1}</td><td>${esc(a.cs)}</td><td>${esc(a.rwy?.id||'—')}</td><td>${esc(a.phase)}</td></tr>`).join('')||'<tr><td colspan="4">No aircraft waiting</td></tr>'}</table></div>
+      <div class="toolTile"><h3>GATE MANAGEMENT</h3><div class="row"><select id="gateAircraft" class="csel">${acOpts}</select><select id="gateTarget" class="csel">${gates}</select><button class="cb" id="assignGateTool">Assign / reserve</button></div><label class="lab">Turnaround minutes <input id="turnaroundMins" class="csel" type="number" min="1" max="240" value="35"></label><button class="cb" id="setTurnaround">Set turnaround</button><div class="hintx">Gate reservations are reflected in the airport stand list. Turnaround timers are simulated shift-time values.</div></div>
+      <div class="toolTile"><h3>HOLDING ASSIGNMENT</h3><div class="row"><select id="holdAircraft" class="csel">${acOpts}</select><input id="holdFix" class="csel" placeholder="Fix / waypoint" value="HOLD"></div><div class="row"><select id="holdDir" class="csel"><option>RIGHT</option><option>LEFT</option></select><select id="holdAlt" class="csel"><option>3000</option><option>5000</option><option>7000</option><option>10000</option><option>12000</option></select><select id="holdLeg" class="csel"><option>1</option><option>1.5</option><option>2</option></select><button class="cb" id="assignHold">Assign hold</button></div><div class="hintx">Holding assignment records the fix, direction, altitude and leg time for controller reference.</div>${s.holdingAssignments.map(h=>`<p class="hintx">${esc(h.cs)} · ${esc(h.fix)} · ${h.direction} · ${h.altitude} ft · ${h.leg} min</p>`).join('')}</div>
+      <div class="toolTile"><h3>EMERGENCY TRAINING GENERATOR</h3><div class="row"><select id="emergencyAircraft" class="csel">${acOpts}</select><select id="emergencyType" class="csel"><option value="PAN">PAN-PAN · Urgency</option><option value="MAYDAY">MAYDAY · Distress</option><option value="MEDICAL">Medical priority</option><option value="ENGINE">Engine problem</option><option value="HYDRAULIC">Aircraft systems problem</option></select><button class="cb bad" id="generateEmergency">Generate</button></div><div class="hintx">Training-only simulated pilot reports. No real-world emergency instructions.</div>${s.emergencies.slice(-4).map(e=>`<p class="hintx">${esc(e.cs)} · ${esc(e.type)} · ${Math.round(e.t)}s</p>`).join('')}</div>
+      <div class="toolTile"><h3>CONTROLLER WORKLOAD</h3><div class="rgrid"><span>Awaiting instructions</span><b>${s.acs.filter(a=>!a.removed&&a.req).length}</b><span>Overdue requests (&gt;60s)</span><b>${s.acs.filter(a=>!a.removed&&a.req&&s.t-a.req.t>60).length}</b><span>Pending handoffs</span><b>${s.acs.filter(a=>!a.removed&&a.handoffPending).length}</b><span>Unacknowledged alerts</span><b>${s.alerts.filter(a=>!a.acknowledged).length}</b></div><table class="toolTable"><tr><th>Aircraft</th><th>Waiting</th><th>Request</th></tr>${s.acs.filter(a=>!a.removed&&a.req).sort((a,b)=>b.req.t-a.req.t).slice(0,8).map(a=>`<tr><td>${esc(a.cs)}</td><td>${Math.round(s.t-a.req.t)}s</td><td>${esc(a.req.type)}</td></tr>`).join('')||'<tr><td colspan="3">No pending calls</td></tr>'}</table></div>
+      <div class="toolTile"><h3>WEATHER RADAR OVERLAY</h3><label><input type="checkbox" id="weatherOverlayToggle" ${s.weatherOverlay?'checked':''}> Show simulated precipitation overlay</label><p class="hintx">Uses the existing simulated rain/weather state. This is a visual training layer, not meteorological data.</p></div>
+      <div class="toolTile"><h3>AIRPORT EDITOR · TAXIWAY GRAPH</h3><div class="row"><input id="editorTwName" class="csel" placeholder="Taxiway name (e.g. Z)" maxlength="4"><select id="editorNodeA" class="csel">${Object.keys(s.N).map(n=>`<option>${esc(n)}</option>`).join('')}</select><select id="editorNodeB" class="csel">${Object.keys(s.N).map(n=>`<option>${esc(n)}</option>`).join('')}</select><button class="cb" id="addTaxiwayEdge">Add segment</button></div><p class="hintx">Adds a connected segment between existing airport graph nodes for this shift. Existing airport geometry is not moved.</p></div>
+      </div>`;
+      $('#reserveRunwayBtn').onclick=()=>{const r=$('#reserveRwy').value,a=s.byId(+$('#reserveAc').value);if(!a)return;s.runwayReservations[r]=a.cs;s.sys(`Runway ${r} reserved for ${a.cs}.`);this.renderTrafficTools();};
+      $('#clearReserveBtn').onclick=()=>{delete s.runwayReservations[$('#reserveRwy').value];this.renderTrafficTools();};
+      $('#assignGateTool').onclick=()=>{const a=s.byId(+$('#gateAircraft').value),g=s.ap.gates.find(x=>x.id===$('#gateTarget').value);if(!a||!g||g.occ&&g.occ!==a.id||g.res&&g.res!==a.id){s.sys('Gate unavailable — choose a free stand.','warn');return;}s.ap.gates.forEach(x=>{if(x.res===a.id)x.res=null;});g.res=a.id;a.gate=g.id;this.renderTrafficTools();this.renderStrips();};
+      $('#setTurnaround').onclick=()=>{const a=s.byId(+$('#gateAircraft').value);if(!a)return;const mins=Math.max(1,Math.min(240,+$('#turnaroundMins').value||35));s.gateTurnarounds[a.id]={until:s.t+mins*60,minutes:mins};s.sys(`${a.cs} turnaround set to ${mins} minutes.`);};
+      $('#assignHold').onclick=()=>{const a=s.byId(+$('#holdAircraft').value);if(!a)return;const h={id:a.id,cs:a.cs,fix:$('#holdFix').value.trim().toUpperCase()||'HOLD',direction:$('#holdDir').value,altitude:+$('#holdAlt').value,leg:+$('#holdLeg').value,t:s.t};s.holdingAssignments=s.holdingAssignments.filter(x=>x.id!==a.id);s.holdingAssignments.push(h);s.sys(`Holding instruction prepared for ${a.cs}: ${h.fix}, ${h.direction}, ${h.altitude} feet, ${h.leg} minute legs.`);this.renderTrafficTools();};
+      $('#generateEmergency').onclick=()=>{const a=s.byId(+$('#emergencyAircraft').value);if(!a)return;const type=$('#emergencyType').value,e={id:a.id,cs:a.cs,type,t:s.t};s.emergencies.push(e);s.request(a,'emergency',`${a.say}, ${type==='MAYDAY'?'MAYDAY MAYDAY MAYDAY':type==='PAN'?'PAN-PAN PAN-PAN PAN-PAN':type}, simulated emergency, request priority handling.`);s.sys(`TRAINING EVENT · ${a.cs} · ${type}`,'bad');this.renderTrafficTools();};
+      $('#weatherOverlayToggle').onchange=e=>{s.weatherOverlay=e.target.checked;this.draw();};
+      $('#addTaxiwayEdge').onclick=()=>{const name=$('#editorTwName').value.trim().toUpperCase(),a=$('#editorNodeA').value,b=$('#editorNodeB').value;if(!/^[A-Z0-9]{1,4}$/.test(name)||a===b||s.ap.tw[name]){s.sys('Invalid taxiway name or duplicate / identical nodes.','warn');return;}const A0=s.N[a],B0=s.N[b];if(!A0||!B0){s.sys('Unknown airport graph node.','warn');return;}const len=Math.hypot(A0.x-B0.x,A0.y-B0.y);s.ap.tw[name]={name,nodes:[a,b],lead:false,oneWay:0,closed:false};A0.tws.push(name);B0.tws.push(name);A0.adj.push({to:b,tw:name,len});B0.adj.push({to:a,tw:name,len});s.sys(`Airport editor: taxiway ${name} segment ${a}–${b} added to this shift.`);this.renderTrafficTools();};
+    }
+    _aircraftUsesTaxiway(a,tw){const s=this.sim;if(!a.path||!s||!a.onGround)return false;const path=a.path,marks=path.nodeS||[];if(marks.length<2)return (s.remEdges(a)||[]).some(e=>{const q=s.ap.edge(e.u,e.v);return q&&q.tw===tw;});let k=0;for(let i=1;i<marks.length;i++)if(marks[i].s>=path.s){k=i-1;break;}const edge=s.ap.edge(marks[k]?.node,marks[k+1]?.node);return !!(edge&&edge.tw===tw);}
+    _aircraftOnRunway(a,rid){const s=this.sim;if(!s||!a.rwy)return false;return this._aircraftOnRunwayId(a,rid);}
+    _aircraftOnRunwayId(a,rid){return !!(a.rwy&&(a.rwy.id===rid||a.rwy.rwyId===rid)&&this.sim.onAnyRunway(a));}
+
     renderAtis() {
       const s = this.sim; if (!s) return;
       $('#atisConditions').innerHTML = `<span>Airport</span><b>${esc(s.ap.icao)} · ${esc(s.ap.name)}</b><span>Weather</span><b>${esc(s.wx.label)}</b><span>Wind</span><b>${esc(s.windStr())}</b><span>Runways in use</span><b>${esc(s.ends.map(e=>e.id).join(' / '))}</b><span>Visibility</span><b>${s.wx.visFt >= 5280 ? (s.wx.visFt/5280).toFixed(0)+' SM' : (s.wx.visFt/5280).toFixed(2)+' SM'}</b><span>Altimeter</span><b>${esc(s.wx.alt)}</b>`;
