@@ -10,7 +10,7 @@ window.LC_LEADERBOARD = { url: 'https://fanmtpzhsdytkuzqszzy.supabase.co', key: 
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Local Control — Tower Simulator</title>
+<title>Local Control v35 — Tower Simulator</title>
 <style>
 :root{
   --bg:#0b0f14; --panel:#111821; --panel2:#16202b; --line:#233142; --text:#d7dee7; --dim:#8696a7; --faint:#56657a;
@@ -58,9 +58,9 @@ body.comp-paused #view,body.comp-paused #brite{filter:blur(22px) brightness(.25)
 #pausedBanner{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:rgba(255,179,60,.15);border:1px solid var(--amber);color:var(--amber);padding:4px 14px;border-radius:4px;font-family:var(--mono);font-weight:700;letter-spacing:.2em;display:none;pointer-events:none}
 #side{grid-row:2/4;grid-column:2;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);min-height:0}
 #radarTools{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:5px 7px;background:#101923;border-bottom:1px solid var(--line);font-size:10px;color:var(--dim)}#radarTools label{display:flex;align-items:center;gap:3px}#radarTools select{background:#182432;color:var(--text);border:1px solid var(--line);border-radius:4px}
-#brite{width:100%;height:250px;display:block;border-bottom:1px solid var(--line);cursor:crosshair;flex:none}
+#brite{width:100%;height:250px;min-height:180px;display:block;border-bottom:1px solid var(--line);cursor:crosshair;flex:none} #side{overflow:hidden} #radarTools{flex:none} body.full-radar #brite{width:100%;height:auto;min-height:0;flex:1 1 auto;border-bottom:0} body.full-radar #side{min-width:0;min-height:0}
 #panel{flex:none;border-bottom:1px solid var(--line);padding:10px 12px;max-height:46vh;overflow:auto}
-#strips{flex:1;overflow:auto;padding:6px 8px 12px}.vchip{background:#182b38;border:1px solid #3b6575;color:#bfeeff;border-radius:4px;padding:3px 6px;cursor:pointer;font:700 10px var(--mono)}.vchip:hover{border-color:var(--amber);color:var(--amber)}.stripbay{border:1px solid var(--line);border-radius:6px;margin:5px 0;padding:5px;min-height:34px}.stripbay.over{border-color:var(--cyan);background:#10232b}.stripbay .sgh{display:flex;justify-content:space-between;color:var(--amber);font-size:10px;font-weight:800;letter-spacing:.08em;padding:3px}.strip[draggable=true]{cursor:grab}.strip.editing{outline:1px solid var(--amber)}body.full-radar #scope{display:none}body.full-radar #side{grid-column:1/3;grid-row:2/4;border:0}body.full-radar #brite{height:auto;flex:1;min-height:0}body.full-radar #panel,body.full-radar #strips{display:none}body.full-radar #radarTools{flex:none}body.full-radar #comm{display:none}
+#strips{flex:1;overflow:auto;padding:6px 8px 12px}.vchip{background:#182b38;border:1px solid #3b6575;color:#bfeeff;border-radius:4px;padding:3px 6px;cursor:pointer;font:700 10px var(--mono)}.vchip:hover{border-color:var(--amber);color:var(--amber)}.stripbay{border:1px solid var(--line);border-radius:6px;margin:5px 0;padding:5px;min-height:34px}.stripbay.over{border-color:var(--cyan);background:#10232b}.stripbay .sgh{display:flex;justify-content:space-between;color:var(--amber);font-size:10px;font-weight:800;letter-spacing:.08em;padding:3px}.strip[draggable=true]{cursor:grab}.strip.editing{outline:1px solid var(--amber)}body.full-radar #scope{display:none!important}body.full-radar #side{grid-column:1/3;grid-row:2/4;border:0;display:flex;flex-direction:column;min-height:0}body.full-radar #brite{display:block;width:100%;height:auto;flex:1 1 0;min-height:0}body.full-radar #panel,body.full-radar #strips{display:none!important}body.full-radar #radarTools{flex:none}body.full-radar #comm{display:none!important}
 #comm{grid-column:1;grid-row:3;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--line);min-height:0}
 #log{flex:1;overflow:auto;padding:6px 10px;font-family:var(--mono);font-size:12px;line-height:1.45}
 .ll{display:grid;grid-template-columns:62px 74px 1fr;gap:6px;cursor:default;border-radius:3px;padding:0 3px}
@@ -195,7 +195,14 @@ table.cmds td:nth-child(3){color:var(--faint);font-family:var(--mono);white-spac
 .inc{font-size:12px;padding:4px 0;border-bottom:1px solid #1c2733;color:#c6d0db}
 .inc span{font-family:var(--mono);color:var(--faint);margin-right:6px} .inc b{color:var(--red);margin-right:4px} .inc em{color:var(--red);font-style:normal;font-family:var(--mono)}
 .ver{font:600 10px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.04em;margin-left:4px;border:1px solid var(--line);border-radius:4px;padding:1px 5px;vertical-align:middle}
-#start .card{position:relative}
+#start .card{position:relative;background:linear-gradient(145deg,#111d2b 0%,#0a111a 72%);border:1px solid #31465c;box-shadow:0 24px 80px #000b;}
+#start .card>h1{font-size:30px;letter-spacing:.16em;color:#f5b84b;text-shadow:0 0 24px #f5b84b22}
+#start .card>h2{color:#9db2c8;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-top:-8px}
+#start .maps label:has(input:checked){border-color:#d89a37;background:linear-gradient(90deg,#d89a371c,#182536)}
+#start .maps label{transition:border-color .15s,background .15s}#start .maps label:hover{border-color:#718da9}
+#start .go-big{background:linear-gradient(135deg,#f4bd58,#d58a24);color:#17120a;font-weight:900;letter-spacing:.08em}
+#hotline .card{max-width:620px}#hotlinePresets{grid-template-columns:repeat(2,minmax(0,1fr))}
+
 .xclose{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:none;border:1px solid var(--line);color:var(--dim);font-size:16px;cursor:pointer;line-height:1}
 .xclose:hover{color:#fff;border-color:#6b7b8e}
 .x{float:right;background:none;border:1px solid var(--line);border-radius:5px;cursor:pointer;padding:3px 9px;color:var(--dim)}
@@ -307,12 +314,53 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
 .alertItem.critical{border-left-color:#ed454d}.alertItem b{display:block;margin-bottom:4px}.alertItem small{color:var(--dim)}
 @keyframes alarmPulse{50%{filter:brightness(1.45)}}
 
+
+/* v35: full-page operations centre / main menu */
+#start{z-index:50;align-items:stretch;justify-content:stretch;background:#070c12;backdrop-filter:none;overflow:hidden}
+#start .start-card{position:relative;width:100%;height:100%;max-height:none;max-width:none;border:0;border-radius:0;box-shadow:none;padding:0 0 28px;overflow:auto;background:radial-gradient(ellipse at 78% 5%,#1b3045 0%,transparent 38%),linear-gradient(155deg,#101c29 0%,#0a1119 58%,#080d13 100%);scroll-behavior:smooth}
+.home-hero{padding:25px clamp(22px,5vw,76px) 20px;border-bottom:1px solid #26384a;background:linear-gradient(110deg,#111e2cdd,#0b121bcc)}
+.home-brandline{display:flex;align-items:center;gap:12px;font:800 12px var(--mono);letter-spacing:.16em;color:#e8edf4}
+.home-brandline i{display:block;font:10px var(--sans);letter-spacing:.2em;color:#7f96ad;margin-top:3px;font-style:normal}
+.home-mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid #d89a37;border-radius:9px;color:#f5b84b;font:900 17px var(--mono);box-shadow:0 0 22px #f5b84b18}
+.home-live{margin-left:auto;color:#8ea5bb;font:10px var(--mono);letter-spacing:.12em}.home-live b{display:inline-block;width:7px;height:7px;border-radius:50%;background:#6fe09a;box-shadow:0 0 10px #6fe09a;margin-right:7px}
+.home-hero-main{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:20px;max-width:1450px;margin:22px auto 10px}
+.home-kicker{font:700 10px var(--mono);letter-spacing:.24em;color:#e4a944;margin-bottom:10px}
+#start .home-hero h1{font:500 clamp(27px,4vw,48px)/1.03 var(--sans);letter-spacing:.06em;color:#f1f5f9;margin:0;text-shadow:none}
+#start .home-hero h1 strong{color:#f3b74e;font-weight:900}
+.home-hero-main p{color:#a3b5c7;font-size:14px;max-width:560px;line-height:1.6;margin:14px 0 8px}
+.home-hero-art{height:175px;max-width:360px;width:100%;justify-self:center;position:relative;overflow:hidden;border:1px solid #294258;border-radius:50%;background:radial-gradient(circle,#142b3b 0%,#0b1722 55%,#08111a 100%);box-shadow:0 0 50px #2b759022,inset 0 0 40px #0008}
+.home-radar-ring{position:absolute;border:1px solid #3a7280;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);aspect-ratio:1}.home-radar-ring.r1{width:42%}.home-radar-ring.r2{width:68%}.home-radar-ring.r3{width:94%}
+.home-radar-sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 15deg,transparent 0 76%,#4bc6b522 89%,#4bc6b500 90%);animation:homeSweep 8s linear infinite}
+@keyframes homeSweep{to{transform:rotate(360deg)}}
+.radar-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#79e7c6;box-shadow:0 0 10px #79e7c6}.radar-dot.d1{left:35%;top:34%}.radar-dot.d2{left:67%;top:54%;background:#f1bd5c}.radar-dot.d3{left:47%;top:72%}.radar-plane{position:absolute;left:58%;top:25%;color:#f1bd5c;font-size:17px;transform:rotate(35deg)}.home-hero-art small{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#7895a8;font:9px var(--mono);letter-spacing:.16em}
+.home-stats{display:flex;align-items:center;gap:clamp(18px,4vw,58px);max-width:1450px;margin:20px auto 0;padding-top:15px;border-top:1px solid #26384a}.home-stats div{display:flex;flex-direction:column;gap:3px}.home-stats b{font:800 19px var(--mono);color:#f0b64d}.home-stats span{font:9px var(--mono);letter-spacing:.13em;color:#8196aa}.home-stats>small{margin-left:auto;color:#657b90;font-size:10px}
+.home-nav{position:sticky;top:0;z-index:5;display:flex;gap:4px;align-items:center;padding:0 clamp(14px,5vw,76px);background:#0c141eF2;border-bottom:1px solid #293b4e;backdrop-filter:blur(12px);overflow-x:auto}
+.home-nav button{flex:none;background:none;border:0;border-bottom:2px solid transparent;color:#8fa2b5;padding:15px 14px;font:700 10px var(--mono);letter-spacing:.12em;cursor:pointer}.home-nav button:hover,.home-nav button.active{color:#f2bd5c;border-bottom-color:#e5a63c}.home-nav #homeBoardBtn{margin-left:auto;color:#a8c2d8}
+#start .start-card>.xclose{position:fixed;top:20px;right:24px;z-index:8;background:#111d2a;border-color:#3b5065;color:#a8b9c9}
+#start .start-card>h1,#start .start-card>h2{display:none}
+#start .start-card>h3,#start .start-card>.maps,#start .start-card>#compName,#start .start-card>#aiSectorOptions,#start .start-card>.opts,#start .start-card>.intro,#start .start-card>.startRow{margin-left:clamp(20px,5vw,76px);margin-right:clamp(20px,5vw,76px)}
+.home-section{max-width:1450px;margin:0 auto;padding:23px clamp(20px,5vw,76px) 8px;scroll-margin-top:62px}
+.home-section-head{display:flex;align-items:center;gap:12px;border-bottom:1px solid #26384a;padding-bottom:9px;margin-bottom:4px}.home-section-head span{font:800 10px var(--mono);letter-spacing:.16em;color:#e7ae4b}.home-section-head small{margin-left:auto;color:#71879c;font:9px var(--mono);letter-spacing:.12em}
+#start .home-section h3{color:#c3d0dc;font-size:12px;margin:17px 0 8px;letter-spacing:.15em}
+#start .home-section .maps{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+#start .home-section .maps span{min-height:68px;background:linear-gradient(145deg,#172534,#111b27);border-color:#2b4053}
+#start .home-section .maps input:checked+span{background:linear-gradient(110deg,#3c2b12,#172536);border-color:#d99c3d;box-shadow:inset 3px 0 #e4a642}
+#start .home-section .maps b{font-size:13px}
+#start .home-section .opts{gap:12px 24px}
+#start .home-section .opts>div{padding:12px 14px;border:1px solid #26394b;border-radius:9px;background:#101b27}
+#start .home-section .opts h3{margin-top:0}
+#start .home-briefing{max-width:1450px;padding:12px clamp(20px,5vw,76px);line-height:1.65;border-top:1px solid #26384a}
+#start .home-launch{position:sticky;bottom:0;z-index:6;display:flex;align-items:center;gap:12px;padding:13px clamp(20px,5vw,76px);margin-top:14px;background:#0c141ef2;border-top:1px solid #34485c;backdrop-filter:blur(12px)}
+.home-launch>div{display:flex;flex-direction:column;gap:3px;margin-right:auto}.home-launch>div b{font:800 11px var(--mono);letter-spacing:.12em;color:#e7b452}.home-launch>div span{font-size:11px;color:#8194a7}
+#start .home-launch .ghost-big{margin:0;padding:11px 16px;border-color:#3b5065}#start .home-launch .go-big{margin:0;padding:13px 24px;min-width:210px}#start .home-launch .go-big span{font-size:18px;margin-left:10px}
+@media(max-width:760px){.home-hero{padding:16px 18px}.home-hero-main{grid-template-columns:1fr}.home-hero-art{display:none}.home-stats{gap:14px;flex-wrap:wrap}.home-stats>small{width:100%;margin:0}.home-nav{padding:0 8px}.home-nav button{padding:13px 9px;font-size:9px}.home-nav #homeBoardBtn{margin-left:0}.home-section{padding:18px 16px 6px}#start .start-card>.xclose{top:12px;right:12px}.home-live{display:none}.home-launch{flex-wrap:wrap}.home-launch>div{width:100%}#start .home-launch .ghost-big,#start .home-launch .go-big{flex:1;min-width:0;padding:12px 8px;font-size:11px}}
+
 </style>
 </head>
 <body>
 <div id="app">
   <header id="top">
-    <div class="brand">LOCAL&nbsp;CONTROL <span id="brandIcao">KTTR</span> <small class="ver" title="build v29, Nov 25">v29</small></div>
+    <div class="brand">LOCAL&nbsp;CONTROL <span id="brandIcao">KTTR</span> <small class="ver" title="build v35, Nov 25">v35</small></div>
     <div class="clk"><canvas id="clockCv" style="width:36px;height:36px"></canvas><span id="ampm">AM</span></div>
     <button class="tbtn atisTop" id="atisBtn" title="Open ATIS generator"><small>ATIS</small> <b id="atis">-</b></button>
     <div class="tk"><small>Rwy</small><b id="rwyIn">27</b></div>
@@ -324,8 +372,8 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     <div id="counts"></div>
     <div class="grp"><button class="tbtn" id="pauseBtn">❚❚ Pause</button><button class="tbtn spd" data-speed="1">1×</button><button class="tbtn spd" data-speed="2">2×</button><button class="tbtn spd" data-speed="4">4×</button><button class="tbtn" id="speedCycle">1×</button></div>
     <div id="moreMenu">
-      <div class="grp"><button class="tbtn" id="tagsBtn">Tags</button><button class="tbtn" id="guideBtn">Guide</button><button class="tbtn" id="voiceBtn">Voice</button></div>
-      <div class="grp"><button class="tbtn" id="opsBtn">Ops</button><button class="tbtn" id="alertsBtn">⚠ Alerts <b id="alertCount" class="alertCount">0</b></button><button class="tbtn" id="lightsBtn">Lights</button><button class="tbtn" id="reportBtn">Report</button><button class="tbtn" id="helpBtn">?</button><button class="tbtn" id="newBtn">New shift</button></div>
+      <div class="grp"><button class="tbtn" id="weatherBtn">Weather</button><button class="tbtn" id="trafficGenBtn">Add Traffic</button><button class="tbtn" id="tagsBtn">Tags</button><button class="tbtn" id="guideBtn">Guide</button><button class="tbtn" id="voiceBtn">Voice</button></div>
+      <div class="grp"><button class="tbtn" id="hotlineBtn">Hotline</button><button class="tbtn" id="opsBtn">Ops</button><button class="tbtn" id="alertsBtn">⚠ Alerts <b id="alertCount" class="alertCount">0</b></button><button class="tbtn" id="lightsBtn">Lights</button><button class="tbtn" id="reportBtn">Report</button><button class="tbtn" id="helpBtn">?</button><button class="tbtn" id="newBtn">New shift</button></div>
     </div>
     <button class="tbtn" id="menuBtn">☰</button>
   </header>
@@ -336,12 +384,12 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     <div id="pausedBanner">PAUSED</div><div id="alarmToast" aria-live="assertive"></div>
   </section>
   <aside id="side">
-    <div id="radarTools"><button class="tbtn" id="radarAirportBtn">Airport view</button><label><input type="checkbox" id="radarRings" checked> Rings</label><label><input type="checkbox" id="radarAlt" checked> Altitude</label><label><input type="checkbox" id="radarLeader" checked> Leaders</label><label><input type="checkbox" id="radarSpeed" checked> GS</label><label><input type="checkbox" id="radarTrail" checked> Trails</label><label>Readback errors <input id="readbackRate" type="range" min="0" max="40" value="8" step="1" style="width:65px"> <span id="readbackRateVal">8%</span></label><label>Range <select id="radarRange"><option>6</option><option selected>12</option><option>20</option><option>40</option></select> NM</label></div><canvas id="brite"></canvas>
+    <div id="radarTools"><button class="tbtn" id="radarAirportBtn" type="button" title="Switch between split airport/radar and full radar">Radar view</button><label><input type="checkbox" id="radarRings" checked> Rings</label><label><input type="checkbox" id="radarAlt" checked> Altitude</label><label><input type="checkbox" id="radarLeader" checked> Leaders</label><label><input type="checkbox" id="radarSpeed" checked> GS</label><label><input type="checkbox" id="radarTrail" checked> Trails</label><label>Readback errors <input id="readbackRate" type="range" min="0" max="40" value="8" step="1" style="width:65px"> <span id="readbackRateVal">8%</span></label><label>Range <select id="radarRange"><option>6</option><option selected>12</option><option>20</option><option>40</option></select> NM</label></div><canvas id="brite"></canvas>
     <div id="panel"></div>
     <div id="strips"></div>
   </aside>
   <footer id="comm">
-    <div id="loghead"><span>Frequency</span><span class="hint"><kbd>Tab</kbd> next request · <kbd>1</kbd>–<kbd>0</kbd> panel buttons · <kbd>Enter</kbd> send taxi · <kbd>Space</kbd> pause · <kbd>?</kbd> help</span></div>
+    <div id="loghead"><span id="freqLabel">Frequency · 121.7</span><span class="hint"><kbd>Tab</kbd> next request · <kbd>1</kbd>–<kbd>0</kbd> panel buttons · <kbd>Enter</kbd> send taxi · <kbd>Space</kbd> pause · <kbd>?</kbd> help</span></div>
     <div id="log"></div>
   </footer>
   <nav id="mtabs">
@@ -353,17 +401,23 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
   </nav>
 </div>
 
-<div class="modal" id="start"><div class="card">
+<div class="modal" id="start"><div class="card start-card">
+  <div class="home-hero">
+    <div class="home-brandline"><span class="home-mark">LC</span><span>LOCAL CONTROL <i>ATC SIMULATION PLATFORM</i></span><span class="home-live"><b></b> SIMULATION READY</span></div>
+    <div class="home-hero-main"><div><div class="home-kicker">YOUR CONTROL ROOM STARTS HERE</div><h1>TAKE THE<br><strong>CONTROLLER'S SEAT.</strong></h1><p>Build your shift. Choose your airport, position and traffic. Then take control of the frequency.</p></div><div class="home-hero-art"><div class="home-radar-ring r1"></div><div class="home-radar-ring r2"></div><div class="home-radar-ring r3"></div><div class="home-radar-sweep"></div><span class="radar-dot d1"></span><span class="radar-dot d2"></span><span class="radar-dot d3"></span><span class="radar-plane">✈</span><small>LOCAL CONTROL / LIVE SCOPE</small></div></div>
+    <div class="home-stats"><div><b>11</b><span>TRAINING AIRPORTS</span></div><div><b>6</b><span>TRAFFIC LEVELS</span></div><div><b>5</b><span>CONTROLLER SECTORS*</span></div><div><b>∞</b><span>ENDLESS SHIFTS</span></div><small>*Sector availability varies by simulation position.</small></div>
+  </div>
+  <nav class="home-nav" aria-label="Main menu navigation"><button class="active" data-menu-target="home-setup">OVERVIEW</button><button data-menu-target="home-position">CONTROLLER POSITION</button><button data-menu-target="home-airports">AIRPORTS</button><button data-menu-target="home-traffic">TRAFFIC &amp; OPTIONS</button><button id="homeBoardBtn">LEADERBOARDS ↗</button></nav>
   <button class="xclose" id="startClose" title="Back to your shift" aria-label="Back to your shift" style="display:none">✕</button>
   <h1>LOCAL CONTROL</h1>
   <h2>Tower simulator — combined Local &amp; Ground</h2>
-  <h3>Mode</h3>
+  <section id="home-setup" class="home-section"><div class="home-section-head"><span>01 / SHIFT CONFIGURATION</span><small>CHOOSE HOW YOU WANT TO PLAY</small></div><h3>Mode</h3>
   <div class="maps modes">
     <label><input type="radio" name="mode" value="endless" checked><span><b>Endless</b><em>Pick the traffic level and work as long as you like. The shift never ends.</em></span></label>
     <label><input type="radio" name="mode" value="comp"><span><b>Competition</b><em>Starts at heavy traffic and adds 10% every 10 minutes. 1× speed only. The shift ends the moment your score drops below zero; your best score goes on the map's leaderboard.</em></span></label>
   </div>
   <div id="compName" style="display:none"><h3>Name for the leaderboard</h3><input id="pname" maxlength="20" placeholder="optional" autocomplete="off"></div>
-  <h3>Controller position</h3>
+  </section><section id="home-position" class="home-section"><div class="home-section-head"><span>02 / CONTROLLER POSITION</span><small>SELECT YOUR WORKSTATION</small></div><h3>Controller position</h3>
   <div class="maps modes">
     <label><input type="radio" name="position" value="local" checked><span><b>Combined Local Control</b><em>Ground and Tower together, as in the original simulator.</em></span></label>
     <label><input type="radio" name="position" value="ground"><span><b>Ground</b><em>Pushback, taxi routes, runway crossings and ground movement only.</em></span></label>
@@ -381,7 +435,7 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     </div>
     <p class="hintx" id="aiSectorHint">Tower: choose whether AI Ground and Clearance Delivery handle adjacent operations.</p>
   </div>
-  <h3>Airport</h3>
+  </section><section id="home-airports" class="home-section"><div class="home-section-head"><span>03 / AIRPORT SELECTION</span><small>CHOOSE YOUR FIELD</small></div><h3>Airport</h3>
   <div class="maps">
     <label><input type="radio" name="map" value="single" checked><span><b>KTTR · Single runway</b><em>9/27 · GA field, about 80% GA. Busy closed traffic, two runway crossings to the FBO.</em></span></label>
     <label><input type="radio" name="map" value="parallel"><span><b>KTTP · Parallel runways</b><em>9L/27R &amp; 9R/27L in a mountain valley · airline hub, about 80% airline. 12 gates between the runways.</em></span></label>
@@ -390,10 +444,13 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     <label><input type="radio" name="map" value="essa"><span><b>ESSA · Stockholm Arlanda</b><em>Parallel-runway training layout · schematic, not to scale.</em></span></label>
     <label><input type="radio" name="map" value="rjtt"><span><b>RJTT · Tokyo Haneda</b><em>Crossing-runway training layout · schematic, not to scale.</em></span></label>
     <label><input type="radio" name="map" value="lszh"><span><b>LSZH · Zurich Airport</b><em>Parallel-runway training layout · schematic, not to scale.</em></span></label>
-    <label><input type="radio" name="map" value="kmdw"><span><b>KMDW · Chicago Midway</b><em>Crossing-runway training layout · schematic, not to scale.</em></span></label>
+    <label><input type="radio" name="map" value="kmdw"><span><b>KMDW · Chicago Midway</b><em>Compact three-runway field · dense terminal-side taxiway grid.</em></span></label>
+    <label><input type="radio" name="map" value="kpdx"><span><b>KPDX · Portland International</b><em>Large US hub · dual parallel runways and central terminal.</em></span></label>
+    <label><input type="radio" name="map" value="kase"><span><b>KASE · Aspen/Pitkin County</b><em>Mountain valley field · diagonal runway and compact apron.</em></span></label>
+    <label><input type="radio" name="map" value="kroc"><span><b>KROC · Greater Rochester</b><em>Regional field · crossing runways and separate GA apron.</em></span></label>
   </div>
-  <div class="opts">
-    <div id="densOpt"><h3>Traffic</h3><div class="og"><label><input type="radio" name="dens" value="light"><span>Light</span></label><label><input type="radio" name="dens" value="medium" checked><span>Medium</span></label><label><input type="radio" name="dens" value="heavy"><span>Heavy</span></label></div><p class="hintx">Selecting a difficulty also resets the arrival/departure sliders to that level’s recommended traffic rates. You can fine-tune them afterwards.</p></div>
+  </section><section id="home-traffic" class="home-section"><div class="home-section-head"><span>04 / TRAFFIC &amp; PREFERENCES</span><small>TUNE YOUR SESSION</small></div><div class="opts">
+    <div id="densOpt"><h3>Traffic</h3><div class="og"><label><input type="radio" name="dens" value="verylight"><span>Very light</span></label><label><input type="radio" name="dens" value="light"><span>Light</span></label><label><input type="radio" name="dens" value="medium" checked><span>Medium</span></label><label><input type="radio" name="dens" value="busy"><span>Busy</span></label><label><input type="radio" name="dens" value="heavy"><span>Heavy</span></label><label><input type="radio" name="dens" value="extreme"><span>Extreme</span></label></div><p class="hintx">Selecting a difficulty also resets the arrival/departure sliders to that level’s recommended traffic rates. You can fine-tune them afterwards.</p></div>
     <div><h3>Traffic flow</h3>
       <div class="og"><label><input type="checkbox" id="arrivalsOn" checked><span>Arrivals</span></label><label><input type="checkbox" id="departuresOn" checked><span>Departures</span></label></div>
       <label class="flowCtl">Arrivals / hour <input id="arrRate" type="range" min="0" max="90" value="48"><b id="arrRateVal">48</b></label>
@@ -404,10 +461,52 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     <div><h3>Data tags</h3><div class="og"><label><input type="radio" name="tags" value="all" checked><span>All</span></label><label><input type="radio" name="tags" value="air"><span>Airborne</span></label><label><input type="radio" name="tags" value="off"><span>Off</span></label></div></div>
     <div><h3>Pilot voice</h3><div class="og"><label><input type="radio" name="voice" value="off" checked><span>Off</span></label><label><input type="radio" name="voice" value="on"><span>On</span></label></div></div>
   </div>
-  <div class="intro" style="font-size:12px;color:var(--dim)">Each shift picks the runway configuration and traffic pattern at random. Weather changes as you work: VFR, haze, rain under a low ceiling, or fog. When the field goes IFR, the pattern closes. Time of day runs on a 10-minute day, so you'll work sunset, night, and sunrise every shift. In low visibility you see only lights past the tower's visibility, plus whatever the DBRITE and data tags show.</div>
-  <div class="startRow"><button class="ghost-big" id="boardBtn">Leaderboards</button><button class="go-big" id="startBtn">OPEN POSITION ▸</button></div>
+  </section><div class="intro home-briefing" style="font-size:12px;color:var(--dim)">Each shift picks the runway configuration and traffic pattern at random. Weather changes as you work: VFR, haze, rain under a low ceiling, or fog. When the field goes IFR, the pattern closes. Time of day runs on a 10-minute day, so you'll work sunset, night, and sunrise every shift. In low visibility you see only lights past the tower's visibility, plus whatever the DBRITE and data tags show.</div>
+  <div class="startRow home-launch"><div><b>READY TO COMMENCE?</b><span>Your selected configuration will be applied when you open the position.</span></div><button class="ghost-big" id="boardBtn">VIEW LEADERBOARDS</button><button class="go-big" id="startBtn">OPEN POSITION <span>→</span></button></div>
 </div></div>
 
+<div class="modal" id="trafficGenerator"><div class="card">
+  <button class="x" data-close="trafficGenerator">Close</button><h1 style="font-size:20px">CUSTOM TRAFFIC GENERATOR</h1>
+  <p class="hintx">Create a training aircraft at a selected stand. The callsign, aircraft type, destination and gate are assigned immediately.</p>
+  <div class="sec"><div class="sech">Aircraft details</div>
+    <label class="lab">Callsign <input id="customCallsign" class="csel" maxlength="16" placeholder="SWA626"></label>
+    <label class="lab">Aircraft type <select id="customType" class="csel"><option>B738</option><option>A320</option><option>A319</option><option>B752</option><option>B763</option><option>E175</option><option>C172</option><option>PA28</option><option>BE20</option><option>PC12</option></select></label>
+    <label class="lab">Destination <select id="customDest" class="csel"><option>ORD</option><option>DFW</option><option>ATL</option><option>DEN</option><option>LAX</option><option>SEA</option><option>BOS</option><option>MSP</option><option>CLT</option><option>PHX</option><option>MIA</option><option>IAH</option><option>SFO</option><option>DTW</option><option>BNA</option><option>STL</option></select></label>
+    <label class="lab">Gate <select id="customGate" class="csel"></select></label>
+    <button class="cb go big" id="customCreate">CREATE AIRCRAFT</button>
+  </div>
+</div></div>
+<div class="modal" id="weatherControl"><div class="card">
+  <button class="x" data-close="weatherControl">Close</button><h1 style="font-size:20px">WEATHER CONTROL</h1>
+  <p class="hintx">Set the current weather manually. Conditions transition smoothly; automatic weather evolution can be paused for this session.</p>
+  <div class="sec"><div class="sech">Preset conditions</div><div class="og">
+    <button class="cb" data-wx-set="vmc">VMC · Clear</button><button class="cb" data-wx-set="mvfr">MVFR · Haze</button><button class="cb" data-wx-set="imc">IMC · Rain / low ceiling</button><button class="cb" data-wx-set="fog">LIFR · Fog</button>
+  </div></div>
+  <div class="sec"><div class="sech">Manual weather parameters</div>
+    <label class="flowCtl">Wind direction <input id="wxDir" type="range" min="0" max="350" step="10" value="270"><b id="wxDirVal">270°</b></label>
+    <label class="flowCtl">Wind speed <input id="wxKt" type="range" min="0" max="35" value="8"><b id="wxKtVal">8 kt</b></label>
+    <label class="flowCtl">Visibility <select id="wxVis" class="csel"><option value="10">10+ SM</option><option value="5">5 SM</option><option value="3">3 SM</option><option value="1">1 SM</option><option value="0.5">½ SM</option><option value="0.25">¼ SM</option></select></label>
+    <label class="flowCtl">Ceiling <select id="wxCeil" class="csel"><option value="25000">Clear / above 25,000 ft</option><option value="5000">5,000 ft</option><option value="3000">3,000 ft</option><option value="1500">1,500 ft</option><option value="700">700 ft</option><option value="200">200 ft</option></select></label>
+    <div class="og"><label><input type="checkbox" id="wxRain"><span>Rain</span></label><label><input type="checkbox" id="wxAuto" checked><span>Automatic weather changes</span></label></div>
+    <button class="cb go big" id="wxApply">APPLY WEATHER</button>
+  </div>
+</div></div>
+
+<div class="modal" id="hotline"><div class="card">
+  <button class="x" data-close="hotline">Close</button><h1 style="font-size:20px">CONTROLLER HOTLINE</h1>
+  <p class="hintx">Send coordination messages to neighbouring positions. Messages are logged in the frequency panel.</p>
+  <div class="row"><label>Call position <select id="hotlineTo" class="csel"><option value="ground">Ground</option><option value="tower">Tower</option><option value="clearance">Clearance Delivery</option><option value="departure">Departure</option><option value="approach">Approach</option></select></label></div>
+  <div class="sec"><div class="sech">Preset coordination messages</div><div class="og" id="hotlinePresets">
+    <button class="cb" data-hotline="Request release / clearance status">Request release / clearance status</button>
+    <button class="cb" data-hotline="Confirm runway crossing coordination">Coordinate runway crossing</button>
+    <button class="cb" data-hotline="Traffic ready for handoff">Traffic ready for handoff</button>
+    <button class="cb" data-hotline="Request traffic sequence">Request traffic sequence</button>
+    <button class="cb" data-hotline="Runway configuration change coordination">Coordinate runway change</button>
+    <button class="cb" data-hotline="Taxiway blocked; advise affected traffic">Report blocked taxiway</button>
+  </div></div>
+  <label class="lab">Custom message <input id="hotlineCustom" class="csel" placeholder="Enter coordination message"></label>
+  <button class="cb go" id="hotlineSend">Transmit message</button><div id="hotlineStatus" class="hintx"></div>
+</div></div>
 <div class="modal" id="ops"><div class="card">
   <button class="x" data-close="ops">Close</button><h1 style="font-size:20px">AIRPORT OPERATIONS</h1>
   <div id="opsBody"></div>
@@ -901,7 +1000,163 @@ const ATC = {};
   MAPS.essa = profile('parallel', 'essa', 'ESSA', 'Stockholm Arlanda', 137, 0.04, 'Parallel-runway training layout · schematic, not to scale');
   MAPS.rjtt = profile('cross', 'rjtt', 'RJTT', 'Tokyo Haneda', 35, 0.02, 'Crossing-runway training layout · schematic, not to scale');
   MAPS.lszh = profile('parallel', 'lszh', 'LSZH', 'Zurich Airport', 1416, 0.03, 'Parallel-runway training layout · schematic, not to scale');
-  MAPS.kmdw = profile('cross', 'kmdw', 'KMDW', 'Chicago Midway', 620, 0.01, 'Crossing-runway training layout · schematic, not to scale');
+  MAPS.kmdw = () => {
+    const ap=Builder({key:'kmdw',name:'Chicago Midway',icao:'KMDW',elev:620,theme:'city',
+      tower:{x:2700,y:1450},gaShare:0.01,patMax:1,fbo:{x:3900,y:2400},terminal:{x:3200,y:1500},
+      profileNote:'Compact three-runway Chicago training diagram; not an official airport chart'});
+    const R1=ap.runway('13C','31C',{x:-4800,y:0},{x:4800,y:0},180,'R','L');
+    const R2=ap.runway('13L','31R',{x:-4400,y:2600},{x:4400,y:2600},180,'L','R');
+    const R3=ap.runway('4','22',{x:1000,y:3900},{x:1000,y:-3300},150,'L','R');
+    const xs=[-4400,-3200,-2000,-800,400,1600,2800,4000];
+    ap.laneX('A','A',500,xs); ap.laneX('B','B',2100,xs);
+    [-4000,-2000,0,2000,4000].forEach((x,i)=>ap.conn('A'+(i+1),R1,x,0,'A'+(i===0? -4400:i===1?-2000:i===2?400:i===3?2800:4000)));
+    [-4000,-2000,0,2000,4000].forEach((x,i)=>ap.conn('B'+(i+1),R2,x,2600,'B'+(i===0?-4400:i===1?-2000:i===2?400:i===3?2800:4000)));
+    // Three short cross-field links form a dense taxiway grid between the parallels.
+    for(const [id,x] of [['C1',-2800],['C2',400],['C3',2800]]){
+      ap.add(id+'a',x,500);ap.add(id+'b',x,1100);ap.add(id+'c',x,1600);ap.add(id+'d',x,2100);
+      ap.TW(id,[id+'a',id+'b',id+'c',id+'d']);
+    }
+    // Runway 4/22 has its own short parallel taxiway between the runway crossings.
+    ap.laneY('D','D',1600,[500,900,1200,1600,1900,2100]);
+    ap.conn('D1',R3,1000,900,'D900'); ap.conn('D2',R3,1000,1900,'D1900');
+    ap.TW('DA',['A1600','D500']); ap.TW('DB',['B1600','D2100']);
+    // Compact passenger terminal and four concourse stands on the east side.
+    const gx=[2300,2900,3500,4100];
+    ap.laneX('T','T',1200,[1600,1800,2100,2300,2500,2700,2900,3100,3300,3500,3700,3900,4100,4300],{ramp:true});
+    gx.forEach((x,i)=>ap.gate('G'+(i+1),x,1480,0,'T',1200,200));
+    ap.TW('TERM_LINK',['D1200','T1600']);
+    ap.laneX('S','S',-1900,[-4300,-4200,-4000,-3800,-3600,-3400,-3200,-3000,-2800,-2600,-2400,-2200],{ramp:true});
+    ap.spotRows([-4000,-3400,-2800,-2200],-1900,'S');
+    ap.add('SG1',-5200,-1900);ap.add('SG2',-5200,500);ap.add('SG3',-4800,500);
+    ap.TW('GA_LINK',['S-4300','SG1','SG2','SG3','A-4400']);
+    ap.aprons=[
+      {pts:[[1550,900],[4500,900],[4500,1750],[1550,1750]]},
+      {pts:[[-4550,-2300],[-1900,-2300],[-1900,-1550],[-4550,-1550]]}
+    ];
+    ap.buildings=[
+      {kind:'terminal',pts:[[2100,1750],[4200,1750],[4200,2100],[2100,2100]],label:'MIDWAY TERMINAL'},
+      {kind:'hangar',pts:[[-4400,-2700],[-3000,-2700],[-3000,-2350],[-4400,-2350]],label:'GENERAL AVIATION'},
+      {kind:'hangar',pts:[[3500,2300],[4400,2300],[4400,2650],[3500,2650]],label:'CARGO'}
+    ];
+    ap.configs=[
+      {ends:['31C','31R','22'],arr:['31C','31R'],vfr:['31C']},
+      {ends:['13C','13L','4'],arr:['13C','13L'],vfr:['13C']}
+    ];
+    return ap.finish();
+  };
+  // Three individually constructed US airports. These are original training
+  // diagrams with distinct geometry, not renamed copies of the generic layouts.
+  MAPS.kpdx = () => {
+    const ap = Builder({ key:'kpdx', name:'Portland International', icao:'KPDX', elev:31, theme:'coast',
+      tower:{x:0,y:1550}, gaShare:0.03, patMax:1, fbo:{x:4300,y:-1900}, terminal:{x:0,y:1550}, profileNote:'Custom dual-parallel runway training diagram; not an official airport chart' });
+    const R1=ap.runway('10L','28R',{x:-5600,y:0},{x:5600,y:0},200,'R','L');
+    const R2=ap.runway('10R','28L',{x:-5200,y:3000},{x:5200,y:3000},200,'L','R');
+    const xs=[-5000,-3800,-2600,-1300,0,1300,2600,3800,5000];
+    ap.laneX('A','A',500,xs); ap.laneX('B','B',2500,xs);
+    xs.filter((x,i)=>i%2===0).forEach((x,i)=>{
+      ap.conn('A'+(i+1),R1,x,0,'A'+x);
+      ap.conn('B'+(i+1),R2,x,3000,'B'+x);
+    });
+    // Three north-south connectors between the runway-side taxiways.
+    for(const [id,x] of [['C1',-3000],['C2',0],['C3',3000]]){
+      ap.add(id+'a',x,500); ap.add(id+'b',x,1100); ap.add(id+'c',x,1900); ap.add(id+'d',x,2500);
+      ap.TW(id,[id+'a',id+'b',id+'c',id+'d']);
+    }
+    const gx=[-2800,-2200,-1600,-1000,-400,200,800,1400,2000,2600];
+    ap.laneX('T','T',1050,[-3200,3200,-3000,0,3000,...gx.flatMap(x=>[x,x-200,x+200])],{ramp:true});
+    ap.laneX('U','U',1950,[-3200,3200,-3000,0,3000,...gx.flatMap(x=>[x,x-200,x+200])],{ramp:true});
+    gx.forEach((x,i)=>ap.gate('G'+(i+1),x,1320,0,'T',1050,200));
+    gx.slice(0,6).forEach((x,i)=>ap.gate('G'+(i+11),x,2220,180,'U',1950,200));
+    ap.TW('D',['A-5000','T-3200']); ap.TW('E',['B5000','U3200']);
+    for(const [i,x] of [-3000,0,3000].entries()){ap.TW('CT'+(i+1),['T'+x,'C'+(i+1)+'b']);ap.TW('CU'+(i+1),['U'+x,'C'+(i+1)+'c']);}
+    ap.laneX('CARGO','Q',-1200,[-4900,-4700,-4500,-4400,-4200,-4000,-3900,-3700,-3500,-3400,-3200,-3000],{ramp:true});
+    ap.spotRows([-4700,-4200,-3700,-3200],-1200,'Q');
+    ap.add('QX1',-5900,-1200); ap.add('QX2',-6200,-600); ap.add('QX3',-6200,500); ap.add('QX4',-5600,500);
+    ap.TW('Q_LINK',['Q-4900','QX1','QX2','QX3','QX4','A-5000']);
+    ap.aprons=[
+      {pts:[[-3400,850],[3300,850],[3300,1450],[-3400,1450]]},
+      {pts:[[-3400,1750],[2200,1750],[2200,2350],[-3400,2350]]},
+      {pts:[[-5300,-1550],[-1800,-1550],[-1800,-850],[-5300,-850]]}
+    ];
+    ap.buildings=[
+      {kind:'terminal',pts:[[-2400,1420],[2100,1420],[2100,1760],[-2400,1760]],label:'PORTLAND TERMINAL'},
+      {kind:'hangar',pts:[[-5200,-2100],[-3800,-2100],[-3800,-1650],[-5200,-1650]],label:'CARGO'},
+      {kind:'hangar',pts:[[3500,-2100],[4900,-2100],[4900,-1650],[3500,-1650]],label:'MAINTENANCE'}
+    ];
+    ap.configs=[
+      {ends:['28R','28L'],arr:['28R','28L'],vfr:['28R']},
+      {ends:['10L','10R'],arr:['10L','10R'],vfr:['10L']}
+    ];
+    return ap.finish();
+  };
+  MAPS.kase = () => {
+    const ap=Builder({key:'kase',name:'Aspen/Pitkin County',icao:'KASE',elev:7820,theme:'mountains',
+      tower:{x:-1700,y:1700},gaShare:0.42,patMax:2,fbo:{x:3000,y:2500},terminal:{x:-2700,y:0},profileNote:'Custom mountain-valley runway training diagram; not an official airport chart'});
+    const R=ap.runway('15','33',{x:-4300,y:-2700},{x:4300,y:2700},150,'R','L');
+    // A diagonal parallel taxiway follows the mountain-valley runway.
+    const ux=8600/R.length,uy=5400/R.length,px=-uy,py=ux,off=620;
+    const ts=[-.43,-.22,0,.22,.43],ids=[];
+    ts.forEach((t,i)=>{const x=-4300+8600*(t+.5)+px*off,y=-2700+5400*(t+.5)+py*off;const id='V'+(i+1);ap.add(id,x,y);ids.push(id);});
+    ap.TW('V',ids);
+    ts.forEach((t,i)=>{const x=-4300+8600*(t+.5),y=-2700+5400*(t+.5);ap.conn('V'+(i+1),R,x,y,ids[i]);});
+    // Compact terminal apron and a separate GA/FBO ramp at the valley end.
+    const gateXs=[-3600,-3000,-2400,-1800,-1200,-600];
+    ap.laneX('T','T',-400,[-4200,...gateXs.flatMap(x=>[x-200,x,x+200]),-700],{ramp:true});
+    gateXs.forEach((x,i)=>ap.gate('G'+(i+1),x,-120,0,'T',-400,200));
+    ap.laneX('F','F',2300,[1200,1300,1500,1700,1800,1900,2100,2300,2500,2700,2900,3100,3300,3500,3600],{ramp:true});
+    ap.spotRows([1500,2100,2700,3300],2300,'F');
+    ap.add('FX1',1565,2000); ap.TW('FBO_LINK',['V4','FX1','F1800']);
+    ap.add('TL1',-4200,-1250); ap.add('TL2',-4200,-800); ap.TW('TERM_LINK',['V1','TL1','TL2','T-4200']);
+    ap.aprons=[
+      {pts:[[-4450,-800],[-650,-800],[-650,100],[-4450,100]]},
+      {pts:[[900,1850],[3900,1850],[3900,2750],[900,2750]]}
+    ];
+    ap.buildings=[
+      {kind:'terminal',pts:[[-4200,100],[-1450,100],[-1450,430],[-4200,430]],label:'ASPEN TERMINAL'},
+      {kind:'hangar',pts:[[2300,2750],[3500,2750],[3500,3150],[2300,3150]],label:'FBO'},
+      {kind:'hangar',pts:[[-900,3350],[-250,3350],[-250,3700],[-900,3700]],label:'AIRPORT OPS'}
+    ];
+    ap.configs=[{ends:['33'],arr:['33'],vfr:['33']},{ends:['15'],arr:['15'],vfr:['15']}];
+    return ap.finish();
+  };
+  MAPS.kroc = () => {
+    const ap=Builder({key:'kroc',name:'Frederick Douglass Greater Rochester',icao:'KROC',elev:559,theme:'coast',
+      tower:{x:1900,y:1900},gaShare:0.12,patMax:2,fbo:{x:-3600,y:-2800},terminal:{x:2600,y:2600},profileNote:'Custom regional crossing-runway training diagram; not an official airport chart'});
+    const R1=ap.runway('4','22',{x:-4300,y:-2900},{x:4300,y:2900},180,'R','L');
+    const R2=ap.runway('10','28',{x:-3400,y:1000},{x:3400,y:1000},150,'R','L');
+    // Distinct taxi spines: diagonal main-runway taxiway and a northern
+    // cross-field taxiway feeding the passenger apron.
+    const ux=8600/R1.length,uy=5800/R1.length,px=-uy,py=ux,off=560,ids=[];
+    [-.42,-.2,.05,.28,.43].forEach((t,i)=>{const x=-4300+8600*(t+.5)+px*off,y=-2900+5800*(t+.5)+py*off,id='M'+(i+1);ap.add(id,x,y);ids.push(id);});
+    ap.TW('M',ids);
+    [-.32,-.05,.22,.4].forEach((t,i)=>{const x=-4300+8600*(t+.5),y=-2900+5800*(t+.5);ap.conn('M'+(i+1),R1,x,y,ids[Math.min(i+1,4)]);});
+    ap.laneX('N','N',1750,[-3000,-2200,-1400,-600,200,1000,1800,2600,3300]);
+    [-2200,-600,1000,2600].forEach((x,i)=>ap.conn('N'+(i+1),R2,x,1000,'N'+x));
+    // Terminal frontage and two concourse fingers.
+    const rgx=[-1500,-900,-300,300,900,1500,2100,2700];
+    ap.laneX('T','T',2350,[-1800,-1200,1800,...rgx.flatMap(x=>[x-200,x,x+200]),3000],{ramp:true});
+    ap.laneY('F1','F1',-1200,[1750,2050,2350]); ap.laneY('F2','F2',1800,[1750,2050,2350]);
+    ap.TW('F1CONNECT',['N-1400','F11750','F12050','F12350','T-1200']);
+    ap.TW('F2CONNECT',['N1800','F21750','F22050','F22350','T1800']);
+    rgx.forEach((x,i)=>ap.gate('G'+(i+1),x,2600,0,'T',2350,200));
+    ap.laneX('S','S',-3400,[-4000,-3900,-3700,-3500,-3300,-3100,-2900,-2700,-2500,-2300,-2100,-1900,-1700,-1600],{ramp:true});
+    ap.spotRows([-3700,-3100,-2500,-1900],-3400,'S');
+    ap.add('SX1',-4200,-3000); ap.add('SX2',-4200,-2400); ap.TW('GA_LINK',['S-4000','SX1','SX2','M1']);
+    ap.aprons=[
+      {pts:[[-2100,2200],[3400,2200],[3400,2850],[-2100,2850]]},
+      {pts:[[-4400,-3850],[-1300,-3850],[-1300,-3150],[-4400,-3150]]}
+    ];
+    ap.buildings=[
+      {kind:'terminal',pts:[[-1700,2850],[3000,2850],[3000,3250],[-1700,3250]],label:'ROCHESTER TERMINAL'},
+      {kind:'hangar',pts:[[-4200,-4250],[-2900,-4250],[-2900,-3900],[-4200,-3900]],label:'GENERAL AVIATION'},
+      {kind:'hangar',pts:[[3300,3200],[4200,3200],[4200,3600],[3300,3600]],label:'CARGO'}
+    ];
+    ap.configs=[
+      {ends:['22','28'],arr:['22','28'],vfr:['28']},
+      {ends:['4','10'],arr:['4','10'],vfr:['10']}
+    ];
+    return ap.finish();
+  };
   A.MAP_INFO = {
     single: { name: 'Single runway', icao: 'KTTR', desc: '9/27 · GA field (~80% GA)' },
     parallel: { name: 'Parallel runways', icao: 'KTTP', desc: '9L/27R & 9R/27L · airline hub (~80% airline)' },
@@ -910,7 +1165,10 @@ const ATC = {};
     essa: { name: 'Stockholm Arlanda', icao: 'ESSA', desc: 'Parallel-runway training layout · schematic, not to scale' },
     rjtt: { name: 'Tokyo Haneda', icao: 'RJTT', desc: 'Crossing-runway training layout · schematic, not to scale' },
     lszh: { name: 'Zurich Airport', icao: 'LSZH', desc: 'Parallel-runway training layout · schematic, not to scale' },
-    kmdw: { name: 'Chicago Midway', icao: 'KMDW', desc: 'Crossing-runway training layout · schematic, not to scale' },
+    kmdw: { name: 'Chicago Midway', icao: 'KMDW', desc: 'Compact three-runway field · dense terminal-side taxiway grid' },
+    kpdx: { name: 'Portland International', icao: 'KPDX', desc: 'Two parallel runways · central terminal island · cargo apron' },
+    kase: { name: 'Aspen/Pitkin County', icao: 'KASE', desc: 'Diagonal valley runway · compact terminal · separate GA ramp' },
+    kroc: { name: 'Greater Rochester', icao: 'KROC', desc: 'Crossing runways · diagonal taxiway spine · terminal concourses' },
   };
   // Simplified, simulator-specific procedure catalogue. These are training routes, not published real-world charts.
   const PROC_NAMES = {
@@ -919,6 +1177,9 @@ const ATC = {};
     rjtt: { sid:['NORTH2','TOKYO4','SOUTH3','BAY1'], star:['NORTH2A','TOKYO4A','SOUTH3A','BAY1A'] },
     lszh: { sid:['NORTH1','DEGES2','SOUTH2','GERSA1'], star:['NORTH1A','DEGES2A','SOUTH2A','GERSA1A'] },
     kmdw: { sid:['BDF3','OBK4','MIDWAY2','SOUTH1'], star:['BDF3A','OBK4A','MIDWAY2A','SOUTH1A'] },
+    kpdx: { sid:['BTG3','EUG2','HHOOD1','WILLM2'], star:['BTG3A','EUG2A','HHOOD1A','WILLM2A'] },
+    kase: { sid:['SNOW1','INLET2','ASPEN1','MCCLURE1'], star:['SNOW1A','INLET2A','ASPEN1A','MCCLURE1A'] },
+    kroc: { sid:['ROC1','BUFF2','EAST1','WEST2'], star:['ROC1A','BUFF2A','EAST1A','WEST2A'] },
     single: { sid:['NORTH1','EAST1','SOUTH1','WEST1'], star:['NORTH1A','EAST1A','SOUTH1A','WEST1A'] },
     parallel: { sid:['NORTH2','EAST2','SOUTH2','WEST2'], star:['NORTH2A','EAST2A','SOUTH2A','WEST2A'] },
     cross: { sid:['NORTH3','EAST3','SOUTH3','WEST3'], star:['NORTH3A','EAST3A','SOUTH3A','WEST3A'] }
@@ -1175,9 +1436,12 @@ const ATC = {};
   const KT = A.KT, NM = A.NM;
 
   const DENSITY = {
+    verylight: { arrHr: 5, depHr: 2, patMax: 1, vinHr: 0 },
     light: { arrHr: 10, depHr: 4, patMax: 1, vinHr: 1 },
     medium: { arrHr: 20, depHr: 7, patMax: 2, vinHr: 2 },
+    busy: { arrHr: 30, depHr: 10, patMax: 3, vinHr: 3 },
     heavy: { arrHr: 38, depHr: 12, patMax: 3, vinHr: 4 },
+    extreme: { arrHr: 55, depHr: 18, patMax: 4, vinHr: 6 },
   };
   // Expose immutable traffic presets to the UI. Keeping these on ATC avoids
   // leaking simulator-local constants or causing ReferenceError on shift start.
@@ -1365,6 +1629,7 @@ const ATC = {};
     }
     weatherTick(dt) {
       const w = this.wx;
+      if (this.manualWeather && this.autoWeather === false) return;
       // visibility / ceiling ease toward the reported values (~2 min)
       // everything eases toward the new conditions over a couple of minutes
       const k = Math.min(1, dt / 75);
@@ -1373,6 +1638,7 @@ const ATC = {};
       w.ceilFt = w.ceilFt == null ? ceilT : w.ceilFt + (ceilT - w.ceilFt) * k;
       w.rainK = (w.rainK || 0) + ((w.rain ? 1 : 0) - (w.rainK || 0)) * k;
       w.hazeK = (w.hazeK || 0) + ((w.key === 'mvfr' ? 1 : 0) - (w.hazeK || 0)) * k;
+      if (this.atisBroadcast) this.atisBroadcast = this.buildAtisBroadcast();
       // bad weather (MVFR or worse) lasts at most 3/4 of a day
       const bad = w.key !== 'vmc';
       if (bad) { if (this.badSince == null) this.badSince = this.t; } else this.badSince = null;
@@ -1387,11 +1653,16 @@ const ATC = {};
       }
       if (this.t >= this.next.wind) {
         this.next.wind = this.t + 60;
+        const oldDir=w.windDir, oldKt=w.windKt, oldVis=w.visFt, oldCeil=w.ceilFt;
         let dir = w.windDir + this.rng.range(-12, 12);
         const off = A.angDiff(this.R0.H, dir); if (Math.abs(off) > 60) dir = this.R0.H + Math.sign(off) * 60;
         const kt = A.clamp(w.windKt + this.rng.range(-2.5, 2.5), w.key === 'fog' ? 0 : 3, w.key === 'fog' ? 6 : 22);
         const gust = kt > 10 && this.rng.chance(0.35) ? Math.round(kt + this.rng.range(6, 11)) : 0;
         this.setWind(dir, kt, gust);
+        const windShift=Math.abs(A.angDiff(oldDir,w.windDir))>=20 || Math.abs(oldKt-w.windKt)>=5;
+        const visShift=Math.abs(oldVis-w.visFt)>=1500, ceilShift=Math.abs((oldCeil||25000)-(w.ceilFt||25000))>=500;
+        if(windShift||visShift||ceilShift) this.atis=String.fromCharCode(this.atis==='Z'?65:this.atis.charCodeAt(0)+1);
+        this.atisBroadcast=this.buildAtisBroadcast();
       }
       if (this.t >= this.next.wx) {
         this.next.wx = this.t + this.rng.range(240, 600);
@@ -1693,20 +1964,20 @@ const ATC = {};
     refreshOperationalAlerts() {
       const next = [];
       const moving = this.acs.filter(a => !a.removed && a.onGround && ['push','taxi','exiting','lineup','luaw','takeoff','rollout'].includes(a.phase));
-      const add = (key, severity, title, detail, x, y) => next.push({ key, severity, title, detail, x, y, t: this.t });
+      const add = (key, severity, title, detail, x, y, aircraft = [], surface = null) => next.push({ key, severity, title, detail, x, y, aircraft, surface, t: this.t });
       // Runway occupancy / incursion risks: runway occupied while another aircraft
       // is cleared or positioned to enter, depart, or land on the same strip.
       for (const a of this.acs) {
         if (a.removed || !a.onGround) continue;
         if (this.onAnyRunway(a) && a.rwy && this.isRunwayClosed(a.rwy.id))
-          add(`closed-rwy-${a.id}-${a.rwy.id}`, 'critical', 'Closed runway occupied', `${a.cs} is on closed runway ${a.rwy.id}.`, a.x, a.y);
+          add(`closed-rwy-${a.id}-${a.rwy.id}`, 'critical', 'Closed runway occupied', `${a.cs} is on closed runway ${a.rwy.id}.`, a.x, a.y, [a.id], {kind:'runway',id:a.rwy.rwyId});
         if (!this.onAnyRunway(a)) continue;
         const rid = a.rwy && a.rwy.rwyId;
         const contenders = this.acs.filter(b => b !== a && !b.removed && b.rwy && b.rwy.rwyId === rid && (
           (!b.onGround && (b.phase === 'final' || b.phase === 'inbound') && b.clr && b.clr.land) ||
           (b.onGround && ['lineup','luaw','takeoff'].includes(b.phase) && (b.clr && b.clr.to || b.phase === 'takeoff'))
         ));
-        for (const b of contenders) add(`incursion-${a.id}-${b.id}-${rid}`, 'critical', 'RUNWAY INCURSION RISK', `${a.cs} occupies runway ${a.rwy.id} while ${b.cs} is cleared/positioned to use the same runway.`, a.x, a.y);
+        for (const b of contenders) add(`incursion-${a.id}-${b.id}-${rid}`, 'critical', 'RUNWAY INCURSION RISK', `${a.cs} occupies runway ${a.rwy.id} while ${b.cs} is cleared/positioned to use the same runway.`, a.x, a.y, [a.id,b.id], {kind:'runway',id:a.rwy.id});
       }
       // Ground congestion: proximity plus overlapping taxiway route segments.
       const routeTws = a => new Set((a.path && a.path.nodeS || []).flatMap(q => (this.N[q.node] && this.N[q.node].tws) || []));
@@ -1714,13 +1985,13 @@ const ATC = {};
         const a = moving[i], b = moving[j];
         if (a.phase === 'takeoff' || b.phase === 'takeoff' || a.phase === 'rollout' || b.phase === 'rollout') continue;
         const d = A.dist(a, b), shared = [...routeTws(a)].filter(t => routeTws(b).has(t));
-        if (d < 260) add(`taxi-close-${a.id}-${b.id}`, 'warning', 'Taxiway traffic conflict', `${a.cs} and ${b.cs} are within ${Math.round(d)} ft on the movement area.`, (a.x+b.x)/2, (a.y+b.y)/2);
-        else if (d < 520 && shared.length) add(`taxi-bottleneck-${a.id}-${b.id}`, 'warning', 'Taxiway bottleneck', `${a.cs} and ${b.cs} share taxiway ${shared.slice(0,2).join('/')} with limited spacing.`, (a.x+b.x)/2, (a.y+b.y)/2);
+        if (d < 260) add(`taxi-close-${a.id}-${b.id}`, 'warning', 'Taxiway traffic conflict', `${a.cs} and ${b.cs} are within ${Math.round(d)} ft on the movement area.`, (a.x+b.x)/2, (a.y+b.y)/2, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
+        else if (d < 520 && shared.length) add(`taxi-bottleneck-${a.id}-${b.id}`, 'warning', 'Taxiway bottleneck', `${a.cs} and ${b.cs} share taxiway ${shared.slice(0,2).join('/')} with limited spacing.`, (a.x+b.x)/2, (a.y+b.y)/2, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
       }
       // Aircraft approaching or occupying a closed taxiway segment.
       for (const a of moving) {
         const used = [...routeTws(a)].filter(t => this.closedTaxiways.has(t));
-        if (used.length) add(`closed-twy-${a.id}-${used.join('-')}`, 'critical', 'Closed taxiway occupied / route conflict', `${a.cs} route includes closed taxiway ${used.join(', ')}.`, a.x, a.y);
+        if (used.length) add(`closed-twy-${a.id}-${used.join('-')}`, 'critical', 'Closed taxiway occupied / route conflict', `${a.cs} route includes closed taxiway ${used.join(', ')}.`, a.x, a.y, [a.id], {kind:'taxiway',id:used[0]});
       }
       // A stopped aircraft on a taxi route can block the flow even without a
       // near-collision. Ignore parked aircraft at stands and parking spots.
@@ -1729,7 +2000,7 @@ const ATC = {};
         if (a === b || A.dist(a,b) > 360) continue;
         const shared = [...routeTws(a)].filter(t => routeTws(b).has(t));
         if (shared.length || A.dist(a,b) < 210)
-          add(`taxi-blocked-${a.id}-${b.id}`, 'warning', 'Taxiway blocked', `${b.cs} is stopped ahead of ${a.cs}${shared.length ? ` on taxiway ${shared.slice(0,2).join('/')}` : ''}.`, b.x, b.y);
+          add(`taxi-blocked-${a.id}-${b.id}`, 'warning', 'Taxiway blocked', `${b.cs} is stopped ahead of ${a.cs}${shared.length ? ` on taxiway ${shared.slice(0,2).join('/')}` : ''}.`, b.x, b.y, [a.id,b.id], {kind:'taxiway',id:shared[0] || null});
       }
       const old = new Map(this.alerts.map(a => [a.key, a]));
       this.alerts = next.map(a => Object.assign(a, { since: old.has(a.key) ? old.get(a.key).since : this.t }));
@@ -3784,17 +4055,33 @@ const ATC = {};
     draw(now) {
       const ctx = this.ctx, sim = this.sim, wx = sim.wx, sc = this.view.scale;
       this.drawStatic();
-      // Operational overlays: closures are deliberately conspicuous on the live airport view.
-      { const sim=this.sim,ctx=this.ctx; ctx.save(); this.screenT(ctx); ctx.font='700 11px ui-monospace,monospace';
-        for(const id of sim.closedTaxiways||[]){const tw=sim.ap.tw[id];if(!tw)continue;const ns=tw.nodes||[];for(let j=1;j<ns.length;j++){const n1=sim.ap.nodes[ns[j-1]],n2=sim.ap.nodes[ns[j]];if(!n1||!n2)continue;const p1=this.w2s(n1.x,n1.y),p2=this.w2s(n2.x,n2.y);ctx.strokeStyle='#ff3b30';ctx.lineWidth=5;ctx.setLineDash([8,5]);ctx.beginPath();ctx.moveTo(...p1);ctx.lineTo(...p2);ctx.stroke();ctx.setLineDash([]);const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2;ctx.fillStyle='#ff3b30';ctx.fillText(`× ${id} CLOSED`,mx+4,my-4);}}
-        for(const id of sim.closedRunways||[]){const r=sim.ap.runways.find(q=>q.id===id);if(!r)continue;const p1=this.w2s(r.a.x,r.a.y),p2=this.w2s(r.b.x,r.b.y);ctx.strokeStyle='#ff3b30';ctx.lineWidth=7;ctx.setLineDash([14,8]);ctx.beginPath();ctx.moveTo(...p1);ctx.lineTo(...p2);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#ff3b30';ctx.fillText(`RUNWAY ${id} CLOSED`,(p1[0]+p2[0])/2,(p1[1]+p2[1])/2);}
-        const alerts=(sim.alerts||sim.activeAlerts||[]).filter(x=>x.active!==false);if(alerts.length){ctx.fillStyle='#2a1010';ctx.fillRect(12,12,Math.min(this.W-24,330),26+Math.min(3,alerts.length)*18);ctx.fillStyle='#ff6961';ctx.fillText(`⚠ ${alerts.length} ACTIVE AIRFIELD ALERT${alerts.length===1?'':'S'}`,22,20);alerts.slice(0,3).forEach((x,i)=>{ctx.fillText(String(x.title||x.kind||'Operational alert').slice(0,42),22,38+i*16);});}
-        ctx.restore(); }
 
       this.screenT(ctx);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.drawImage(this.cache, 0, 0);
       this.screenT(ctx);
+      // Draw closures AFTER the cached airport map so the markings remain visible.
+      { const sim=this.sim,ctx=this.ctx; ctx.save(); ctx.font='700 11px ui-monospace,monospace'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        for (const id of sim.closedTaxiways || []) {
+          const tw=sim.ap.tw[id]; if(!tw) continue; const ns=tw.nodes||[];
+          for(let j=1;j<ns.length;j++) { const n1=sim.ap.nodes[ns[j-1]],n2=sim.ap.nodes[ns[j]]; if(!n1||!n2) continue;
+            const p1=this.w2s(n1.x,n1.y),p2=this.w2s(n2.x,n2.y);
+            ctx.save(); ctx.lineCap='round'; ctx.strokeStyle='rgba(255,35,45,.28)'; ctx.lineWidth=18; ctx.beginPath(); ctx.moveTo(...p1); ctx.lineTo(...p2); ctx.stroke();
+            ctx.strokeStyle='#ff303b'; ctx.lineWidth=5; ctx.setLineDash([9,5]); ctx.beginPath(); ctx.moveTo(...p1); ctx.lineTo(...p2); ctx.stroke(); ctx.setLineDash([]);
+            // Repeated red X hatching makes the closure unmistakable at normal zoom.
+            const dx=p2[0]-p1[0],dy=p2[1]-p1[1],len=Math.hypot(dx,dy),count=Math.max(1,Math.floor(len/24));
+            ctx.strokeStyle='#ff303b'; ctx.lineWidth=2.5;
+            for(let k=0;k<=count;k++){const t=count?k/count:0,x=p1[0]+dx*t,y=p1[1]+dy*t;ctx.beginPath();ctx.moveTo(x-5,y-5);ctx.lineTo(x+5,y+5);ctx.moveTo(x-5,y+5);ctx.lineTo(x+5,y-5);ctx.stroke();}
+            ctx.restore();
+          }
+          const mid=ns.length?sim.ap.nodes[ns[Math.floor(ns.length/2)]]:null;
+          if(mid){const q=this.w2s(mid.x,mid.y);ctx.fillStyle='#ff303b';ctx.fillRect(q[0]-48,q[1]-11,96,22);ctx.fillStyle='#fff';ctx.fillText(`${id} CLOSED`,q[0],q[1]);}
+        }
+        for(const id of sim.closedRunways || []) { const r=sim.ap.runways.find(q=>q.id===id); if(!r) continue; const p1=this.w2s(r.a.x,r.a.y),p2=this.w2s(r.b.x,r.b.y);
+          ctx.save();ctx.lineCap='round';ctx.strokeStyle='rgba(255,20,30,.30)';ctx.lineWidth=28;ctx.beginPath();ctx.moveTo(...p1);ctx.lineTo(...p2);ctx.stroke();ctx.strokeStyle='#ff2635';ctx.lineWidth=9;ctx.setLineDash([18,9]);ctx.beginPath();ctx.moveTo(...p1);ctx.lineTo(...p2);ctx.stroke();ctx.setLineDash([]);
+          const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2;ctx.fillStyle='#b51220';ctx.fillRect(mx-74,my-13,148,26);ctx.fillStyle='#fff';ctx.fillText(`RWY ${id} CLOSED`,mx,my);ctx.restore(); }
+        const alerts=(sim.alerts||[]).filter(x=>x.active!==false); if(alerts.length){ctx.fillStyle='#2a1010';ctx.fillRect(12,12,Math.min(this.W-24,330),26+Math.min(3,alerts.length)*18);ctx.fillStyle='#ff6961';ctx.textAlign='left';ctx.fillText(`⚠ ${alerts.length} ACTIVE AIRFIELD ALERT${alerts.length===1?'':'S'}`,22,20);alerts.slice(0,3).forEach((x,i)=>ctx.fillText(String(x.title||x.kind||'Operational alert').slice(0,42),22,38+i*16));}
+        ctx.restore(); }
       const P = this.pal();
       // pattern guide
       if (this.opts.guide) {
@@ -3815,6 +4102,17 @@ const ATC = {};
       const acs = sim.acs.filter(a => !a.removed).sort((a, b) => (a.onGround ? 0 : a.alt) - (b.onGround ? 0 : b.alt));
       const vis = new Map();
       for (const ac of acs) vis.set(ac, this.visFor(ac));
+      // Connected history tracks for airborne arrivals, pattern traffic and departures.
+      ctx.save(); ctx.lineWidth=2; ctx.setLineDash([5,4]);
+      for (const ac of acs) {
+        if (ac.onGround || !ac.hist || ac.hist.length < 2) continue;
+        const pattern = ac.phase === 'pattern' || ac.role === 'pat' || ac.role === 'vin';
+        const colour = pattern ? '#ffd166' : ac.phase === 'inbound' || ac.phase === 'final' ? '#63d9ff' : '#b7a1ff';
+        ctx.strokeStyle=colour; ctx.globalAlpha=.78; ctx.beginPath();
+        ac.hist.forEach((h,i)=>{const q=this.w2s(h.x,h.y);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}); ctx.stroke();
+        const last=ac.hist[ac.hist.length-1],q=this.w2s(last.x,last.y);ctx.setLineDash([]);ctx.fillStyle=colour;ctx.beginPath();ctx.arc(q[0],q[1],3,0,Math.PI*2);ctx.fill();ctx.setLineDash([5,4]);
+      }
+      ctx.restore();
       const sym = this.opts.sym || 1; const kMin = (ac) => { const minPx = (ac.T.ga ? 15 : ac.T.kind === 'bizjet' ? 18 : ac.T.wake === 'H' ? 32 : 25) * sym; return Math.max(sc, minPx / ac.T.len); };
       // shadows
       if ((wx.dark || 0) < 0.6 && wx.visFt > 0.6 * 5280) {
@@ -3992,6 +4290,8 @@ const ATC = {};
         for (let i = 0; i < 140; i++) { const x = ((i * 97.3 + t * 160) % (this.W + 40)) - 20; const y = ((i * 57.1 + t * 900) % (this.H + 40)) - 20; ctx.moveTo(x, y); ctx.lineTo(x - 3, y + 12); }
         ctx.stroke(); ctx.restore();
       }
+      // active alert overlays blink yellow/red and mark every implicated aircraft and surface
+      this.drawAlertHighlights(ctx, now);
       // tags
       this.drawTags(ctx, acs, vis, now);
       // compass / scale / wind
@@ -4004,6 +4304,20 @@ const ATC = {};
       if (ac.role === 'arr') return '#63d3f2';
       return '#7fe39a';
     }
+    drawAlertHighlights(ctx, now) {
+      const sim=this.sim, phase=Math.floor(now/320)%2===0, active=sim.alerts||[]; if(!active.length)return;
+      ctx.save(); ctx.lineCap='round'; ctx.lineJoin='round';
+      for(const a of active){
+        const col=phase?'#ff3030':'#ffd43b';
+        if(a.surface&&a.surface.kind==='runway'){
+          const rw=sim.ap.rwyById(a.surface.id); if(rw){const p= this.w2s(rw.a.x,rw.a.y),q=this.w2s(rw.b.x,rw.b.y);ctx.strokeStyle=col;ctx.lineWidth=13;ctx.globalAlpha=.72;ctx.beginPath();ctx.moveTo(...p);ctx.lineTo(...q);ctx.stroke();ctx.globalAlpha=1;}
+        } else if(a.surface&&a.surface.kind==='taxiway'&&sim.ap.tw[a.surface.id]){
+          const tw=sim.ap.tw[a.surface.id];ctx.strokeStyle=col;ctx.lineWidth=12;ctx.globalAlpha=.72;ctx.beginPath();tw.nodes.forEach((n,i)=>{const p=this.w2s(sim.N[n].x,sim.N[n].y);i?ctx.lineTo(...p):ctx.moveTo(...p);});ctx.stroke();ctx.globalAlpha=1;
+        }
+        const ids=a.aircraft||[]; for(const id of ids){const ac=sim.byId(id);if(!ac)continue;const p=this.w2s(ac.x,ac.y);ctx.strokeStyle=col;ctx.lineWidth=4;ctx.shadowColor=col;ctx.shadowBlur=13;ctx.beginPath();ctx.arc(p[0],p[1],17,0,Math.PI*2);ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle=col;ctx.font='bold 11px ui-monospace,monospace';ctx.fillText('!',p[0]+13,p[1]-18);}
+      }
+      ctx.restore();
+    }
     drawTags(ctx, acs, vis, now) {
       const sim = this.sim; const mode = this.opts.tags;
       ctx.save();
@@ -4011,10 +4325,10 @@ const ATC = {};
       this.tagBoxes = [];
       for (const ac of acs) {
         const isSel = this.sel === ac.id, hov = this.hover === ac.id;
-        if (mode === 'off' && !isSel && !hov && !ac.req) continue;
-        if (mode === 'air' && ac.onGround && !isSel && !hov && !ac.req) continue;
-        if (ac.phase === 'parkedArr') continue;
-        if (ac.phase === 'parked' && !ac.req && !isSel && !hov) continue;
+        if (mode === 'off' && !isSel && !hov && !ac.req && !ac.handoffPending) continue;
+        if (mode === 'air' && ac.onGround && !isSel && !hov && !ac.req && !ac.handoffPending) continue;
+        if (ac.phase === 'parkedArr' && !ac.handoffPending && !ac.req) continue;
+        if (ac.phase === 'parked' && !ac.req && !ac.handoffPending && !isSel && !hov) continue;
         const [x, y] = this.w2s(ac.x, ac.y);
         if (x < -40 || y < -40 || x > this.W + 40 || y > this.H + 40) continue;
         const col = isSel ? '#ffe066' : this.tagColor(ac, now);
@@ -4022,18 +4336,19 @@ const ATC = {};
         const clr = sim.clrTag(ac);
         const l1 = `${ac.cs}${clr ? ' ' + clr : ''}`;
         const l2 = ac.onGround
-          ? `${ac.type} ${ac.T.wakeLetter}${ac.spd > 3 ? ' ' + Math.round(ac.spd / A.KT) : ''}`
-          : `${String(Math.round(ac.alt / 100)).padStart(3, '0')} ${Math.round(ac.gsFps / A.KT / 10).toString().padStart(2, '0')} ${ac.type}`;
-        const ox = 16, oy = -30;
-        const w = Math.max(ctx.measureText(l1).width, ctx.measureText(l2).width) + 8;
+          ? `${ac.type} ${ac.T.wakeLetter}${ac.spd > 3 ? ' ' + Math.round(ac.spd / A.KT) : ''} ${ac.squawk || ''}`
+          : `${String(Math.round(ac.alt / 100)).padStart(3, '0')} ${Math.round(ac.gsFps / A.KT / 10).toString().padStart(2, '0')} ${ac.type} ${ac.squawk || ''}`;
+        const l3 = `${A.fmtHdg(ac.hdg)}° · ${ac.controller || 'UNASSIGNED'}`;
+        const ox = 16, oy = -42;
+        const w = Math.max(ctx.measureText(l1).width, ctx.measureText(l2).width, ctx.measureText(l3).width) + 8;
         ctx.strokeStyle = col; ctx.globalAlpha = 0.7; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(x + 4, y - 4); ctx.lineTo(x + ox, y + oy + 26); ctx.stroke();
         ctx.globalAlpha = 1;
         ctx.fillStyle = isSel ? 'rgba(30,26,8,.82)' : 'rgba(8,12,16,.62)';
-        ctx.fillRect(x + ox, y + oy, w, 28);
-        if (isSel) { ctx.strokeStyle = col; ctx.strokeRect(x + ox + 0.5, y + oy + 0.5, w - 1, 27); }
-        ctx.fillStyle = col; ctx.fillText(l1, x + ox + 4, y + oy + 2); ctx.fillText(l2, x + ox + 4, y + oy + 15);
-        this.tagBoxes.push({ id: ac.id, x: x + ox, y: y + oy, w, h: 28 });
+        ctx.fillRect(x + ox, y + oy, w, 41);
+        if (isSel) { ctx.strokeStyle = col; ctx.strokeRect(x + ox + 0.5, y + oy + 0.5, w - 1, 40); }
+        ctx.fillStyle = col; ctx.fillText(l1, x + ox + 4, y + oy + 2); ctx.fillText(l2, x + ox + 4, y + oy + 15); ctx.fillText(l3, x + ox + 4, y + oy + 28);
+        this.tagBoxes.push({ id: ac.id, x: x + ox, y: y + oy, w, h: 41 });
         // target marker when the airframe is not visible
         const v = vis.get(ac);
         if (v.frame < 0.3 || isSel) {
@@ -4084,7 +4399,9 @@ const ATC = {};
     constructor(canvas, sim) { this.c = canvas; this.ctx = canvas.getContext('2d'); this.sim = sim; this.range = 12 * NM; this.sel = null; this.opts = { rings:true, altitude:true, leader:true, speed:true, trail:true }; }
     resize() {
       const r = this.c.getBoundingClientRect(); this.dpr = Math.min(2, window.devicePixelRatio || 1);
-      this.W = r.width; this.H = r.height; this.c.width = this.W * this.dpr; this.c.height = this.H * this.dpr;
+      this.W = Math.max(0, r.width); this.H = Math.max(0, r.height);
+      const w=Math.max(1,Math.round(this.W*this.dpr)),h=Math.max(1,Math.round(this.H*this.dpr));
+      if(this.c.width!==w)this.c.width=w; if(this.c.height!==h)this.c.height=h;
     }
     w2s(x, y) { const s = Math.min(this.W, this.H) / 2 / this.range; return [this.W / 2 + (x - this.cx) * s, this.H / 2 - (y - this.cy) * s]; }
     draw() {
@@ -4121,7 +4438,7 @@ const ATC = {};
         const isSel = this.sel === ac.id;
         const col = isSel ? '#ffe066' : ac.req ? '#ffb33c' : ac.flight === 'VFR' ? '#d9f7e6' : '#58f08f';
         ctx.fillStyle = col; ctx.globalAlpha = 0.35;
-        if (this.opts.trail) for (const h of ac.hist) { const [hx, hy] = this.w2s(h.x, h.y); ctx.fillRect(hx - 1, hy - 1, 2, 2); }
+        if (this.opts.trail && ac.hist && ac.hist.length > 1) { ctx.strokeStyle=col;ctx.globalAlpha=.55;ctx.lineWidth=1.5;ctx.beginPath();ac.hist.forEach((h,i)=>{const q=this.w2s(h.x,h.y);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});ctx.stroke();ctx.globalAlpha=1; }
         ctx.globalAlpha = 1;
         ctx.fillRect(x - 2.5, y - 2.5, 5, 5);
         const hv = A.hv(ac.hdg); ctx.strokeStyle = col; ctx.lineWidth = 1;
@@ -4196,9 +4513,15 @@ const ATC = {};
     }
     bindStatic() {
       $('#startBtn').onclick = () => this.start();
+      document.querySelectorAll('[data-menu-target]').forEach(b => b.onclick = () => { const target = document.getElementById(b.dataset.menuTarget); if (target) target.scrollIntoView({behavior:'smooth',block:'start'}); document.querySelectorAll('.home-nav button').forEach(x => x.classList.toggle('active', x === b)); });
+      $('#homeBoardBtn').onclick = () => this.showBoard();
       $('#helpBtn').onclick = () => this.modal('#help', true);
       $('#reportBtn').onclick = () => { this.renderReport(); this.modal('#report', true); };
       $('#opsBtn').onclick = () => { this.renderOps(); this.modal('#ops', true); };
+      $('#hotlineBtn').onclick = () => this.modal('#hotline', true);
+      const sendHotline = msg => { const to=$('#hotlineTo').value; const names={ground:'Ground',tower:'Tower',clearance:'Clearance Delivery',departure:'Departure',approach:'Approach'}; const line=`HOTLINE → ${names[to]}: ${msg}`; this.logLine({from:'sys',text:line,cls:'sys',t:this.sim?this.sim.t:0}); $('#hotlineStatus').textContent=`Transmitted to ${names[to]}.`; if(this.sim){this.sim.incidents.push({t:this.sim.t,type:'Coordination',text:line});this.logLine({from:'sys',text:`${names[to]}: Roger. Coordination message received; advise if further action is required.`,cls:'sys',t:this.sim.t+1});} };
+      $('#hotlineSend').onclick=()=>{const m=$('#hotlineCustom').value.trim();if(m)sendHotline(m);};
+      $('#hotlinePresets').querySelectorAll('[data-hotline]').forEach(b=>b.onclick=()=>sendHotline(b.dataset.hotline));
       $('#lightsBtn').onclick = () => { this.renderLighting(); this.modal('#lighting', true); };
       $('#alertsBtn').onclick = () => { this.renderAlerts(true); this.modal('#alerts', true); };
       $('#atisBtn').onclick = () => { this.renderAtis(); this.modal('#atisPanel', true); };
@@ -4232,6 +4555,12 @@ const ATC = {};
       };
       document.querySelectorAll('input[name=position]').forEach(r => r.addEventListener('change', syncAISectors)); syncAISectors();
       document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => this.modal('#' + b.dataset.close, false));
+      $('#weatherBtn').onclick = () => this.openWeatherControl();
+      $('#trafficGenBtn').onclick = () => this.openTrafficGenerator();
+      for (const id of ['wxDir','wxKt']) { const el=$('#'+id), out=$('#'+id+'Val'); if(el&&out) el.oninput=()=>out.textContent=el.value+(id==='wxDir'?'°':' kt'); }
+      document.querySelectorAll('[data-wx-set]').forEach(b=>b.onclick=()=>{const k=b.dataset.wxSet;const map={vmc:[10,25000,false],mvfr:[5,2800,false],imc:[1.5,700,true],fog:[.375,200,false]}[k];$('#wxVis').value=String(map[0]);$('#wxCeil').value=String(map[1]);$('#wxRain').checked=map[2];$('#wxDir').value=this.sim.wx.windDir;$('#wxKt').value=this.sim.wx.windKt;$('#wxDirVal').textContent=$('#wxDir').value+'°';$('#wxKtVal').textContent=$('#wxKt').value+' kt';this.applyWeather(k);});
+      $('#wxApply').onclick=()=>this.applyWeather(null);
+      $('#customCreate').onclick=()=>this.createCustomTraffic();
       $('#pauseBtn').onclick = () => this.togglePause();
       document.querySelectorAll('[data-speed]').forEach(b => b.onclick = () => { if (this.comp) return; this.speed = +b.dataset.speed; this.syncTop(); });
       $('#tagsBtn').onclick = () => { const m = ['all', 'air', 'off']; this.r.opts.tags = m[(m.indexOf(this.r.opts.tags) + 1) % 3]; this.syncTop(); };
@@ -4325,8 +4654,9 @@ const ATC = {};
       const flow = { arrivals: $('#arrivalsOn').checked, departures: $('#departuresOn').checked, arrHr: this.comp ? densityFlow.arrHr : +$('#arrRate').value, depHr: this.comp ? densityFlow.depHr : +$('#depRate').value, randomClosures: $('#randomClosures').checked, closureRate: +$('#closureRate').value };
       const pos = v('position') || 'local';
       const aiSectors = { ground: ['tower','clearance','local'].includes(pos) && $('#aiGround').checked, clearance: ['tower','ground','local'].includes(pos) && $('#aiDel').checked, tower: false, departure: ['tower','local'].includes(pos) && $('#aiDeparture').checked, approach: ['tower','local'].includes(pos) && $('#aiApproach').checked };
-      const opts = { density: this.comp ? 'heavy' : (v('dens') || 'light'), map: v('map') || 'single', mode, position: pos, flow, aiSectors };
+      const mapChoice = v('map') || 'single'; const opts = { density: this.comp ? 'heavy' : (v('dens') || 'medium'), map: mapChoice, mode, position: pos, flow, aiSectors };
       this.position = opts.position;
+      const freqMap={local:'118.7 / 121.7',ground:'121.7',tower:'118.7',clearance:'121.9'}; const fl=document.getElementById('freqLabel'); if(fl)fl.textContent=`${({local:'LOCAL / GND',ground:'GROUND',tower:'TOWER',clearance:'CLEARANCE DELIVERY'}[pos])} · ${freqMap[pos]}`;
       this.sim = new A.Sim(opts);
       const cv = $('#view');
       if (!this.r) {
@@ -4343,10 +4673,17 @@ const ATC = {};
       $('#log').innerHTML = '';
       this.modal('#start', false);
       this.paused = false; this.speed = 1; document.body.classList.remove('comp-paused');
+      document.body.classList.remove('full-radar');
+      const rb=document.getElementById('radarAirportBtn'); if(rb){rb.textContent='Radar view';rb.setAttribute('aria-pressed','false');}
+      const fb=document.getElementById('radarFullBtn'); if(fb)fb.textContent='Full radar';
       this.r.resize(); this.b.resize();
       this.setView(this.mobile && window.innerHeight > window.innerWidth ? 'field' : 'pattern');
       const w = this.sim.wx;
       this.logLine({ from: 'sys', text: `Position open: ${{local:'Local + Ground',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]}${Object.entries(this.sim.aiSectors).filter(([k,v])=>v).map(([k])=>' · AI '+({ground:'Ground',clearance:'DEL',tower:'Tower',departure:'Departure',approach:'Approach'}[k])).join('')}, ${this.sim.ap.icao} (${this.sim.ap.name} (${this.sim.ap.profileNote || this.sim.ap.desc || 'training layout'}). In use this shift: ${this.sim.ends.map(e => `runway ${e.id} (${e.sideSg > 0 ? 'left' : 'right'} traffic)`).join(', ')}${this.sim.ends.length > 1 ? `; VFR pattern on ${this.sim.vfrEnds.map(e => e.id).join('/')}` : ''}. ${w.label}, wind ${this.sim.windStr()}. Click an aircraft, then use the buttons (number keys work too). Press ? for help.`, cls: 'sys', t: 0 });
+      if(this.position==='clearance'){
+        const waiting=this.sim.acs.filter(a=>!a.removed&&a.onGround&&a.flight==='IFR'&&!a.ifrClearance&&['parked','stopped'].includes(a.phase)).slice(0,5);
+        waiting.forEach((a,i)=>{a.controller='Ground';a.req=a.req||{type:'clearance',text:`Ground, ${a.say}, request IFR clearance coordination.`,t:this.sim.t+i};this.logLine({from:'gnd',text:`Ground → Clearance Delivery: ${a.cs} requesting IFR clearance coordination.`,cls:'sys',t:this.sim.t+i});});
+      }
       this.syncTop(); this.renderPanel(true); this.renderAlerts(true);
     }
     togglePause() { this.paused = !this.paused; this.syncTop(); }
@@ -4372,7 +4709,7 @@ const ATC = {};
           const rect = cv.getBoundingClientRect(); const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
           const id = this.r.pick(sx, sy);
           if (id) this.select(id);
-          else { this.select(null); this.mapClick(this.r.s2w(sx, sy)); }
+          else { const handled = this.mapClick(this.r.s2w(sx, sy)); if (!handled) this.select(null); }
         }
         drag = null;
       });
@@ -4397,7 +4734,7 @@ const ATC = {};
         if (tp && !tp.moved && tp.n === 1) {
           const rect = cv.getBoundingClientRect(); const sx = tp.x - rect.left, sy = tp.y - rect.top;
           const id = this.r.pick(sx, sy);
-          if (id) this.select(id); else { this.select(null); this.mapClick(this.r.s2w(sx, sy)); }
+          if (id) this.select(id); else { const handled = this.mapClick(this.r.s2w(sx, sy)); if (!handled) this.select(null); }
           e.preventDefault();
         }
         tp = null;
@@ -4405,8 +4742,19 @@ const ATC = {};
     }
     bindRadarControls(){
       const $=id=>document.getElementById(id);const b=$('radarFullBtn'),a=$('radarAirportBtn');
-      if(b)b.onclick=()=>{document.body.classList.add('full-radar');setTimeout(()=>this.b.resize(),40);};
-      if(a)a.onclick=()=>{document.body.classList.remove('full-radar');setTimeout(()=>this.b.resize(),40);};
+      const setRadar=on=>{
+        const active=!!on; document.body.classList.toggle('full-radar',active);
+        if(b)b.textContent=active?'Exit full radar':'Full radar';
+        if(a){a.textContent=active?'Airport view':'Radar view';a.setAttribute('aria-pressed',String(active));}
+        // Canvas dimensions must be measured after the grid has reflowed. Two
+        // frames avoid the zero-size canvas race when #scope is display:none.
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          if(this.b)this.b.resize(); if(this.r)this.r.resize();
+          if(this.r)this.r.cacheKey='';
+        }));
+      };
+      if(b)b.onclick=()=>setRadar(!document.body.classList.contains('full-radar'));
+      if(a)a.onclick=()=>setRadar(!document.body.classList.contains('full-radar'));
       for(const [id,key] of [['radarRings','rings'],['radarAlt','altitude'],['radarLeader','leader'],['radarSpeed','speed'],['radarTrail','trail']]){const e=$(id);if(e)e.onchange=()=>{this.b.opts[key]=e.checked;};}
       const rg=$('radarRange');if(rg)rg.onchange=()=>{this.b.range=Number(rg.value)*A.NM;};const rr=$('readbackRate'),rv=$('readbackRateVal');if(rr){rr.oninput=()=>{this.readbackErrorRate=Number(rr.value)/100;if(rv)rv.textContent=rr.value+'%';};}
     }
@@ -4430,6 +4778,60 @@ const ATC = {};
       const res = this.sim.exec(line, this.sel);
       if (res.ac && res.ac.id !== this.sel) this.select(res.ac.id);
       this.renderPanel(true);
+    }
+    openWeatherControl() {
+      const w=this.sim.wx; $('#wxDir').value=w.windDir; $('#wxKt').value=w.windKt;
+      $('#wxDirVal').textContent=w.windDir+'°'; $('#wxKtVal').textContent=w.windKt+' kt';
+      $('#wxVis').value=String(Math.max(.25,Math.min(10,Math.round((w.visFt/5280)*4)/4)));
+      $('#wxCeil').value=String(w.ceil==null?25000:(w.ceil||25000)); $('#wxRain').checked=!!w.rain; $('#wxAuto').checked=!this.sim.manualWeather;
+      this.modal('#weatherControl',true);
+    }
+    applyWeather(preset) {
+      const s=this.sim, dir=+$('#wxDir').value, kt=+$('#wxKt').value, vis=+$('#wxVis').value, ceil=+$('#wxCeil').value, rain=$('#wxRain').checked;
+      let key=preset;
+      if(!key) key=vis>=3 && ceil>=1000?'vmc':vis>=1 && ceil>=1000?'mvfr':vis<=.5?'fog':'imc';
+      s.setWx(key); s.wx.vis=vis; s.wx.visTarget=vis*5280; s.wx.visFt=vis*5280; s.wx.ceil=ceil>=25000?null:ceil; s.wx.ceilFt=ceil; s.wx.rain=rain; s.wx.cond=rain?'-RA OVC'+String(Math.round(ceil/100)).padStart(3,'0'):s.wx.cond;
+      s.wx.vfr=vis>=3 && ceil>=1000; s.setWind(dir,kt,0); s.manualWeather=true; s.autoWeather=$('#wxAuto').checked;
+      s.atis=String.fromCharCode(s.atis==='Z'?65:s.atis.charCodeAt(0)+1); s.atisBroadcast=s.buildAtisBroadcast();
+      s.sys(`Manual weather applied: wind ${A.fmtHdg(dir)}/${kt}, visibility ${vis} SM, ceiling ${ceil>=25000?'clear':ceil.toLocaleString()+' ft'}${rain?', rain':''}. ATIS ${s.atis}.`,'warn');
+      this.syncTop(); this.modal('#weatherControl',false);
+    }
+    openTrafficGenerator() {
+      const s=this.sim, sel=$('#customGate');
+      sel.innerHTML=s.ap.gates.map(g=>`<option value="${g.id}" ${g.occ||g.res?'disabled':''}>${g.id}${g.occ||g.res?' · occupied/reserved':''}</option>`).join('');
+      this.modal('#trafficGenerator',true);
+    }
+    createCustomTraffic() {
+      const s=this.sim, cs=($('#customCallsign').value||'').trim().toUpperCase().replace(/[^A-Z0-9-]/g,'').slice(0,16), type=$('#customType').value, dest=$('#customDest').value, gateId=$('#customGate').value;
+      const g=s.ap.gates.find(x=>x.id===gateId); if(!g||g.occ||g.res){this.logLine({from:'sys',text:'Choose an available gate before creating traffic.',cls:'warn',t:s.t});return;}
+      if(!cs){this.logLine({from:'sys',text:'Enter a callsign, for example SWA626.',cls:'warn',t:s.t});return;}
+      if(s.used.has(cs)){this.logLine({from:'sys',text:`Callsign ${cs} is already in use.`,cls:'warn',t:s.t});return;}
+      if(!A.TYPES[type]){this.logLine({from:'sys',text:`Aircraft type ${type} is not supported.`,cls:'warn',t:s.t});return;}
+      const airline=type==='C172'||type==='PA28'||type==='BE20'||type==='PC12'?null:'SWA';
+      const spec={cs,say:cs,type,airline};
+      const ac=s.makeAc(spec,{role:'dep',flight:'IFR',x:g.x,y:g.y,hdg:g.hdg,phase:'parked',node:g.node,gate:g.id,controller:'Ground'});
+      g.occ=ac.id; ac.destCity=dest; ac.flightPlan.destination=dest; ac.flightPlan.route='DCT '+dest; ac.depBrg=({ORD:50,DFW:195,ATL:120,DEN:275,LAX:250,SEA:300,BOS:70,MSP:10,CLT:100,PHX:240,MIA:140,IAH:180,SFO:270,DTW:60,BNA:115,STL:90})[dest]||90; ac.depDir=A.dirName(ac.depBrg);
+      ac.squawk=String(1000+((ac.id*37)%7000)).padStart(4,'0'); ac.sid=s.procedures.sid[Math.round(ac.depBrg/90)%4].name; ac.flightPlan.sid=ac.sid;
+      s.request(ac,'push',`Ground, ${ac.say}, gate ${g.id}, request pushback with information ${s.atis}.`);
+      this.logLine({from:'sys',text:`CUSTOM TRAFFIC CREATED · ${cs} · ${type} · ${dest} · GATE ${g.id}`,cls:'sys',t:s.t}); this.modal('#trafficGenerator',false); this.renderStrips(); this.syncTop();
+    }
+    requestHandoff(ac,target) {
+      const s=this.sim; if(!ac||!target||target===ac.controller)return;
+      if(ac.handoffPending){this.logLine({from:'sys',text:`${ac.cs} already has a pending handoff to ${ac.handoffPending.to}.`,cls:'warn',t:s.t});return;}
+      ac.handoffPending={from:ac.controller||({local:'Tower',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]||'Tower'),to:target,t:s.t};
+      ac.handoffStatus='Pending';
+      this.logLine({from:'sys',text:`HANDOFF REQUEST · ${ac.cs} → ${target} · awaiting acceptance`,cls:'sys',t:s.t});
+      if(['Ground','Tower','Clearance Delivery','Departure','Approach'].includes(target)){
+        if(target===({local:'Tower',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]||'Tower')){
+          this.logLine({from:'sys',text:`INCOMING HANDOFF · ${ac.cs} from ${ac.handoffPending.from}. Select the aircraft and accept the handoff.`,cls:'warn',t:s.t});
+        } else s.later(1.5,()=>{if(!ac.removed&&ac.handoffPending&&ac.handoffPending.to===target){const from=ac.handoffPending.from;ac.controller=target;ac.handoffPending=null;ac.handoffStatus='Accepted';ac.lastHandoff={from,to:target,t:s.t};this.logLine({from:'sys',text:`HANDOFF ACCEPTED · ${ac.cs} now with ${target}.`,cls:'sys',t:s.t});this.renderStrips();}});
+      }
+      this.renderPanel(true); this.renderStrips();
+    }
+    acceptHandoff(ac) {
+      if(!ac||!ac.handoffPending||ac.handoffPending.to!==({local:'Tower',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]||'Tower'))return;
+      const h=ac.handoffPending; ac.controller=h.to; ac.lastHandoff={from:h.from,to:h.to,t:this.sim.t}; ac.handoffPending=null; ac.handoffStatus='Accepted';
+      this.logLine({from:'sys',text:`HANDOFF ACCEPTED · ${ac.cs} from ${h.from}; now under your control.`,cls:'sys',t:this.sim.t}); this.renderPanel(true); this.renderStrips();
     }
     send(cmd) { const ac = this.sim.byId(this.sel); if (!ac) return; this.run(ac.cs + ' ' + cmd, true); }
 
@@ -4475,7 +4877,7 @@ const ATC = {};
     _speak(m) {
       const ss = window.speechSynthesis; if (!ss) return;
       if (ss.pending && this.spoken > 2) return;
-      const u = new SpeechSynthesisUtterance(m.text.replace(/\bG(\d)\b/g, 'gate $1').replace(/\b(\d{3})\b/g, (x) => x.split('').join(' ')));
+      const u = new SpeechSynthesisUtterance(m.text.replace(/\bG(\d+)\b/g, 'gate $1').replace(/\bundefined\b/gi,'say again').replace(/\b(\d{3})\b/g, (x) => x.split('').join(' ')));
       const id = m.ac ? m.ac.id : 0;
       if (this.voices.length) u.voice = this.voices[id % this.voices.length];
       u.pitch = 0.85 + (id * 37 % 30) / 100; u.rate = 1.12 + (id * 13 % 15) / 100;
@@ -4502,7 +4904,7 @@ const ATC = {};
       const sc = s.score;
       $('#score').textContent = sc.pts;
       $('#score').className = sc.pts < 0 ? 'neg' : '';
-      $('#counts').textContent = `${sc.landed} LDG · ${sc.departed} DEP · ${sc.tg} T&G · ${sc.srs + sc.wake + sc.incur + sc.conflicts} INC`;
+      $('#counts').textContent = `${sc.landed} LDG · ${sc.departed} DEP · ${sc.tg} T&G · ${s.incidents.length} INC`;
       $('#pauseBtn').textContent = this.paused ? '▶ Resume' : '❚❚ Pause';
       $('#pauseBtn').classList.toggle('on', this.paused);
       document.querySelectorAll('[data-speed]').forEach(b => b.classList.toggle('on', +b.dataset.speed === this.speed));
@@ -4646,8 +5048,9 @@ const ATC = {};
         if (!force && this.panelKey === k) return; this.panelKey = k; this.panelHasTaxi = false;
         const eligible = ac.flight === 'IFR' && ac.onGround && ['parked','stopped'].includes(ac.phase) && !ac.ifrClearance;
         const fp = ac.flightPlan || {};
-        el.innerHTML = `<div class="ph"><div><b>${esc(ac.cs)}</b> <span class="fr IFR">${esc(ac.flight)}</span><div class="pt2">${esc(ac.type)} · ${esc(fp.destination || ac.destCity || 'Destination pending')}</div></div><div class="ps">${ac.ifrClearance ? 'Clearance issued' : eligible ? 'Awaiting IFR clearance' : esc(s.status(ac))}</div>${ac.req ? `<div class="preq">“${esc(ac.req.text)}”</div>` : ''}</div><div class="pb"><div class="sec"><div class="sech">IFR flight plan</div><div class="row lab">Destination <input id="cdDest" class="csel" value="${esc(fp.destination || ac.destCity || 'ORD')}"></div><div class="row lab">Route <input id="cdRoute" class="csel" value="${esc(fp.route || ('DCT ' + (fp.destination || ac.destCity || 'ORD')))}"></div><div class="row lab">SID <select id="cdSid" class="csel">${s.procedures.sid.map(p=>`<option value="${p.name}" ${ac.sid===p.name?'selected':''}>${p.name} · ${p.route}</option>`).join('')}<option value="NO SID">NO SID</option></select></div><div class="row lab">Squawk <input id="cdSquawk" class="csel" maxlength="4" value="${ac.squawk || ((1000 + ac.id * 37) % 4096).toString(8).padStart(4,'0')}"></div><div class="row lab">Initial altitude <select id="cdAlt" class="csel"><option value="3000">3,000 ft</option><option value="5000" selected>5,000 ft</option><option value="7000">7,000 ft</option><option value="10000">10,000 ft</option><option value="12000">12,000 ft</option></select></div><div class="row"><button class="cb go big" id="issueClearance" ${eligible ? '' : 'disabled'}>Issue IFR clearance</button></div><div class="hintx">Issue → pilot readback → aircraft released to Ground for pushback/taxi.</div></div><div class="sec"><div class="sech">Flight plan details</div><div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Route</span><b>${esc(fp.route || 'Not assigned')}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b><span>SID</span><b>${esc(fp.sid || ac.sid || '—')}</b><span>STAR</span><b>${esc(fp.star || ac.star || '—')}</b></div></div></div>`;
+        el.innerHTML = `<div class="ph"><div><b>${esc(ac.cs)}</b> <span class="fr IFR">${esc(ac.flight)}</span><div class="pt2">${esc(ac.type)} · ${esc(fp.destination || ac.destCity || 'Destination pending')} · ${esc(ac.controller || 'Unassigned')}</div></div><div class="ps">${ac.ifrClearance ? 'Clearance issued' : eligible ? 'Awaiting IFR clearance' : esc(s.status(ac))}</div>${ac.req ? `<div class="preq">“${esc(ac.req.text)}”</div>` : ''}</div><div class="pb"><div class="sec"><div class="sech">IFR flight plan</div><div class="row lab">Destination <input id="cdDest" class="csel" value="${esc(fp.destination || ac.destCity || 'ORD')}"></div><div class="row lab">Route <input id="cdRoute" class="csel" value="${esc(fp.route || ('DCT ' + (fp.destination || ac.destCity || 'ORD')))}"></div><div class="row lab">SID <select id="cdSid" class="csel">${s.procedures.sid.map(p=>`<option value="${p.name}" ${ac.sid===p.name?'selected':''}>${p.name} · ${p.route}</option>`).join('')}<option value="NO SID">NO SID</option></select></div><div class="row lab">Squawk <input id="cdSquawk" class="csel" maxlength="4" value="${ac.squawk || ((1000 + ac.id * 37) % 4096).toString(8).padStart(4,'0')}"></div><div class="row lab">Initial altitude <select id="cdAlt" class="csel"><option value="3000">3,000 ft</option><option value="5000" selected>5,000 ft</option><option value="7000">7,000 ft</option><option value="10000">10,000 ft</option><option value="12000">12,000 ft</option></select></div><div class="row"><button class="cb go big" id="issueClearance" ${eligible ? '' : 'disabled'}>Issue IFR clearance</button></div><div class="hintx">Issue → pilot readback → aircraft released to Ground for pushback/taxi.</div></div><div class="sec"><div class="sech">Flight plan details</div><div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Route</span><b>${esc(fp.route || 'Not assigned')}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b><span>SID</span><b>${esc(fp.sid || ac.sid || '—')}</b><span>STAR</span><b>${esc(fp.star || ac.star || '—')}</b></div></div><div class="sec"><div class="sech">Manual handoff</div><div class="row"><select id="handoffTarget" class="csel"><option value="Ground">Ground</option><option value="Tower">Tower</option></select><button class="cb go" id="handoffBtn">Initiate handoff</button></div></div></div>`;
         const issue = $('#issueClearance'); if (issue) issue.onclick = () => this.issueClearance(ac.id);
+        const hb=$('#handoffBtn');if(hb)hb.onclick=()=>this.requestHandoff(ac,$('#handoffTarget').value);
         return;
       }
       const key = [this.position, ac.id, ac.phase, ready, crossing, ac.pat && ac.pat.leg, !!ac.req, ac.clr.land, ac.clr.to, ac.clr.luaw, ac.onGround, ac.ho, ac.expExit, ac.expedite, tb.dest, tb.via.join(','), ac.holdPos, ac.pat && ac.pat.ext, ac.pat && ac.pat.wantFull, ac.pat && ac.pat.laps, ac.pat && ac.pat.sg, ac.pat && ac.pat.nextSg, ac.pat && ac.pat.follow, !!ac.landed, ac.rwy && ac.rwy.id, !!ac.lahso, ac.circle && ac.circle.broke, !ac.onGround && ac.phase === 'final' ? s.sideStepEnds(ac).length + s.circleEnds(ac).length : 0, s.lahsoInfo && !ac.onGround ? !!s.lahsoInfo(ac) : 0].join('|');
@@ -4661,6 +5064,9 @@ const ATC = {};
         <div class="ps" id="pstat">${esc(s.status(ac))}</div>${ac.req ? `<div class="preq"><span id="preqw">${Math.round(s.t - ac.req.t)}s</span>“${esc(ac.req.text)}”</div>` : ''}</div>`;
       let body = '';
       const air = !ac.onGround;
+      const handoffTargets = ({local:['Ground','Tower','Clearance Delivery','Departure','Approach'],ground:['Tower','Clearance Delivery'],tower:['Ground','Departure','Approach'],clearance:['Ground'],})[this.position||'local'] || ['Ground','Tower','Clearance Delivery','Departure','Approach'];
+      body += sec('Controller handoff', `${ac.handoffPending && ac.handoffPending.to===({local:'Tower',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]||'Tower') ? `<div class="hintx">Incoming from ${esc(ac.handoffPending.from)} · awaiting your acceptance.</div><button class="cb go" id="acceptHandoffBtn">ACCEPT HANDOFF</button>` : ''}<div class="row"><select id="handoffTarget" class="csel">${handoffTargets.map(n=>`<option value="${n}">${n}</option>`).join('')}</select><button class="cb go" id="handoffBtn">Request handoff</button></div><div class="hintx">Outgoing transfers require recipient acceptance; incoming transfers appear as pending until accepted.</div>`);
+
       const fp = ac.flightPlan || {};
       if (ac.flight === 'IFR' || ac.role === 'dep') body += sec('Flight plan', `<div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Route</span><b>${esc(fp.route || (ac.destCity ? 'DCT ' + ac.destCity : '—'))}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b>${fp.sid || ac.sid ? `<span>SID</span><b>${esc(fp.sid || ac.sid)}</b>` : ''}${fp.star || ac.star ? `<span>STAR</span><b>${esc(fp.star || ac.star)}</b>` : ''}${ac.squawk ? `<span>Squawk</span><b>${esc(ac.squawk)}</b>` : ''}</div><p class="hintx">SID / STAR are simplified simulator training procedures, not published real-world charts.</p>`);
       const hdgOpts = (sel) => { sel = (Math.round(A.norm(sel) / 10) * 10) || 360; let o = ''; for (let h = 10; h <= 360; h += 10) o += `<option value="${A.fmtHdg(h)}" ${h === sel ? 'selected' : ''}>${A.fmtHdg(h)}</option>`; return o; };
@@ -4760,11 +5166,12 @@ const ATC = {};
         }
       }
       if (!ac.onGround && ac.phase === 'final') {
-        const available = s.ap.gates.filter(g => !g.occ && (!g.res || g.res === ac.id));
-        if (available.length) body += sec('Gate assignment', `<div class="row"><select id="gateAssign" class="csel"><option value="">Assign arrival stand…</option>${available.map(g => `<option value="${g.id}" ${ac.gate === g.id ? 'selected' : ''}>${g.id}</option>`).join('')}</select><button class="cb" id="gateAssignBtn">Assign stand</button></div>`);
+        const available = s.ap.gates;
+        if (available.length) body += sec('Gate assignment', `<div class="row"><select id="gateAssign" class="csel"><option value="">Choose any gate…</option>${available.map(g => `<option value="${g.id}" ${g.occ && g.occ!==ac.id || g.res && g.res!==ac.id?'disabled':''} ${ac.gate === g.id ? 'selected' : ''}>${g.id}${g.occ&&g.occ!==ac.id?' · occupied':g.res&&g.res!==ac.id?' · reserved':''}</option>`).join('')}</select><button class="cb" id="gateAssignBtn">Assign stand</button></div>`);
       }
       el.innerHTML = head + `<div class="pb">${body || '<div class="empty small">Nothing to do for this one right now.</div>'}</div>`;
-      const gateBtn = $('#gateAssignBtn'); if (gateBtn) gateBtn.onclick = () => { const g = $('#gateAssign').value; if (!g) return; const old = s.ap.gates.find(x => x.res === ac.id); if (old) old.res = null; const next = s.ap.gates.find(x => x.id === g); if (next && (!next.res || next.res === ac.id)) { next.res = ac.id; ac.gate = g; this.renderPanel(true); } };
+      const handoffBtn=$('#handoffBtn'); if(handoffBtn) handoffBtn.onclick=()=>this.requestHandoff(s.byId(this.sel),$('#handoffTarget').value); const acceptBtn=$('#acceptHandoffBtn'); if(acceptBtn) acceptBtn.onclick=()=>this.acceptHandoff(s.byId(this.sel));
+      const gateBtn = $('#gateAssignBtn'); if (gateBtn) gateBtn.onclick = () => { const g = $('#gateAssign').value; if (!g) return; const next = s.ap.gates.find(x => x.id === g); if (!next || (next.occ && next.occ !== ac.id) || (next.res && next.res !== ac.id)) { this.logLine({from:'sys',text:`Gate ${g} is occupied or reserved; choose another gate.`,cls:'warn',t:s.t}); return; } const old=s.ap.gates.find(x=>x.res===ac.id); if(old)old.res=null; const prior=s.ap.gates.find(x=>x.id===ac.gate); if(prior&&prior.res===ac.id)prior.res=null; next.res=ac.id; ac.gate=g; this.logLine({from:'sys',text:`${ac.cs} assigned to gate ${g}.` ,cls:'sys',t:s.t}); this.renderPanel(true); this.renderStrips(); };
       el.querySelectorAll('.cb').forEach(b => b.onclick = () => this.press(b.dataset.cmd));
       el.querySelectorAll('.chip[data-dest]').forEach(b => b.onclick = () => { this.tb.dest = b.dataset.dest; this.previewRoute(); this.renderPanel(true); });
       el.querySelectorAll('[data-via-remove]').forEach(b=>b.onclick=()=>{this.tb.via.splice(+b.dataset.viaRemove,1);this.previewRoute();this.renderPanel(true);});
@@ -4810,7 +5217,7 @@ const ATC = {};
       if (!this.panelHasTaxi || !this.tb) return false;
       const s = this.sim, N = s.N;
       for (const p of [...s.ap.gates, ...s.ap.spots]) if (A.dist(w, p) < 160) { this.tb.dest = p.id; this.previewRoute(); this.renderPanel(true); return true; }
-      const tw = s.ap.twAt(w, 140);
+      const tw = s.ap.twAt(w, 520);
       if (!tw) return false;
       const t = s.ap.tw[tw];
       if (t.conn && !t.rapid && s.endsById[this.tb.dest.split('@')[0]]) {
