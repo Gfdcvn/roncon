@@ -6,7 +6,7 @@
    Paste your Supabase project URL and publishable (or legacy anon) key here.
    Leave them empty and scores are kept only in this browser.
    ======================================================================== */
-window.LC_LEADERBOARD = { url: '', key: '' };
+window.LC_LEADERBOARD = { url: 'https://fanmtpzhsdytkuzqszzy.supabase.co', key: 'sb_publishable_lGT6YR0OtZZ5U84ZffaPcQ_Ppbkrj4y' };
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -57,9 +57,10 @@ table.lb td.n,table.lb th.n{text-align:right} table.lb tr.me td{color:var(--ambe
 body.comp-paused #view,body.comp-paused #brite{filter:blur(22px) brightness(.25)}
 #pausedBanner{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:rgba(255,179,60,.15);border:1px solid var(--amber);color:var(--amber);padding:4px 14px;border-radius:4px;font-family:var(--mono);font-weight:700;letter-spacing:.2em;display:none;pointer-events:none}
 #side{grid-row:2/4;grid-column:2;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);min-height:0}
+#radarTools{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:5px 7px;background:#101923;border-bottom:1px solid var(--line);font-size:10px;color:var(--dim)}#radarTools label{display:flex;align-items:center;gap:3px}#radarTools select{background:#182432;color:var(--text);border:1px solid var(--line);border-radius:4px}
 #brite{width:100%;height:250px;display:block;border-bottom:1px solid var(--line);cursor:crosshair;flex:none}
 #panel{flex:none;border-bottom:1px solid var(--line);padding:10px 12px;max-height:46vh;overflow:auto}
-#strips{flex:1;overflow:auto;padding:6px 8px 12px}
+#strips{flex:1;overflow:auto;padding:6px 8px 12px}.vchip{background:#182b38;border:1px solid #3b6575;color:#bfeeff;border-radius:4px;padding:3px 6px;cursor:pointer;font:700 10px var(--mono)}.vchip:hover{border-color:var(--amber);color:var(--amber)}.stripbay{border:1px solid var(--line);border-radius:6px;margin:5px 0;padding:5px;min-height:34px}.stripbay.over{border-color:var(--cyan);background:#10232b}.stripbay .sgh{display:flex;justify-content:space-between;color:var(--amber);font-size:10px;font-weight:800;letter-spacing:.08em;padding:3px}.strip[draggable=true]{cursor:grab}.strip.editing{outline:1px solid var(--amber)}body.full-radar #scope{display:none}body.full-radar #side{grid-column:1/3;grid-row:2/4;border:0}body.full-radar #brite{height:auto;flex:1;min-height:0}body.full-radar #panel,body.full-radar #strips{display:none}body.full-radar #radarTools{flex:none}body.full-radar #comm{display:none}
 #comm{grid-column:1;grid-row:3;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--line);min-height:0}
 #log{flex:1;overflow:auto;padding:6px 10px;font-family:var(--mono);font-size:12px;line-height:1.45}
 .ll{display:grid;grid-template-columns:62px 74px 1fr;gap:6px;cursor:default;border-radius:3px;padding:0 3px}
@@ -97,6 +98,52 @@ input.small{width:54px;text-transform:uppercase}
 .tbh{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .tbr{display:flex;gap:5px;margin-top:5px}
 .empty{color:var(--dim);padding:8px 0;line-height:1.5} .empty span{color:var(--faint);font-size:12px} .empty.small{font-size:12px}
+
+/* premium operations + lighting consoles */
+#ops .card,#lighting .card{background:linear-gradient(145deg,#111c28 0%,#0d141d 58%,#101923 100%);border:1px solid #34475a;box-shadow:0 28px 90px rgba(0,0,0,.72),inset 0 1px rgba(255,255,255,.035)}
+#ops .card>h1,#lighting .card>h1{display:flex;align-items:center;gap:12px;font-size:18px;letter-spacing:.17em;padding:3px 0 15px;border-bottom:1px solid #29394a}
+#ops .card>h1:before{content:'▦';display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:linear-gradient(145deg,#1d3947,#122532);border:1px solid #31566a;color:#7ed9ed;font-size:20px}
+#lighting .card>h1:before{content:'✦';display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:linear-gradient(145deg,#514022,#2c2518);border:1px solid #80652e;color:#ffd27a;font-size:20px}
+#ops .card,#lighting .card{width:min(1020px,96vw);padding:24px 28px}
+#opsBody,#lightingBody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:15px}
+#opsBody .sec,#lightingBody .sec{margin:0;padding:15px 16px;border:1px solid #293b4d;border-radius:11px;background:linear-gradient(155deg,rgba(27,42,56,.88),rgba(13,21,30,.92));box-shadow:inset 0 1px rgba(255,255,255,.025)}
+#opsBody .sec:first-child,#opsBody .sec:nth-child(2),#lightingBody .sec:first-child,#lightingBody .sec:nth-child(2){min-height:110px}
+#opsBody .sec:last-child,#lightingBody .sec:last-child{grid-column:1/-1}
+#opsBody .sech,#lightingBody .sech{font:800 10px var(--mono);letter-spacing:.16em;color:#86a2b8;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+#opsBody .sech:before,#lightingBody .sech:before{content:'';width:4px;height:13px;border-radius:3px;background:var(--cyan);box-shadow:0 0 10px rgba(99,211,242,.3)}
+#lightingBody .sech:before{background:var(--amber);box-shadow:0 0 10px rgba(255,179,60,.3)}
+.badgeLite{font:700 10px var(--mono);color:#9bd9e8;border:1px solid #31576a;background:#102330;border-radius:5px;padding:5px 8px}
+#opsBody .rgrid{padding:7px 9px;margin:3px 0;border:1px solid #26384a;border-radius:6px;background:#0b131c}
+#opsBody .rgrid b{color:#dce8f3}
+#opsBody .og{margin:5px 5px 5px 0}
+#opsBody .og span{border-radius:7px;background:#111d29;border-color:#34495c;padding:7px 11px}
+#opsBody .cb,#lightingBody .cb{border-radius:7px;padding:8px 12px;font-weight:700}
+#opsBody .csel,#opsBody select,#opsBody input[type=number]{background:#09121b;border:1px solid #34495c;border-radius:7px;padding:8px 10px;color:#e5edf6}
+#opsBody .lab{align-items:center;justify-content:space-between;padding:5px 0;color:#9eb0c1}
+#lightingBody{grid-template-columns:1fr 1fr}
+#lightingBody .lightHero{grid-column:1/-1;display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.lightStatus{border:1px solid #4c432e;border-radius:10px;padding:14px;background:radial-gradient(ellipse at 90% 0%,rgba(255,190,80,.16),transparent 55%),#171a1d;display:flex;flex-direction:column;justify-content:center;min-height:106px}
+.lightStatus small{font:700 9px var(--mono);letter-spacing:.18em;color:#a18c63}
+.lightStatus b{font:800 21px var(--mono);color:#ffcf75;margin:5px 0}
+.lightStatus span{font-size:11px;color:#aeb8c3}
+.lightPresets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lightPresetBtn{border:1px solid #39485a;border-radius:10px;background:linear-gradient(160deg,#1b2835,#111a24);padding:12px 8px;cursor:pointer;text-align:left;min-height:88px;transition:.15s}
+.lightPresetBtn:hover{border-color:#a17a3b;transform:translateY(-1px)}
+.lightPresetBtn.active{border-color:#e2ad52;box-shadow:inset 0 0 0 1px rgba(255,190,80,.22),0 0 20px rgba(255,179,60,.08)}
+.lightPresetBtn b{display:block;color:#f1d39a;font:800 12px var(--mono);margin-bottom:5px}
+.lightPresetBtn span{font-size:10px;color:#9eacb9}
+.lightPresetBtn i{display:block;height:5px;border-radius:8px;margin-top:10px;background:linear-gradient(90deg,#78623a,#f4c76b)}
+.lightControl{display:grid;grid-template-columns:minmax(180px,1fr) minmax(100px,1.1fr) 44px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(66,85,104,.42)}
+.lightControl:last-child{border-bottom:0}
+.lightControl label{display:flex;align-items:center;gap:9px;color:#d5e0eb;font-size:12px}
+.lightControl label b{font-size:11px}
+.lightControl input[type=checkbox]{accent-color:#f0b955;width:16px;height:16px}
+.lightControl input[type=range]{width:100%;accent-color:#e6b65d}
+.lightControl [data-light-value]{font:700 11px var(--mono);color:#f2cc82;text-align:right}
+.lightFooter{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:4px}
+.lightFooter .hintx{max-width:520px}
+@media(max-width:720px){#opsBody,#lightingBody{grid-template-columns:1fr}#opsBody .sec:last-child,#lightingBody .sec:last-child,#lightingBody .lightHero{grid-column:1}.lightHero{grid-template-columns:1fr!important}.lightControl{grid-template-columns:1fr 1fr 40px}#ops .card,#lighting .card{padding:18px 14px}}
+
 /* strips */
 .sg{margin-top:6px}
 .sgh{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:4px 2px;display:flex;justify-content:space-between}
@@ -284,12 +331,12 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
   </header>
   <section id="scope">
     <canvas id="view"></canvas>
-    <div id="viewbtns"><button class="tbtn" data-view="field">Field</button><button class="tbtn" data-view="pattern">Pattern</button><button class="tbtn" data-view="final">Final</button></div>
+    <div id="viewbtns"><button class="tbtn" data-view="field">Field</button><button class="tbtn" data-view="pattern">Pattern</button><button class="tbtn" data-view="final">Final</button><button class="tbtn" id="radarFullBtn">Full radar</button></div>
     <div id="timers"><div class="wth">Wake timer</div><div class="row"><button class="tbtn" data-timer="120">2 min</button><button class="tbtn" data-timer="180">3 min</button></div><div id="timerList"></div></div>
     <div id="pausedBanner">PAUSED</div><div id="alarmToast" aria-live="assertive"></div>
   </section>
   <aside id="side">
-    <canvas id="brite"></canvas>
+    <div id="radarTools"><button class="tbtn" id="radarAirportBtn">Airport view</button><label><input type="checkbox" id="radarRings" checked> Rings</label><label><input type="checkbox" id="radarAlt" checked> Altitude</label><label><input type="checkbox" id="radarLeader" checked> Leaders</label><label><input type="checkbox" id="radarSpeed" checked> GS</label><label><input type="checkbox" id="radarTrail" checked> Trails</label><label>Readback errors <input id="readbackRate" type="range" min="0" max="40" value="8" step="1" style="width:65px"> <span id="readbackRateVal">8%</span></label><label>Range <select id="radarRange"><option>6</option><option selected>12</option><option>20</option><option>40</option></select> NM</label></div><canvas id="brite"></canvas>
     <div id="panel"></div>
     <div id="strips"></div>
   </aside>
@@ -322,6 +369,17 @@ body.mobile.mland.collapsed #app{grid-template-columns:1fr 0}
     <label><input type="radio" name="position" value="ground"><span><b>Ground</b><em>Pushback, taxi routes, runway crossings and ground movement only.</em></span></label>
     <label><input type="radio" name="position" value="tower"><span><b>Tower</b><em>Runway, takeoff, landing, pattern and sequencing clearances.</em></span></label>
     <label><input type="radio" name="position" value="clearance"><span><b>Clearance Delivery</b><em>Issue IFR route, SID, squawk and initial altitude; receive pilot readbacks.</em></span></label>
+  </div>
+  <div id="aiSectorOptions" class="sec" style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#101923">
+    <div class="sech">AI neighbouring sectors</div>
+    <p class="hintx" style="margin:3px 0 9px">Choose which adjacent positions are staffed by simulated controllers. They coordinate routine clearances and handoffs while you work your selected position.</p>
+    <div class="og" id="aiSectorChoices">
+      <label id="aiGroundWrap"><input type="checkbox" id="aiGround" checked><span>AI Ground</span></label>
+      <label id="aiDelWrap"><input type="checkbox" id="aiDel" checked><span>AI Clearance Delivery</span></label>
+      <label id="aiDepartureWrap"><input type="checkbox" id="aiDeparture" checked><span>AI Departure</span></label>
+      <label id="aiApproachWrap"><input type="checkbox" id="aiApproach" checked><span>AI Approach</span></label>
+    </div>
+    <p class="hintx" id="aiSectorHint">Tower: choose whether AI Ground and Clearance Delivery handle adjacent operations.</p>
   </div>
   <h3>Airport</h3>
   <div class="maps">
@@ -854,6 +912,18 @@ const ATC = {};
     lszh: { name: 'Zurich Airport', icao: 'LSZH', desc: 'Parallel-runway training layout · schematic, not to scale' },
     kmdw: { name: 'Chicago Midway', icao: 'KMDW', desc: 'Crossing-runway training layout · schematic, not to scale' },
   };
+  // Simplified, simulator-specific procedure catalogue. These are training routes, not published real-world charts.
+  const PROC_NAMES = {
+    bikf: { sid:['NORTH1','EAST2','SOUTH1','WEST2'], star:['NORTH1A','EAST2A','SOUTH1A','WEST2A'] },
+    essa: { sid:['NORTH3','ARLAN2','SOUTH4','WEST3'], star:['NORTH3A','ARLAN2A','SOUTH4A','WEST3A'] },
+    rjtt: { sid:['NORTH2','TOKYO4','SOUTH3','BAY1'], star:['NORTH2A','TOKYO4A','SOUTH3A','BAY1A'] },
+    lszh: { sid:['NORTH1','DEGES2','SOUTH2','GERSA1'], star:['NORTH1A','DEGES2A','SOUTH2A','GERSA1A'] },
+    kmdw: { sid:['BDF3','OBK4','MIDWAY2','SOUTH1'], star:['BDF3A','OBK4A','MIDWAY2A','SOUTH1A'] },
+    single: { sid:['NORTH1','EAST1','SOUTH1','WEST1'], star:['NORTH1A','EAST1A','SOUTH1A','WEST1A'] },
+    parallel: { sid:['NORTH2','EAST2','SOUTH2','WEST2'], star:['NORTH2A','EAST2A','SOUTH2A','WEST2A'] },
+    cross: { sid:['NORTH3','EAST3','SOUTH3','WEST3'], star:['NORTH3A','EAST3A','SOUTH3A','WEST3A'] }
+  };
+  A.procedureSet = key => { const p = PROC_NAMES[key] || PROC_NAMES.single; return { sid:p.sid.map((name,i)=>({name,route:`${name} ${['NORTH','EAST','SOUTH','WEST'][i]}BOUND` })), star:p.star.map((name,i)=>({name,route:`${name} ${['NORTH','EAST','SOUTH','WEST'][i]} ARRIVAL` })) }; };
   A.buildAirport = key => (MAPS[key] || MAPS.single)();
 
   /* ---------------- routing ---------------- */
@@ -1105,9 +1175,9 @@ const ATC = {};
   const KT = A.KT, NM = A.NM;
 
   const DENSITY = {
-    light: { arrHr: 27, depHr: 8, patMax: 1, vinHr: 2 },
-    medium: { arrHr: 48, depHr: 14, patMax: 2, vinHr: 4 },
-    heavy: { arrHr: 72, depHr: 20, patMax: 3, vinHr: 6 },
+    light: { arrHr: 10, depHr: 4, patMax: 1, vinHr: 1 },
+    medium: { arrHr: 20, depHr: 7, patMax: 2, vinHr: 2 },
+    heavy: { arrHr: 38, depHr: 12, patMax: 3, vinHr: 4 },
   };
   // Expose immutable traffic presets to the UI. Keeping these on ATC avoids
   // leaking simulator-local constants or causing ReferenceError on shift start.
@@ -1152,6 +1222,8 @@ const ATC = {};
       this.atis = 'ABCDEFGHJKLMNP'[this.rng.int(0, 13)];
       this.ends = cfg.ends.map(id => this.makeEnd(id));
       this.endsById = Object.fromEntries(this.ends.map(e => [e.id, e]));
+      this.procedures = A.procedureSet(this.ap.key);
+      this.aiSectors = Object.assign({ ground:false, clearance:false, tower:false, departure:true, approach:true }, this.o.aiSectors || {});
       this.arrEnds = cfg.arr.map(id => this.endsById[id]);
       this.vfrEnds = cfg.vfr.map(id => this.endsById[id]);
       this.R0 = this.ends[0]; this.cur = this.R0;
@@ -1383,6 +1455,7 @@ const ATC = {};
       }
       ac.req = { type, t: this.t, text };
       this.pilot(ac, text, 'req');
+      if (['tower','clearance'].includes(this.o.position) && (type === 'push' || type === 'taxi' || type === 'clear')) this.aiGroundRequest(ac, type);
     }
     incident(kind, text, pts, ac) {
       this.score.pts -= pts;
@@ -1418,7 +1491,7 @@ const ATC = {};
         phase: 'parked', path: null, clr: { land: null, to: false, luaw: false, cross: false },
         req: null, born: this.t, hist: [], wt: this.rng.range(0.92, 1.08),
         ifrClearance: this.o.position !== 'clearance', squawk: null, sid: null, initialAltitude: 5000,
-        flightPlan: { callsign: spec.cs, route: '', destination: '', aircraft: spec.type, flightLevel: 180 },
+        flightPlan: { callsign: spec.cs, route: '', destination: '', aircraft: spec.type, flightLevel: 180, sid: '', star: '' },
       }, props);
       ac.vr = T.vr * Math.sqrt(ac.wt); ac.vapp = T.vapp * Math.sqrt(ac.wt);
       ac.acc = Math.pow(ac.vr * KT, 2) / (2 * Math.max(T.roll * ac.wt - ac.vr * KT * (T.ga ? 1.5 : 2.8), T.roll * 0.5));
@@ -1427,6 +1500,26 @@ const ATC = {};
       this.used.add(spec.cs);
       this.acs.push(ac);
       return ac;
+    }
+    aiClearDeparture(ac, announce=true) {
+      if (!ac || ac.removed || ac.flight !== 'IFR' || (ac.sid && ac.flightPlan && ac.flightPlan.sid)) return;
+      const sid = this.procedures.sid[ac.depBrg == null ? this.rng.int(0,3) : (Math.round(ac.depBrg / 90) % 4)];
+      ac.sid = sid.name; ac.flightPlan.sid = sid.name; ac.flightPlan.route = `${sid.route} DCT ${ac.destCity || 'DEST'}`;
+      ac.squawk = ac.squawk || String(1000 + ((ac.id * 37) % 7000)).padStart(4,'0');
+      ac.initialAltitude = ac.initialAltitude || 5000; ac.ifrClearance = true;
+      if (announce) this.sys(`AI Clearance Delivery: ${ac.cs} cleared via ${sid.name}, squawk ${ac.squawk}, initial ${ac.initialAltitude.toLocaleString()} ft; released to Ground.`);
+    }
+    aiGroundRequest(ac, type) {
+      if (!this.aiSectors.ground || !ac || ac.removed || !ac.req) return false;
+      const cmd = type === 'push' ? `${ac.cs} PUSH` : type === 'taxi' ? `${ac.cs} TAXI ${this.ends[0].id}` : type === 'clear' && (ac.gate || ac.spot) ? `${ac.cs} TAXI ${ac.gate || ac.spot}` : '';
+      if (!cmd) return false;
+      this.later(1.8, () => {
+        if (ac.removed || !ac.req) return;
+        this.sys(`AI Ground: ${ac.cs}, ${type === 'push' ? 'pushback approved' : type === 'clear' ? `taxi to stand ${ac.gate || ac.spot}` : `taxi to runway ${this.ends[0].id}`}.`);
+        const result = this._exec(cmd, ac.id);
+        if (!result || !result.ok) this.sys(`AI Ground unable to process ${ac.cs}; controller intervention required.`, 'warn');
+      });
+      return true;
     }
     freeGate() { const g = this.ap.gates.filter(g => !g.occ && !g.res); return g.length ? this.rng.pick(g) : null; }
     freeSpot() { const s = this.ap.spots.filter(s => !s.occ && !s.res); return s.length ? this.rng.pick(s) : null; }
@@ -1437,7 +1530,9 @@ const ATC = {};
       const ac = this.makeAc(spec, { role: 'dep', flight: 'IFR', x: g.x, y: g.y, hdg: g.hdg, phase: 'parked', node: g.node, gate: g.id });
       g.occ = ac.id;
       ac.depOff = this.rng.pick([-40, -30, -20, 0, 0, 20, 30, 40]);
-      ac.destCity = this.rng.pick(CITIES); ac.flightPlan.destination = ac.destCity; ac.flightPlan.route = `DCT ${ac.destCity}`; ac.depBrg = CITY_BRG[ac.destCity]; ac.depDir = A.dirName(ac.depBrg);
+      ac.destCity = this.rng.pick(CITIES); ac.flightPlan.destination = ac.destCity; ac.depBrg = CITY_BRG[ac.destCity]; ac.depDir = A.dirName(ac.depBrg);
+      if (this.aiSectors.clearance) this.aiClearDeparture(ac, true);
+      if (!ac.sid && this.o.position !== 'clearance') { const sid = this.procedures.sid[Math.round(ac.depBrg / 90) % 4]; ac.sid = sid.name; ac.flightPlan.sid = sid.name; ac.flightPlan.route = `${sid.route} DCT ${ac.destCity}`; }
       this.later(this.rng.range(4, 35), () => this.request(ac, 'push', `Ground, ${ac.say}, gate ${g.id}, request pushback with information ${this.atis}.`));
       return true;
     }
@@ -1484,7 +1579,9 @@ const ATC = {};
       });
       p.occ = ac.id; p.res = null;
       ac.depOff = this.rng.pick([-40, -30, -20, 0, 0, 20, 30, 40]);
-      ac.destCity = this.rng.pick(CITIES); ac.flightPlan.destination = ac.destCity; ac.flightPlan.route = `DCT ${ac.destCity}`; ac.depBrg = CITY_BRG[ac.destCity]; ac.depDir = A.dirName(ac.depBrg);
+      ac.destCity = this.rng.pick(CITIES); ac.flightPlan.destination = ac.destCity; ac.depBrg = CITY_BRG[ac.destCity]; ac.depDir = A.dirName(ac.depBrg);
+      if (this.aiSectors.clearance) this.aiClearDeparture(ac, true);
+      if (!ac.sid && this.o.position !== 'clearance') { const sid = this.procedures.sid[Math.round(ac.depBrg / 90) % 4]; ac.sid = sid.name; ac.flightPlan.sid = sid.name; ac.flightPlan.route = `${sid.route} DCT ${ac.destCity}`; }
       if (!ifr) {
         ac.pat = this.newPattern(ac); ac.pat.laps = this.rng.int(2, 4);
         if (this.ap.noPattern || this.rng.chance(0.35)) { ac.role = 'vdep'; ac.vfrDirName = this.rng.pick(['north', 'south', 'east', 'west']); ac.vfrDir = { north: 0, south: 180, east: 90, west: 270 }[ac.vfrDirName]; }
@@ -1550,6 +1647,7 @@ const ATC = {};
         ias: Math.min(T.app + 10, 190), onGround: false, phase: 'final', rwy: R,
       });
       if (park) { park.res = ac.id; if (toFbo) ac.spot = park.id; else ac.gate = park.id; }
+      const star = this.rng.pick(this.procedures.star); ac.star = star.name; ac.flightPlan.star = star.name; ac.flightPlan.route = `${star.route} RWY ${R.id}`;
       ac.vs = -700;
       this.request(ac, 'arr', `Tower, ${ac.say}, ${re ? 'back with you, ' : ''}10 mile final ILS runway ${this.end.id}.`);
       return true;
@@ -2287,7 +2385,13 @@ const ATC = {};
       if (ac.ho && ac.hoHdg == null && agl > 400) ac.hoHdg = ac.flight === 'IFR' && ac.depHdg != null ? ac.depHdg : ac.flight === 'VFR' && ac.vfrDir != null ? ac.vfrDir : ac.hdg;
       this.airMove(ac, dt, track, altT, spdT);
       const dfield = A.dist(ac, this.ap.center);
-      if (!ac.ho && dfield > 4.5 * NM && !ac.freqAsk) { ac.freqAsk = true; this.request(ac, 'freq', `Tower, ${ac.say}, check frequency change?`); }
+      if (!ac.ho && dfield > 4.5 * NM && !ac.freqAsk) {
+        ac.freqAsk = true;
+        if (this.o.position === 'tower' && this.aiSectors.departure) {
+          this.sys(`AI Departure: ${ac.cs}, radar contact, continue ${ac.sid ? ac.sid + ' departure' : 'outbound'}.`);
+          this.pilot(ac, `${ac.say}, switching to Departure.`, 'sys'); ac.ho = true; ac.req = null;
+        } else this.request(ac, 'freq', `Tower, ${ac.say}, check frequency change?`);
+      }
       if (!ac.ho && dfield > 7 * NM && !ac.freqMissed) {
         ac.freqMissed = true; this.score.freq++; this.incident('Frequency change', `${ac.cs} left the area without being switched to departure`, 5, ac);
         ac.ho = true; ac.req = null;
@@ -2300,6 +2404,7 @@ const ATC = {};
       this.airMove(ac, dt, this.lineTrack(ac, this.thr, this.H, 30), Math.max(3000, this.elev + 2300), ac.T.app);
       if (f.u > this.L + 2.5 * NM) {
         this.pilot(ac, `${ac.say}, switching to approach.`);
+        if (this.aiSectors.approach) this.sys(`AI Approach: ${ac.cs}, missed approach received; radar identification maintained and resequencing.`);
         this.remove(ac);
         this.requeue.push({ t: this.t + this.rng.range(240, 420), spec: { cs: ac.cs, type: ac.type, airline: ac.airline, say: ac.say, rwy: ac.rwy && ac.rwy.id } });
         this.used.delete(ac.cs);
@@ -3679,6 +3784,13 @@ const ATC = {};
     draw(now) {
       const ctx = this.ctx, sim = this.sim, wx = sim.wx, sc = this.view.scale;
       this.drawStatic();
+      // Operational overlays: closures are deliberately conspicuous on the live airport view.
+      { const sim=this.sim,ctx=this.ctx; ctx.save(); this.screenT(ctx); ctx.font='700 11px ui-monospace,monospace';
+        for(const id of sim.closedTaxiways||[]){const tw=sim.ap.tw[id];if(!tw)continue;const ns=tw.nodes||[];for(let j=1;j<ns.length;j++){const n1=sim.ap.nodes[ns[j-1]],n2=sim.ap.nodes[ns[j]];if(!n1||!n2)continue;const p1=this.w2s(n1.x,n1.y),p2=this.w2s(n2.x,n2.y);ctx.strokeStyle='#ff3b30';ctx.lineWidth=5;ctx.setLineDash([8,5]);ctx.beginPath();ctx.moveTo(...p1);ctx.lineTo(...p2);ctx.stroke();ctx.setLineDash([]);const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2;ctx.fillStyle='#ff3b30';ctx.fillText(`× ${id} CLOSED`,mx+4,my-4);}}
+        for(const id of sim.closedRunways||[]){const r=sim.ap.runways.find(q=>q.id===id);if(!r)continue;const p1=this.w2s(r.a.x,r.a.y),p2=this.w2s(r.b.x,r.b.y);ctx.strokeStyle='#ff3b30';ctx.lineWidth=7;ctx.setLineDash([14,8]);ctx.beginPath();ctx.moveTo(...p1);ctx.lineTo(...p2);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#ff3b30';ctx.fillText(`RUNWAY ${id} CLOSED`,(p1[0]+p2[0])/2,(p1[1]+p2[1])/2);}
+        const alerts=(sim.alerts||sim.activeAlerts||[]).filter(x=>x.active!==false);if(alerts.length){ctx.fillStyle='#2a1010';ctx.fillRect(12,12,Math.min(this.W-24,330),26+Math.min(3,alerts.length)*18);ctx.fillStyle='#ff6961';ctx.fillText(`⚠ ${alerts.length} ACTIVE AIRFIELD ALERT${alerts.length===1?'':'S'}`,22,20);alerts.slice(0,3).forEach((x,i)=>{ctx.fillText(String(x.title||x.kind||'Operational alert').slice(0,42),22,38+i*16);});}
+        ctx.restore(); }
+
       this.screenT(ctx);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.drawImage(this.cache, 0, 0);
@@ -3969,7 +4081,7 @@ const ATC = {};
 
   /* ---------- DBRITE ---------- */
   A.Brite = class {
-    constructor(canvas, sim) { this.c = canvas; this.ctx = canvas.getContext('2d'); this.sim = sim; this.range = 12 * NM; this.sel = null; }
+    constructor(canvas, sim) { this.c = canvas; this.ctx = canvas.getContext('2d'); this.sim = sim; this.range = 12 * NM; this.sel = null; this.opts = { rings:true, altitude:true, leader:true, speed:true, trail:true }; }
     resize() {
       const r = this.c.getBoundingClientRect(); this.dpr = Math.min(2, window.devicePixelRatio || 1);
       this.W = r.width; this.H = r.height; this.c.width = this.W * this.dpr; this.c.height = this.H * this.dpr;
@@ -3985,7 +4097,7 @@ const ATC = {};
       ctx.fillStyle = '#04100a'; ctx.fillRect(0, 0, this.W, this.H);
       ctx.strokeStyle = '#123222'; ctx.lineWidth = 1;
       const [ox, oy] = this.w2s(sim.ap.center.x, sim.ap.center.y); const s = Math.min(this.W, this.H) / 2 / this.range;
-      for (const r of [5, 10, 15]) { ctx.beginPath(); ctx.arc(ox, oy, r * NM * s, 0, 7); ctx.stroke(); }
+      if (this.opts.rings) for (const r of [2, 4, 6, 8, 10, 12, 15, 20, 30, 40].filter(n=>n<=this.range/NM)) { ctx.beginPath(); ctx.arc(ox, oy, r * NM * s, 0, 7); ctx.stroke(); ctx.fillStyle='#397653'; ctx.fillText(`${r} NM`,ox+4,oy-r*NM*s+2); }
       // final course with nm ticks
       ctx.strokeStyle = '#1f5a3a';
       for (const R of sim.arrEnds) {
@@ -4009,13 +4121,13 @@ const ATC = {};
         const isSel = this.sel === ac.id;
         const col = isSel ? '#ffe066' : ac.req ? '#ffb33c' : ac.flight === 'VFR' ? '#d9f7e6' : '#58f08f';
         ctx.fillStyle = col; ctx.globalAlpha = 0.35;
-        for (const h of ac.hist) { const [hx, hy] = this.w2s(h.x, h.y); ctx.fillRect(hx - 1, hy - 1, 2, 2); }
+        if (this.opts.trail) for (const h of ac.hist) { const [hx, hy] = this.w2s(h.x, h.y); ctx.fillRect(hx - 1, hy - 1, 2, 2); }
         ctx.globalAlpha = 1;
         ctx.fillRect(x - 2.5, y - 2.5, 5, 5);
         const hv = A.hv(ac.hdg); ctx.strokeStyle = col; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + hv.x * 12, y - hv.y * 12); ctx.stroke();
         const t1 = ac.cs, t2 = `${String(Math.round(ac.alt / 100)).padStart(3, '0')} ${ac.T.wakeLetter}${Math.round(ac.gsFps / A.KT / 10)}`;
-        ctx.fillText(t1, x + 7, y - 14); ctx.fillText(t2, x + 7, y - 3);
+        if(this.opts.leader){ctx.strokeStyle=col;ctx.globalAlpha=.65;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+9,y-7);ctx.stroke();ctx.globalAlpha=1;} ctx.fillText(t1, x + 10, y - 14); if(this.opts.altitude)ctx.fillText(String(Math.round(ac.alt/100)).padStart(3,'0'), x + 10, y - 3); if(this.opts.speed)ctx.fillText(`${Math.round(ac.gsFps / A.KT)}kt`,x+36,y-3);
         this.boxes.push({ id: ac.id, x, y });
       }
       ctx.fillStyle = '#2f7a52'; ctx.fillText('DBRITE  12NM', 6, 6);
@@ -4108,6 +4220,17 @@ const ATC = {};
       for (const [id, out] of [['arrRate','arrRateVal'],['depRate','depRateVal'],['closureRate','closureRateVal']]) { const x = $('#' + id), y = $('#' + out); if (x && y) x.oninput = () => y.textContent = x.value; }
       const syncDensityFlow = () => { const d = (document.querySelector('input[name=dens]:checked') || {}).value || 'medium'; const preset = A.DENSITY[d] || A.DENSITY.medium; $('#arrRate').value = preset.arrHr; $('#depRate').value = preset.depHr; $('#arrRateVal').textContent = preset.arrHr; $('#depRateVal').textContent = preset.depHr; };
       document.querySelectorAll('input[name=dens]').forEach(r => r.addEventListener('change', syncDensityFlow));
+      const syncAISectors = () => {
+        const pos = (document.querySelector('input[name=position]:checked') || {}).value || 'local';
+        const show = (id, yes) => { const el = $(id); if (el) el.style.display = yes ? '' : 'none'; };
+        show('#aiGroundWrap', pos === 'tower' || pos === 'clearance' || pos === 'local');
+        show('#aiDelWrap', pos === 'tower' || pos === 'ground' || pos === 'local');
+        show('#aiDepartureWrap', pos === 'tower' || pos === 'local');
+        show('#aiApproachWrap', pos === 'tower' || pos === 'local');
+        const hint = $('#aiSectorHint');
+        if (hint) hint.textContent = pos === 'tower' ? 'Tower: choose AI Ground and Clearance Delivery; AI Departure accepts outbound handoffs.' : pos === 'ground' ? 'Ground: choose AI Clearance Delivery; aircraft arrive with a clearance and AI Tower handles runway operations.' : pos === 'clearance' ? 'Clearance Delivery: AI Ground receives aircraft after clearance readback; AI Tower manages runway operations.' : 'Combined Local Control: enable AI Ground, Clearance Delivery and neighbouring departure / approach sectors.';
+      };
+      document.querySelectorAll('input[name=position]').forEach(r => r.addEventListener('change', syncAISectors)); syncAISectors();
       document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => this.modal('#' + b.dataset.close, false));
       $('#pauseBtn').onclick = () => this.togglePause();
       document.querySelectorAll('[data-speed]').forEach(b => b.onclick = () => { if (this.comp) return; this.speed = +b.dataset.speed; this.syncTop(); });
@@ -4200,20 +4323,22 @@ const ATC = {};
       const selectedDensity = this.comp ? 'heavy' : (v('dens') || 'medium');
       const densityFlow = A.DENSITY[selectedDensity] || A.DENSITY.medium;
       const flow = { arrivals: $('#arrivalsOn').checked, departures: $('#departuresOn').checked, arrHr: this.comp ? densityFlow.arrHr : +$('#arrRate').value, depHr: this.comp ? densityFlow.depHr : +$('#depRate').value, randomClosures: $('#randomClosures').checked, closureRate: +$('#closureRate').value };
-      const opts = { density: this.comp ? 'heavy' : v('dens'), map: v('map') || 'single', mode, position: v('position') || 'local', flow };
+      const pos = v('position') || 'local';
+      const aiSectors = { ground: ['tower','clearance','local'].includes(pos) && $('#aiGround').checked, clearance: ['tower','ground','local'].includes(pos) && $('#aiDel').checked, tower: false, departure: ['tower','local'].includes(pos) && $('#aiDeparture').checked, approach: ['tower','local'].includes(pos) && $('#aiApproach').checked };
+      const opts = { density: this.comp ? 'heavy' : (v('dens') || 'light'), map: v('map') || 'single', mode, position: pos, flow, aiSectors };
       this.position = opts.position;
       this.sim = new A.Sim(opts);
       const cv = $('#view');
       if (!this.r) {
         this.r = new A.Renderer(cv, this.sim); this.b = new A.Brite($('#brite'), this.sim);
-        this.bindCanvas(cv); this.bindBrite();
+        this.bindCanvas(cv); this.bindBrite(); this.bindRadarControls();
         requestAnimationFrame(t => this.loop(t));
       } else {
         this.r.sim = this.sim; this.b.sim = this.sim; this.r.buildLights(); this.r.cacheKey = '';
         if (this.r.scnKey !== this.sim.ap.key) { this.r.scn = A.Scenery(7331, this.sim.ap); this.r.scnKey = this.sim.ap.key; }
       }
       this.r.opts.tags = v('tags');
-      this.voice = v('voice') === 'on';
+      this.voice = v('voice') === 'on'; this.radioAudioEnabled = true; this.readbackErrorRate = 0.08; this.audioCtx = this.audioCtx || null;
       this.sel = null; this.r.sel = null; this.panelKey = ''; this.wtimers = [];
       $('#log').innerHTML = '';
       this.modal('#start', false);
@@ -4221,7 +4346,7 @@ const ATC = {};
       this.r.resize(); this.b.resize();
       this.setView(this.mobile && window.innerHeight > window.innerWidth ? 'field' : 'pattern');
       const w = this.sim.wx;
-      this.logLine({ from: 'sys', text: `Position open: ${{local:'Local + Ground',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]}, ${this.sim.ap.icao} (${this.sim.ap.name} (${this.sim.ap.profileNote || this.sim.ap.desc || 'training layout'}). In use this shift: ${this.sim.ends.map(e => `runway ${e.id} (${e.sideSg > 0 ? 'left' : 'right'} traffic)`).join(', ')}${this.sim.ends.length > 1 ? `; VFR pattern on ${this.sim.vfrEnds.map(e => e.id).join('/')}` : ''}. ${w.label}, wind ${this.sim.windStr()}. Click an aircraft, then use the buttons (number keys work too). Press ? for help.`, cls: 'sys', t: 0 });
+      this.logLine({ from: 'sys', text: `Position open: ${{local:'Local + Ground',ground:'Ground',tower:'Tower',clearance:'Clearance Delivery'}[this.position]}${Object.entries(this.sim.aiSectors).filter(([k,v])=>v).map(([k])=>' · AI '+({ground:'Ground',clearance:'DEL',tower:'Tower',departure:'Departure',approach:'Approach'}[k])).join('')}, ${this.sim.ap.icao} (${this.sim.ap.name} (${this.sim.ap.profileNote || this.sim.ap.desc || 'training layout'}). In use this shift: ${this.sim.ends.map(e => `runway ${e.id} (${e.sideSg > 0 ? 'left' : 'right'} traffic)`).join(', ')}${this.sim.ends.length > 1 ? `; VFR pattern on ${this.sim.vfrEnds.map(e => e.id).join('/')}` : ''}. ${w.label}, wind ${this.sim.windStr()}. Click an aircraft, then use the buttons (number keys work too). Press ? for help.`, cls: 'sys', t: 0 });
       this.syncTop(); this.renderPanel(true); this.renderAlerts(true);
     }
     togglePause() { this.paused = !this.paused; this.syncTop(); }
@@ -4247,7 +4372,7 @@ const ATC = {};
           const rect = cv.getBoundingClientRect(); const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
           const id = this.r.pick(sx, sy);
           if (id) this.select(id);
-          else this.mapClick(this.r.s2w(sx, sy));
+          else { this.select(null); this.mapClick(this.r.s2w(sx, sy)); }
         }
         drag = null;
       });
@@ -4272,15 +4397,22 @@ const ATC = {};
         if (tp && !tp.moved && tp.n === 1) {
           const rect = cv.getBoundingClientRect(); const sx = tp.x - rect.left, sy = tp.y - rect.top;
           const id = this.r.pick(sx, sy);
-          if (id) this.select(id); else this.mapClick(this.r.s2w(sx, sy));
+          if (id) this.select(id); else { this.select(null); this.mapClick(this.r.s2w(sx, sy)); }
           e.preventDefault();
         }
         tp = null;
       });
     }
+    bindRadarControls(){
+      const $=id=>document.getElementById(id);const b=$('radarFullBtn'),a=$('radarAirportBtn');
+      if(b)b.onclick=()=>{document.body.classList.add('full-radar');setTimeout(()=>this.b.resize(),40);};
+      if(a)a.onclick=()=>{document.body.classList.remove('full-radar');setTimeout(()=>this.b.resize(),40);};
+      for(const [id,key] of [['radarRings','rings'],['radarAlt','altitude'],['radarLeader','leader'],['radarSpeed','speed'],['radarTrail','trail']]){const e=$(id);if(e)e.onchange=()=>{this.b.opts[key]=e.checked;};}
+      const rg=$('radarRange');if(rg)rg.onchange=()=>{this.b.range=Number(rg.value)*A.NM;};const rr=$('readbackRate'),rv=$('readbackRateVal');if(rr){rr.oninput=()=>{this.readbackErrorRate=Number(rr.value)/100;if(rv)rv.textContent=rr.value+'%';};}
+    }
     bindBrite() {
       const c = $('#brite');
-      c.addEventListener('click', e => { const r = c.getBoundingClientRect(); const id = this.b.pick(e.clientX - r.left, e.clientY - r.top); if (id) this.select(id); });
+      c.addEventListener('click', e => { const r = c.getBoundingClientRect(); const id = this.b.pick(e.clientX - r.left, e.clientY - r.top); this.select(id || null); });
     }
     select(id) {
       this.sel = id; this.r.sel = id; this.b.sel = id; this.renderPanel(true); this.renderStrips();
@@ -4322,11 +4454,12 @@ const ATC = {};
       const ob = this.sim.outbox; if (!ob.length) return;
       this.sim.outbox = [];
       for (const m of ob) {
-        this.logLine(m); if (m.from === 'pilot' && this.voice) this.speak(m);
+        this.logLine(m); if ((m.from==='pilot'||m.from==='atc') && this.radioAudioEnabled) this.radioChirp(); if (m.from === 'pilot' && this.voice) this.speak(m);
         if (this.mobile && m.from === 'pilot' && document.body.dataset.tab !== 'radio') this.unread = (this.unread || 0) + 1;
       }
     }
     fmtT(t) { const s = Math.floor((this.sim.tod0 + t * this.sim.o.timeScale) % 86400); return `${String(Math.floor(s / 3600)).padStart(2, '0')}:${String(Math.floor(s / 60) % 60).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; }
+    radioChirp(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;this.audioCtx=this.audioCtx||new C();if(this.audioCtx.state==='suspended')this.audioCtx.resume();const c=this.audioCtx,t=c.currentTime;const o=c.createOscillator(),g=c.createGain();o.type='sawtooth';o.frequency.setValueAtTime(1050,t);o.frequency.exponentialRampToValueAtTime(720,t+.055);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.035,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+.075);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.08);}catch(e){}}
     logLine(m) {
       const log = $('#log');
       const d = document.createElement('div');
@@ -4457,29 +4590,19 @@ const ATC = {};
     }
     /* ---------- strips ---------- */
     renderStrips() {
-      const s = this.sim; if (!s) return;
-      const groups = { ARR: [], DEP: [], VFR: [] };
-      for (const ac of s.acs) {
-        if (ac.removed || ac.phase === 'parkedArr') continue;
-        if (ac.phase === 'parked' && !ac.req && this.sel !== ac.id) continue;
-        const g = ac.flight === 'VFR' ? 'VFR' : ac.role === 'arr' ? 'ARR' : 'DEP';
-        groups[g].push(ac);
+      const s=this.sim; if(!s)return;
+      this.stripBays=this.stripBays||{};
+      const bays=['PENDING','TAXI','DEPARTURE','ARRIVALS']; const groups=Object.fromEntries(bays.map(k=>[k,[]]));
+      for(const ac of s.acs){if(ac.removed||ac.phase==='parkedArr')continue;let bay=this.stripBays[ac.id];if(!bay){bay=ac.req?'PENDING':ac.onGround?(ac.role==='arr'?'ARRIVALS':'TAXI'):(ac.role==='arr'?'ARRIVALS':'DEPARTURE');this.stripBays[ac.id]=bay;}if(ac.phase==='parked'&&!ac.req&&this.sel!==ac.id)continue;(groups[bay]||groups.PENDING).push(ac);}
+      let html='';
+      for(const bay of bays){const L=groups[bay];L.sort((a,b)=>(b.req?1:0)-(a.req?1:0)||a.born-b.born);html+=`<div class="stripbay" data-bay="${bay}"><div class="sgh"><span>${bay}</span><span>${L.length}</span></div>`;
+        for(const ac of L){const clr=s.clrTag(ac),wait=ac.req?Math.round(s.t-ac.req.t):0;html+=`<div class="strip ${ac.flight==='VFR'?'vfr':ac.role==='arr'?'arr':'dep'} ${ac.id===this.sel?'sel':''} ${ac.req?'req':''}" data-id="${ac.id}" draggable="true"><div class="s1"><b>${ac.cs}</b><span class="ty">${ac.type}/${ac.T.wakeLetter}</span>${clr?`<span class="clr">${clr}</span>`:''}${ac.req?`<span class="rq">${wait}s</span>`:''}</div><div class="s2">${esc(s.status(ac))} · ${esc(ac.flightPlan?.destination||ac.destCity||'—')} · ${ac.squawk||'----'}</div></div>`;}
+        html+='</div>';
       }
-      let html = '';
-      for (const [g, L] of Object.entries(groups)) {
-        L.sort((a, b) => (b.req ? 1 : 0) - (a.req ? 1 : 0) || (a.born - b.born));
-        html += `<div class="sg"><div class="sgh">${g === 'ARR' ? 'Arrivals' : g === 'DEP' ? 'Departures' : 'VFR'} <span>${L.length}</span></div>`;
-        for (const ac of L) {
-          const clr = s.clrTag(ac);
-          const wait = ac.req ? Math.round(s.t - ac.req.t) : 0;
-          html += `<div class="strip ${g.toLowerCase()} ${ac.id === this.sel ? 'sel' : ''} ${ac.req ? 'req' : ''}" data-id="${ac.id}">
-            <div class="s1"><b>${ac.cs}</b><span class="ty">${ac.type}/${ac.T.wakeLetter} <i>C${ac.T.srs}</i></span>${clr ? `<span class="clr">${clr}</span>` : ''}${ac.req ? `<span class="rq">${wait}s</span>` : ''}</div>
-            <div class="s2">${ac.role === 'dep' && ac.depDir ? `<span class="dd" title="departure direction">${ac.depDir} · ${ac.destCity}</span>` : ''}${esc(s.status(ac))}${ac.role === 'dep' && ac.depHdg != null && ac.onGround ? ` · hdg ${A.fmtHdg(ac.depHdg)}` : ''}${ac.gate && ac.role === 'arr' ? ` · ${ac.gate}` : ''}${ac.spot && ac.role !== 'pat' && ac.role !== 'vdep' && ac.flight === 'IFR' ? ` · FBO` : ''}</div></div>`;
-        }
-        html += '</div>';
+      const el=$('#strips');if(el._h!==html){el.innerHTML=html;el._h=html;el.onclick=e=>{if(e.target===el)this.select(null);};
+        el.querySelectorAll('.strip').forEach(d=>{d.onclick=()=>this.select(+d.dataset.id);d.ondblclick=e=>{e.preventDefault();const a=s.byId(+d.dataset.id);if(!a)return;const dest=prompt('Edit strip destination / scratchpad:',a.flightPlan?.destination||a.destCity||'');if(dest!==null){a.flightPlan=a.flightPlan||{};a.flightPlan.destination=dest.trim().toUpperCase();a.destCity=a.flightPlan.destination;this.renderStrips();}};d.ondragstart=e=>{e.dataTransfer.setData('text/plain',d.dataset.id);};});
+        el.querySelectorAll('.stripbay').forEach(b=>{b.ondragover=e=>{e.preventDefault();b.classList.add('over')};b.ondragleave=()=>b.classList.remove('over');b.ondrop=e=>{e.preventDefault();b.classList.remove('over');const id=+e.dataTransfer.getData('text/plain');if(id){this.stripBays[id]=b.dataset.bay;this.select(id);this.renderStrips();}};});
       }
-      const el = $('#strips');
-      if (el._h !== html) { el.innerHTML = html; el._h = html; el.querySelectorAll('.strip').forEach(d => d.onclick = () => this.select(+d.dataset.id)); }
     }
 
     /* ---------- context panel (button driven) ---------- */
@@ -4523,7 +4646,7 @@ const ATC = {};
         if (!force && this.panelKey === k) return; this.panelKey = k; this.panelHasTaxi = false;
         const eligible = ac.flight === 'IFR' && ac.onGround && ['parked','stopped'].includes(ac.phase) && !ac.ifrClearance;
         const fp = ac.flightPlan || {};
-        el.innerHTML = `<div class="ph"><div><b>${esc(ac.cs)}</b> <span class="fr IFR">${esc(ac.flight)}</span><div class="pt2">${esc(ac.type)} · ${esc(fp.destination || ac.destCity || 'Destination pending')}</div></div><div class="ps">${ac.ifrClearance ? 'Clearance issued' : eligible ? 'Awaiting IFR clearance' : esc(s.status(ac))}</div>${ac.req ? `<div class="preq">“${esc(ac.req.text)}”</div>` : ''}</div><div class="pb"><div class="sec"><div class="sech">IFR flight plan</div><div class="row lab">Destination <input id="cdDest" class="csel" value="${esc(fp.destination || ac.destCity || 'ORD')}"></div><div class="row lab">Route <input id="cdRoute" class="csel" value="${esc(fp.route || ('DCT ' + (fp.destination || ac.destCity || 'ORD')))}"></div><div class="row lab">SID <select id="cdSid" class="csel"><option>RNAV</option><option>VECTOR</option><option>STANDARD</option><option>NO SID</option></select></div><div class="row lab">Squawk <input id="cdSquawk" class="csel" maxlength="4" value="${ac.squawk || ((1000 + ac.id * 37) % 4096).toString(8).padStart(4,'0')}"></div><div class="row lab">Initial altitude <select id="cdAlt" class="csel"><option value="3000">3,000 ft</option><option value="5000" selected>5,000 ft</option><option value="7000">7,000 ft</option><option value="10000">10,000 ft</option><option value="12000">12,000 ft</option></select></div><div class="row"><button class="cb go big" id="issueClearance" ${eligible ? '' : 'disabled'}>Issue IFR clearance</button></div><div class="hintx">Issue → pilot readback → aircraft released to Ground for pushback/taxi.</div></div><div class="sec"><div class="sech">Flight plan details</div><div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Route</span><b>${esc(fp.route || 'Not assigned')}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b></div></div></div>`;
+        el.innerHTML = `<div class="ph"><div><b>${esc(ac.cs)}</b> <span class="fr IFR">${esc(ac.flight)}</span><div class="pt2">${esc(ac.type)} · ${esc(fp.destination || ac.destCity || 'Destination pending')}</div></div><div class="ps">${ac.ifrClearance ? 'Clearance issued' : eligible ? 'Awaiting IFR clearance' : esc(s.status(ac))}</div>${ac.req ? `<div class="preq">“${esc(ac.req.text)}”</div>` : ''}</div><div class="pb"><div class="sec"><div class="sech">IFR flight plan</div><div class="row lab">Destination <input id="cdDest" class="csel" value="${esc(fp.destination || ac.destCity || 'ORD')}"></div><div class="row lab">Route <input id="cdRoute" class="csel" value="${esc(fp.route || ('DCT ' + (fp.destination || ac.destCity || 'ORD')))}"></div><div class="row lab">SID <select id="cdSid" class="csel">${s.procedures.sid.map(p=>`<option value="${p.name}" ${ac.sid===p.name?'selected':''}>${p.name} · ${p.route}</option>`).join('')}<option value="NO SID">NO SID</option></select></div><div class="row lab">Squawk <input id="cdSquawk" class="csel" maxlength="4" value="${ac.squawk || ((1000 + ac.id * 37) % 4096).toString(8).padStart(4,'0')}"></div><div class="row lab">Initial altitude <select id="cdAlt" class="csel"><option value="3000">3,000 ft</option><option value="5000" selected>5,000 ft</option><option value="7000">7,000 ft</option><option value="10000">10,000 ft</option><option value="12000">12,000 ft</option></select></div><div class="row"><button class="cb go big" id="issueClearance" ${eligible ? '' : 'disabled'}>Issue IFR clearance</button></div><div class="hintx">Issue → pilot readback → aircraft released to Ground for pushback/taxi.</div></div><div class="sec"><div class="sech">Flight plan details</div><div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Route</span><b>${esc(fp.route || 'Not assigned')}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b><span>SID</span><b>${esc(fp.sid || ac.sid || '—')}</b><span>STAR</span><b>${esc(fp.star || ac.star || '—')}</b></div></div></div>`;
         const issue = $('#issueClearance'); if (issue) issue.onclick = () => this.issueClearance(ac.id);
         return;
       }
@@ -4539,7 +4662,7 @@ const ATC = {};
       let body = '';
       const air = !ac.onGround;
       const fp = ac.flightPlan || {};
-      if (ac.flight === 'IFR' || ac.role === 'dep') body += sec('Flight plan', `<div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Route</span><b>${esc(fp.route || (ac.destCity ? 'DCT ' + ac.destCity : '—'))}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b>${ac.squawk ? `<span>Squawk</span><b>${esc(ac.squawk)}</b>` : ''}</div>`);
+      if (ac.flight === 'IFR' || ac.role === 'dep') body += sec('Flight plan', `<div class="rgrid"><span>Callsign</span><b>${esc(fp.callsign || ac.cs)}</b><span>Route</span><b>${esc(fp.route || (ac.destCity ? 'DCT ' + ac.destCity : '—'))}</b><span>Destination</span><b>${esc(fp.destination || ac.destCity || '—')}</b><span>Aircraft</span><b>${esc(fp.aircraft || ac.type)}</b><span>Flight level</span><b>FL${String(fp.flightLevel || 180).padStart(3,'0')}</b>${fp.sid || ac.sid ? `<span>SID</span><b>${esc(fp.sid || ac.sid)}</b>` : ''}${fp.star || ac.star ? `<span>STAR</span><b>${esc(fp.star || ac.star)}</b>` : ''}${ac.squawk ? `<span>Squawk</span><b>${esc(ac.squawk)}</b>` : ''}</div><p class="hintx">SID / STAR are simplified simulator training procedures, not published real-world charts.</p>`);
       const hdgOpts = (sel) => { sel = (Math.round(A.norm(sel) / 10) * 10) || 360; let o = ''; for (let h = 10; h <= 360; h += 10) o += `<option value="${A.fmtHdg(h)}" ${h === sel ? 'selected' : ''}>${A.fmtHdg(h)}</option>`; return o; };
       this.panelHasTaxi = false;
       if (ac.onGround) {
@@ -4560,11 +4683,11 @@ const ATC = {};
           const own = ac.gate || ac.spot;
           const parks = [...s.ap.gates.map(g => g.id), ...s.ap.spots.map(p => p.id)];
           const chip = d => `<button class="chip ${tb.dest === d ? 'on' : ''}" data-dest="${d}">${d.includes('@') ? d.replace('@', ' @ ') : s.endsById[d] ? `Rwy ${d} full` : d}</button>`;
-          const viaChips = tb.via.length ? tb.via.map(v => `<span class="vchip">${v}</span>`).join('<span class="arr">›</span>') : `<span class="hintx">${this.mobile ? 'Tap' : 'Click'} taxiways on the map in order, or leave empty for the auto route</span>`;
+          const viaChips = tb.via.length ? tb.via.map((v,i) => `<button class="vchip" data-via-remove="${i}" title="Click to remove ${v} from route">${v} ×</button>`).join('<span class="arr">›</span>') : `<span class="hintx">${this.mobile ? 'Tap' : 'Click'} taxiways on the map in order, or leave empty for the auto route</span>`;
           const pv = this.r.preview && this.tb.id === ac.id ? this.r.preview.via.join(' ') : '';
           body += sec('Taxi', `<div class="row">${rwyDests.map(chip).join('')}</div>
             <div class="row">${own ? chip(own) : ''}<select class="csel" id="parkSel"><option value="">Other parking…</option>${parks.filter(p => p !== own).map(p => `<option ${tb.dest === p ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
-            <div class="via">${viaChips}</div>
+            <div class="via">${viaChips}</div><div class="hintx">Route editor: click taxiways on the map to add them in sequence; click a blue route segment above to remove that waypoint. Undo removes the last waypoint.</div>
             <div class="row">${btn('Send taxi', '__taxi', 'go big')}${tb.via.length ? `<button class="cb ghost" data-cmd="__undo">Undo</button><button class="cb ghost" data-cmd="__clear">Clear</button>` : ''}</div>
             <div class="tbinfo ${this.tbErr ? 'err' : ''}" id="tbinfo">${this.tbErr ? '⚠ ' + esc(this.tbErr) : pv ? 'Route: ' + esc(pv) : ''}</div>`);
         }
@@ -4644,6 +4767,7 @@ const ATC = {};
       const gateBtn = $('#gateAssignBtn'); if (gateBtn) gateBtn.onclick = () => { const g = $('#gateAssign').value; if (!g) return; const old = s.ap.gates.find(x => x.res === ac.id); if (old) old.res = null; const next = s.ap.gates.find(x => x.id === g); if (next && (!next.res || next.res === ac.id)) { next.res = ac.id; ac.gate = g; this.renderPanel(true); } };
       el.querySelectorAll('.cb').forEach(b => b.onclick = () => this.press(b.dataset.cmd));
       el.querySelectorAll('.chip[data-dest]').forEach(b => b.onclick = () => { this.tb.dest = b.dataset.dest; this.previewRoute(); this.renderPanel(true); });
+      el.querySelectorAll('[data-via-remove]').forEach(b=>b.onclick=()=>{this.tb.via.splice(+b.dataset.viaRemove,1);this.previewRoute();this.renderPanel(true);});
       el.querySelectorAll('.chip[data-entry]').forEach(b => b.onclick = () => { const a = s.byId(this.sel); if (a) { a.rwy = s.endsById[b.dataset.entry]; if (a.pat) a.pat.sg = a.rwy.sideSg; } this.renderPanel(true); });
       const ps = $('#parkSel'); if (ps) ps.onchange = () => { if (ps.value) { this.tb.dest = ps.value; this.previewRoute(); this.renderPanel(true); } };
       el.querySelectorAll('.csel[data-pre]').forEach(sl => sl.onchange = () => { if (sl.value) this.send(sl.dataset.pre + ' ' + sl.value); sl.value = ''; });
@@ -4653,15 +4777,17 @@ const ATC = {};
     issueClearance(id) {
       const s = this.sim, ac = s && s.byId(id); if (!ac || ac.ifrClearance) return;
       const dest = ($('#cdDest').value || ac.destCity || 'ORD').trim().toUpperCase();
-      const route = ($('#cdRoute').value || `DCT ${dest}`).trim().toUpperCase();
+      let route = ($('#cdRoute').value || `DCT ${dest}`).trim().toUpperCase();
       const sid = $('#cdSid').value, squawk = ($('#cdSquawk').value || '').trim();
+      const proc = s.procedures.sid.find(p => p.name === sid);
+      if (proc && !route.includes(proc.name)) route = `${proc.route} ${route}`;
       const altitude = +$('#cdAlt').value;
       if (!/^[A-Z0-9]{3,5}$/.test(dest) || !/^[0-7]{4}$/.test(squawk) || !Number.isFinite(altitude)) { alert('Check destination and squawk (four octal digits).'); return; }
-      ac.flightPlan = { callsign: ac.cs, route, destination: dest, aircraft: ac.type, flightLevel: Math.round(altitude / 100) };
+      ac.flightPlan = { callsign: ac.cs, route, destination: dest, aircraft: ac.type, flightLevel: Math.round(altitude / 100), sid: sid === 'NO SID' ? '' : sid, star: '' };
       ac.destCity = dest; ac.squawk = squawk; ac.sid = sid; ac.initialAltitude = altitude;
       ac.ifrClearance = true; ac.req = null;
       s.say('atc', ac, `${ac.say}, cleared to ${dest} via ${route}, ${sid === 'NO SID' ? 'no SID' : sid + ' departure'}, squawk ${squawk}, maintain ${altitude.toLocaleString()} feet.`, 'sys');
-      s.later(3, () => { if (ac.removed) return; s.pilot(ac, `${ac.say}, cleared to ${dest} via ${route}, ${sid === 'NO SID' ? 'no SID' : sid + ' departure'}, squawk ${squawk}, maintain ${altitude.toLocaleString()} feet.`, 'req'); s.later(2, () => { if (!ac.removed) { s.sys(`${ac.cs} readback correct — released to Ground.`); if (ac.gate) s.request(ac, 'push', `Ground, ${ac.say}, gate ${ac.gate}, IFR clearance received, request pushback with information ${s.atis}.`); else s.request(ac, 'taxi', `Ground, ${ac.say}, at ${ac.spot || 'parking'}, IFR clearance received, ready to taxi with ${s.atis}.`); } }); });
+      s.later(3, () => { if (ac.removed) return; const wrong=Math.random()<this.readbackErrorRate; const rb=wrong?`${ac.say}, cleared to ${dest} via ${route}, squawk ${squawk==='1200'?'2100':'1200'}, maintain ${altitude.toLocaleString()} feet.`:`${ac.say}, cleared to ${dest} via ${route}, ${sid === 'NO SID' ? 'no SID' : sid + ' departure'}, squawk ${squawk}, maintain ${altitude.toLocaleString()} feet.`; s.pilot(ac,rb,'req'); s.later(2, () => { if (!ac.removed) { if(wrong){s.sys(`${ac.cs} readback incorrect — verify squawk and correct the pilot.`,'bad');ac.req={type:'readback',text:'Readback incorrect — confirm assigned squawk',t:s.t};return;} s.sys(`${ac.cs} readback correct — released to Ground.`); if (ac.gate) s.request(ac, 'push', `Ground, ${ac.say}, gate ${ac.gate}, IFR clearance received, request pushback with information ${s.atis}.`); else s.request(ac, 'taxi', `Ground, ${ac.say}, at ${ac.spot || 'parking'}, IFR clearance received, ready to taxi with ${s.atis}.`); } }); });
       this.renderPanel(true);
     }
     press(c) {
@@ -4704,7 +4830,7 @@ const ATC = {};
       const runways = s.ap.runways.map(r => `<label class="og"><input type="checkbox" data-closure-kind="runway" data-closure-id="${r.id}" ${s.closedRunways.has(r.id) ? 'checked' : ''}><span>Runway ${r.id}</span></label>`).join('');
       const taxiways = Object.keys(s.ap.tw).filter(k => !s.ap.tw[k].lead).map(k => `<label class="og"><input type="checkbox" data-closure-kind="taxiway" data-closure-id="${k}" ${s.closedTaxiways.has(k) ? 'checked' : ''}><span>Taxiway ${k}</span></label>`).join('');
       const stands = s.ap.gates.map(g => { const a = s.acs.find(x => !x.removed && (g.occ === x.id || g.res === x.id)); return `<div class="rgrid"><span>${g.id}</span><b>${a ? `${esc(a.cs)} · ${esc(a.phase)}` : 'Available'}</b></div>`; }).join('');
-      $('#opsBody').innerHTML = `<div class="sec"><div class="sech">Gate / stand occupancy</div>${stands || '<div class="hintx">No gates at this airport.</div>'}</div><div class="sec"><div class="sech">Runway configuration</div><div class="row"><select id="opsConfig" class="csel">${configs}</select><button class="cb go" id="applyConfig">Apply configuration</button></div><p class="hintx">Changing configuration updates active arrival/departure runway ends.</p></div><div class="sec"><div class="sech">Runway closures</div>${runways}</div><div class="sec"><div class="sech">Taxiway closures</div>${taxiways}</div><div class="sec"><div class="sech">Traffic flow</div><div class="row"><label><input type="checkbox" id="opsArr" ${s.flow.arrivals ? 'checked' : ''}> Arrivals</label><label><input type="checkbox" id="opsDep" ${s.flow.departures ? 'checked' : ''}> Departures</label></div><div class="row lab">Arrivals / hour <input id="opsArrRate" type="number" min="0" max="90" value="${s.flow.arrHr}"></div><div class="row lab">Departures / hour <input id="opsDepRate" type="number" min="0" max="60" value="${s.flow.depHr}"></div><button class="cb go" id="applyFlow">Apply traffic flow</button></div>`;
+      $('#opsBody').innerHTML = `<div class="sec"><div class="sech">${esc(s.ap.icao)} · Stand occupancy</div>${stands || '<div class="hintx">No gates at this airport.</div>'}</div><div class="sec"><div class="sech">Active runway configuration</div><div class="row"><select id="opsConfig" class="csel">${configs}</select><button class="cb go" id="applyConfig">Apply configuration</button></div><p class="hintx">Updates active arrival and departure runway ends and the ATIS runway information.</p><div class="row"><span class="badgeLite">ARR ${s.arrEnds.map(e=>e.id).join(' / ')}</span><span class="badgeLite">DEP ${s.ends.map(e=>e.id).join(' / ')}</span></div></div><div class="sec"><div class="sech">Runway availability · click to close / reopen</div><div class="og">${runways}</div></div><div class="sec"><div class="sech">Taxiway availability · click to close / reopen</div><div class="og">${taxiways}</div></div><div class="sec"><div class="sech">Traffic flow controls</div><div class="row"><label><input type="checkbox" id="opsArr" ${s.flow.arrivals ? 'checked' : ''}> Arrivals enabled</label><label><input type="checkbox" id="opsDep" ${s.flow.departures ? 'checked' : ''}> Departures enabled</label></div><div class="row lab">Arrivals / hour <input id="opsArrRate" type="number" min="0" max="90" value="${s.flow.arrHr}"></div><div class="row lab">Departures / hour <input id="opsDepRate" type="number" min="0" max="60" value="${s.flow.depHr}"></div><button class="cb go" id="applyFlow">Apply traffic flow</button></div>`;
       $('#applyConfig').onclick = () => { s.setRunwayConfig(+$('#opsConfig').value); this.renderOps(); };
       $('#applyFlow').onclick = () => { s.flow.arrivals = $('#opsArr').checked; s.flow.departures = $('#opsDep').checked; s.flow.arrHr = Math.max(0,Math.min(90,+$('#opsArrRate').value||0)); s.flow.depHr = Math.max(0,Math.min(60,+$('#opsDepRate').value||0)); s.sys('Traffic flow settings updated.'); };
       $('#opsBody').querySelectorAll('[data-closure-kind]').forEach(x => x.onchange = () => { s.setClosure(x.dataset.closureKind,x.dataset.closureId,x.checked,false); });
@@ -4730,27 +4856,35 @@ const ATC = {};
       const s = this.sim; if (!s) return;
       const L = s.lighting;
       const defs = [
-        ['runway','Runway edge / centreline','runwayLevel'],['taxiway','Taxiway edge / centreline','taxiwayLevel'],
-        ['approach','Approach lights / sequenced flashers','approachLevel'],['papi','PAPI / visual approach indicators','papiLevel'],
-        ['guard','Runway guard / stop-bar lights','guardLevel'],['aircraft','Aircraft navigation / beacon / landing lights','aircraftLevel'],
-        ['city','City and surrounding scenery lights','cityLevel']
+        ['runway','Runway edge / centreline','runwayLevel','RWY'],['taxiway','Taxiway edge / centreline','taxiwayLevel','TWY'],
+        ['approach','Approach lights / sequenced flashers','approachLevel','APP'],['papi','PAPI / visual approach indicators','papiLevel','PAPI'],
+        ['guard','Runway guard / stop-bar lights','guardLevel','STOP'],['aircraft','Aircraft navigation / beacon / landing lights','aircraftLevel','ACFT'],
+        ['city','City and surrounding scenery lights','cityLevel','SCENERY']
       ];
-      const presetNames = { dim:'Dim · 35%', normal:'Standard · 70%', bright:'Bright · 100%' };
-      $('#lightingBody').innerHTML = `<div class="sec"><div class="sech">Control mode</div><div class="row"><label><input type="radio" name="lightMode" value="auto" ${L.mode==='auto'?'checked':''}> Automatic (weather and time of day)</label><label><input type="radio" name="lightMode" value="manual" ${L.mode==='manual'?'checked':''}> Manual</label></div><p class="hintx">Automatic mode follows daylight and visibility. Manual mode uses your selected preset or individual settings.</p></div><div class="sec"><div class="sech">Brightness preset</div><div class="row"><select id="lightPreset" class="csel"><option value="dim" ${L.preset==='dim'?'selected':''}>${presetNames.dim}</option><option value="normal" ${L.preset==='normal'?'selected':''}>${presetNames.normal}</option><option value="bright" ${L.preset==='bright'?'selected':''}>${presetNames.bright}</option><option value="custom" ${L.preset==='custom'?'selected':''}>Custom</option></select><button class="cb go" id="applyLightPreset">Apply preset</button></div><p class="hintx">Presets set the overall output level. Custom lets you tune each lighting system separately.</p></div><div class="sec"><div class="sech">Individual lighting systems</div>${defs.map(([key,label,level])=>`<div class="lightControl"><label><input type="checkbox" data-light-toggle="${key}" ${L[key]?'checked':''}> <b>${label}</b></label><input type="range" min="0" max="100" step="5" value="${Math.round(L[level]*100)}" data-light-level="${level}"><span data-light-value="${level}">${Math.round(L[level]*100)}%</span></div>`).join('')}<p class="hintx">Switch systems off entirely or adjust their individual brightness. Aircraft lights are separate from airfield lighting.</p></div><div class="row"><button class="cb go" id="applyLighting">Apply lighting settings</button><button class="cb" id="resetLighting">Reset to automatic</button></div>`;
-      $('#applyLightPreset').onclick = () => {
-        const preset = $('#lightPreset').value; L.preset = preset;
-        const v = preset === 'dim' ? .35 : preset === 'bright' ? 1 : .70;
-        if (preset !== 'custom') for (const [, , level] of defs) { L[level] = v; const el = document.querySelector(`[data-light-level="${level}"]`); if (el) el.value = Math.round(v*100); const out = document.querySelector(`[data-light-value="${level}"]`); if (out) out.textContent = `${Math.round(v*100)}%`; }
-        L.mode = 'manual'; const m = document.querySelector('input[name=lightMode][value=manual]'); if (m) m.checked = true;
+      const presets = [{id:'dim',name:'DIM',pct:35,desc:'Low intensity · reduced glare'},{id:'normal',name:'STANDARD',pct:70,desc:'Normal night operations'},{id:'bright',name:'BRIGHT',pct:100,desc:'Maximum available output'}];
+      const active = presets.find(p=>p.id===L.preset);
+      const effective = L.mode==='auto' ? (s.wx.visFt<3000?100:s.wx.visFt<6000?85:s.night?70:35) : Math.round((active?active.pct:70));
+      $('#lightingBody').innerHTML = `<div class="lightHero"><div class="lightStatus"><small>FIELD LIGHTING STATUS · ${esc(s.ap.icao)}</small><b>${L.mode==='auto'?'AUTO CONTROL':L.preset==='custom'?'CUSTOM OUTPUT':(active?active.name:'STANDARD')}</b><span>${L.mode==='auto'?'Automatic response to daylight and visibility':'Manual control · operator selected' } · Effective reference ${effective}%</span></div><div class="lightStatus"><small>OPERATING CONDITIONS</small><b>${s.night?'NIGHT':'DAY'} / ${esc(s.wx.label.toUpperCase())}</b><span>Visibility ${Math.round(s.wx.visFt/5280*100)/100} SM · Active runways ${s.ends.map(e=>e.id).join(' / ')}</span></div></div>
+      <div class="sec"><div class="sech">Control philosophy</div><div class="row"><label><input type="radio" name="lightMode" value="auto" ${L.mode==='auto'?'checked':''}> Automatic control</label><label><input type="radio" name="lightMode" value="manual" ${L.mode==='manual'?'checked':''}> Manual control</label></div><p class="hintx">Automatic control adjusts the visual environment according to time of day and visibility. Manual mode applies your chosen preset or individual outputs.</p></div>
+      <div class="sec"><div class="sech">Brightness profiles</div><div class="lightPresets">${presets.map(p=>`<button type="button" class="lightPresetBtn ${L.preset===p.id?'active':''}" data-preset="${p.id}"><b>${p.name} · ${p.pct}%</b><span>${p.desc}</span><i style="width:${p.pct}%"></i></button>`).join('')}</div><p class="hintx">Choose a profile, then fine-tune individual systems below if required.</p></div>
+      <div class="sec" style="grid-column:1/-1"><div class="sech">Individual lighting circuits · live output</div>${defs.map(([key,label,level,tag])=>`<div class="lightControl"><label><input type="checkbox" data-light-toggle="${key}" ${L[key]?'checked':''}><b>${tag}</b><span>${label}</span></label><input aria-label="${label} brightness" type="range" min="0" max="100" step="5" value="${Math.round(L[level]*100)}" data-light-level="${level}"><span data-light-value="${level}">${Math.round(L[level]*100)}%</span></div>`).join('')}<p class="hintx">Each circuit can be switched independently. The slider controls output intensity; unchecked circuits remain off regardless of brightness.</p></div>
+      <div class="lightFooter"><span class="hintx">Changes are applied to the simulator's lighting model and visual rendering.</span><div class="row"><button class="cb" id="resetLighting">Reset to automatic</button><button class="cb go" id="applyLighting">Apply lighting configuration</button></div></div>`;
+      $('#lightingBody').querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{
+        const preset=b.dataset.preset; L.preset=preset; L.mode='manual'; const v=preset==='dim'?.35:preset==='bright'?1:.70;
+        for(const [, ,level] of defs){L[level]=v;}
+        this.renderLighting();
+      });
+      $('#lightingBody').querySelectorAll('[data-light-level]').forEach(el=>el.oninput=()=>{
+        const out=$(`[data-light-value="${el.dataset.lightLevel}"]`); if(out) out.textContent=`${el.value}%`;
+        L.preset='custom'; const manual=$('input[name=lightMode][value=manual]'); if(manual) manual.checked=true;
+        $('#lightingBody').querySelectorAll('.lightPresetBtn').forEach(b=>b.classList.remove('active'));
+      });
+      $('#applyLighting').onclick=()=>{
+        L.mode=($('input[name=lightMode]:checked')||{}).value||'auto';
+        for(const [key,,level] of defs){const t=$(`[data-light-toggle="${key}"]`),v=$(`[data-light-level="${level}"]`);L[key]=!!(t&&t.checked);if(v)L[level]=Math.max(0,Math.min(1,+v.value/100));}
+        s.sys(`Airport lighting configuration applied — ${L.mode==='auto'?'automatic':L.preset+' manual'} mode.`); this.renderLighting();
       };
-      $('#lightingBody').querySelectorAll('[data-light-level]').forEach(el => el.oninput = () => { const out = document.querySelector(`[data-light-value="${el.dataset.lightLevel}"]`); if (out) out.textContent = `${el.value}%`; L.preset = 'custom'; $('#lightPreset').value = 'custom'; });
-      $('#applyLighting').onclick = () => {
-        L.mode = (document.querySelector('input[name=lightMode]:checked') || {}).value || 'auto';
-        L.preset = $('#lightPreset').value;
-        for (const [key,,level] of defs) { const t = document.querySelector(`[data-light-toggle="${key}"]`); const v = document.querySelector(`[data-light-level="${level}"]`); L[key] = !!(t && t.checked); if (v) L[level] = Math.max(0,Math.min(1,+v.value/100)); }
-        s.sys(`Airport lighting set to ${L.mode === 'auto' ? 'automatic' : (L.preset === 'custom' ? 'custom manual' : L.preset + ' preset')} mode.`); this.renderLighting();
-      };
-      $('#resetLighting').onclick = () => { L.mode='auto'; L.preset='normal'; for (const [key,,level] of defs) { L[key]=true; L[level]=({runwayLevel:.75,taxiwayLevel:.65,approachLevel:.8,papiLevel:.85,guardLevel:.75,aircraftLevel:.9,cityLevel:.45})[level]; } this.renderLighting(); };
+      $('#resetLighting').onclick=()=>{L.mode='auto';L.preset='normal';for(const [key,,level] of defs){L[key]=true;L[level]=({runwayLevel:.75,taxiwayLevel:.65,approachLevel:.8,papiLevel:.85,guardLevel:.75,aircraftLevel:.9,cityLevel:.45})[level];}this.renderLighting();};
     }
     renderReport() {
       const s = this.sim; if (!s) return;
